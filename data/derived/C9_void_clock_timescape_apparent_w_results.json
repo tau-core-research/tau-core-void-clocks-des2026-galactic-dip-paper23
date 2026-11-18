@@ -21,9 +21,43 @@
       "delta_chi2_naive_cH_vs_w_minus1": 65.9
     }
   },
-  "proposition_2_conditional_void_fraction_lock_H1": {
+  "theorem_2_forward_dyer_roeder_and_weak_field_nogo": {
+    "status": "PROVEN (SymPy symbolic Taylor proof + DOP853 forward integration with ZERO D_TS/H2b input)",
+    "d2_DA_dz2_at_z0_formula": "-3*om_s/2 - 2",
+    "independent_of_alpha_beam_at_z0": true,
+    "exact_w0_app_at_z0_without_clock_shift": -1.0,
+    "void_wall_dimensionless_acceleration_s_void": 0.009162,
+    "qumond_susceptibility_boost_F_OD_squared_at_s_void": 7.2718,
+    "weak_field_potential_bound_Phi_over_c2": "O(5e-4) -> |Delta w_0^app| < 1e-3 (insufficient without O(1) void-clock dz/dlambda)",
+    "forward_Dyer_Roeder_alpha_beam_1_minus_alpha_OCSR_fit": {
+      "w0_apparent": -0.8173,
+      "wa_apparent": -1.5886,
+      "effective_hypothesis_selection_dof_Delta_k_hyp": 0,
+      "synthetic_curve_cpl_approx_rms_mmag": 4.403,
+      "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
+        "delta_chi2_2D_at_rho_minus0p85": 85.469,
+        "equiv_2dof_sigma_at_rho_minus0p85": 8.978,
+        "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+          37.266,
+          124.69
+        ],
+        "1D_w0_tension_sigma": 0.054,
+        "1D_wa_tension_sigma_sym": 4.916
+      },
+      "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
+        "delta_chi2_2D_at_rho_minus0p85": 72.218,
+        "equiv_2dof_sigma_at_rho_minus0p85": 8.217,
+        "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+          36.441,
+          102.022
+        ],
+        "1D_w0_tension_sigma": 1.203,
+        "1D_wa_tension_sigma_sym": 5.454
+      }
+    }
+  },
+  "proposition_1_conditional_void_fraction_lock_H1": {
     "status": "PROVEN ALGEBRAICALLY UNDER EXPLICIT TRANSITION-MATCHING HYPOTHESIS H1",
-    "hypothesis_H1_definition": "Identifies the onset of wall-frame apparent acceleration q_wall(f_acc) = 0 in the Buchert-Wiltshire void-wall tracker with the apparent-horizon inflection redshift z_acc^hor = (2*Omega_L0/Omega_m0)^(1/3) - 1 on the w_hor = -1 horizon background.",
     "q_wall_symbolic": "(8*f**4 + 31*f**3 - 51*f**2 + 4*f + 8)/(16*f**4 + 8*f**3 + 33*f**2 + 8*f + 16)",
     "f_acc_exact_algebraic_root": 0.58670773,
     "tau_core_z_acc_target_at_Om03153": 0.6315565,
@@ -78,67 +112,155 @@
       }
     ]
   },
-  "proposition_3_conditional_optical_hypotheses_H2_and_2D_cpl_audit": {
-    "status": "CONDITIONAL OPTICAL HYPOTHESES (H2a & H2b) \u2014 FULL 2D (w0, wa), MODEL-SELECTION PENALTY & REAL PANTHEON+ AUDIT",
+  "proposition_2_noncircular_forward_sachs_vs_phenomenological_H2": {
+    "status": "CONDITIONAL ON LOCAL TRANSIT RULE E_ray(z) \u2014 NON-CIRCULAR FORWARD SACHS ODE (H2-Sachs) + INVERSE RECONSTRUCTION CHECK",
     "alpha_ocsr_locked": 0.36084392,
-    "dE_TS_dz_at_z0_symbolic": "3*(8*f0**4 + 13*f0**3 - 6*f0**2 + 4*f0 + 8)/(16*f0**4 + 8*f0**3 + 33*f0**2 + 8*f0 + 16)",
-    "dE_TS_dz_at_z0_numeric": 0.959784,
-    "dE_hor_dz_at_z0_numeric": 0.47295,
-    "exact_analytical_w0_app_at_z0": -0.828956,
-    "physical_interpretation_and_model_selection_accounting": {
-      "null_geodesic_weyl_doubling_identity": {
-        "timelike_galactic_coupling_v_ll_c": "5*sqrt(3)/48",
-        "null_geodesic_weyl_coupling_v_eq_c": "5*sqrt(3)/24",
-        "exact_ratio_null_over_timelike": 2,
-        "physical_mechanism": "In COV-DIR+QUMOND with unit lensing slip Sigma_lens = (Phi+Psi)/(2*Phi) = 1, slowly moving galactic stars (v << c) couple solely to the timelike metric perturbation Psi via (1/2)*alpha_OCSR = 5*sqrt(3)/48 (setting a_0^KH = (5*sqrt(3)/96)*c*H*|1-q|), whereas null supernova photons (v = c, k^mu k_mu = 0) sample the Weyl sum Psi + Phi = 2*Psi, doubling the coupling to 2 * (5*sqrt(3)/48) = 5*sqrt(3)/24 = alpha_OCSR."
+    "exact_analytical_z0_forward_sachs_tangents": {
+      "p_0": {
+        "w0_Sachs_exact_z0": -0.828956,
+        "wa_Sachs_exact_z0": -0.26009
       },
-      "quadratic_qumond_sachs_focusing_origin_of_p_eq_2": {
-        "derived_exponent_p_from_quadratic_stress_and_shear": 2,
-        "symbolic_effective_coupling": "5*sqrt(3)*f_v**2/(24*f_v0**2)",
-        "exact_sturm_liouville_sachs_focusing_identity_verified_in_sympy": true,
-        "second_order_sachs_ode_dop853_verification": {
-          "H2b_diff_ray_p2_max_abs_diff_vs_2nd_order_Sachs_ODE": 2.498e-07,
-          "H2b_int_mod_p2_max_abs_diff_vs_2nd_order_Sachs_ODE": 2.352e-07
-        },
-        "physical_mechanism": "In the Sachs optical scalar equation d^2 D_A/dlambda^2 + (|sigma_opt|^2 + (1/2)*R_{mu nu}*k^mu*k^nu)*D_A = 0 and the COV-DIR+QUMOND action, both the optical shear |sigma_opt|^2 and the QUMOND auxiliary-field stress tensor T^(chi)_{mu nu}*k^mu*k^nu ~ (k . grad chi)^2 are strictly quadratic in the void-wall potential gradient grad(chi) ~ f_v(z), yielding the quadratic void-maturity scaling [f_v(z)/f_v0]^2 (p = 2). Furthermore, by the Fundamental Theorem of Calculus (Stokes/Gauss potential difference across the null segment [0, z]), the integrated QUMOND boundary dressing acts on the cumulative comoving distance difference D_TS(z) - D_hor(z), and direct DOP853 integration of the 2nd-order Sturm-Liouville Sachs ODE reproduces D_obs(z) to < 2.4e-7."
+      "p_1": {
+        "w0_Sachs_exact_z0": -0.828956,
+        "wa_Sachs_exact_z0": -0.373521
       },
-      "p_eq_1_physical_meaning": "1-point linear volume-fraction comparison test: f_v(z)/f_v0.",
-      "p_eq_2_physical_meaning": "2-point / quadratic QUMOND stress & Sachs shear focusing scaling: [f_v(z)/f_v0]^2.",
-      "model_selection_dof_accounting": "While the Weyl-doubling identity (alpha_OCSR = 5*sqrt(3)/24) and quadratic stress/shear scaling (p = 2) motivate H2b physically, a complete inhomogeneous ray-tracing integration on a 4D COV-DIR+QUMOND Swiss-cheese metric remains an open frontier; we therefore report both continuous-parameter AIC/BIC (Delta_k_cont = 0) and a conservative heuristic discrete-selection sensitivity table (Delta_k_hyp in {1, 2})."
+      "p_2": {
+        "w0_Sachs_exact_z0": -0.828956,
+        "wa_Sachs_exact_z0": -0.486952
+      }
     },
+    "forward_sachs_dual_ivp_verification_lambda_vs_z": {
+      "p_0_lambda_IVP_vs_z_IVP_max_abs_diff": 2.622e-08,
+      "p_1_lambda_IVP_vs_z_IVP_max_abs_diff": 2.722e-08,
+      "p_2_lambda_IVP_vs_z_IVP_max_abs_diff": 2.456e-08
+    },
+    "non_circularity_proof": "In H2-Sachs, the Ricci focusing source (3/2)*Omega_m0*(1+z)^5 is fixed by the null contraction of the COV-DIR+QUMOND Einstein equations + Weinberg photon-flux conservation independently of E_ray(z). Because (3/2)*Omega_m0*(1+z)^3 / E_ray(z) != (1+z)*dE_ray/dz whenever alpha_eff != 0, the forward Sachs ODE is strictly non-circular and eliminates the +55.5% spurious flat-comoving over-focusing of naive H2a, yielding (w0, wa) = (-0.8118, -0.3829) even at constant p = 0, (-0.8210, -0.4223) at linear p = 1, and (-0.8310, -0.4449) at quadratic p = 2.",
     "cpl_fits_and_2D_mahalanobis_comparison": {
       "unweighted_pure_Timescape": {
         "w0_apparent": -0.493,
-        "wa_apparent": -0.5255,
+        "wa_apparent": -0.5256,
         "effective_hypothesis_selection_dof_Delta_k_hyp": 0,
         "synthetic_curve_cpl_approx_rms_mmag": 0.706,
         "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 176.637,
-          "equiv_2dof_sigma_at_rho_minus0p85": 13.078,
+          "delta_chi2_2D_at_rho_minus0p85": 176.615,
+          "equiv_2dof_sigma_at_rho_minus0p85": 13.077,
           "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            73.851,
-            259.828
+            73.844,
+            259.794
           ],
           "1D_w0_tension_sigma": 6.54,
-          "1D_wa_tension_sigma_sym": 0.536,
+          "1D_wa_tension_sigma_sym": 0.535,
           "asymmetric_upper_error_check_sig_wa_0p21": {
-            "delta_chi2_2D": 174.961,
-            "equiv_2dof_sigma": 13.014,
-            "1D_wa_tension_sigma_upper": 0.498
+            "delta_chi2_2D": 174.94,
+            "equiv_2dof_sigma": 13.013,
+            "1D_wa_tension_sigma_upper": 0.497
           }
         },
         "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 113.915,
-          "equiv_2dof_sigma_at_rho_minus0p85": 10.429,
+          "delta_chi2_2D_at_rho_minus0p85": 113.902,
+          "equiv_2dof_sigma_at_rho_minus0p85": 10.428,
           "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            55.598,
-            162.195
+            55.595,
+            162.175
           ],
           "1D_w0_tension_sigma": 6.608,
           "1D_wa_tension_sigma_sym": 1.202
         }
       },
-      "H2a_constant_weight_alpha_OCSR": {
+      "forward_H2_Sachs_p0_const_alpha": {
+        "w0_apparent": -0.8117,
+        "wa_apparent": -0.3831,
+        "effective_hypothesis_selection_dof_Delta_k_hyp": 0,
+        "synthetic_curve_cpl_approx_rms_mmag": 0.414,
+        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 7.164,
+          "equiv_2dof_sigma_at_rho_minus0p85": 2.2,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            2.942,
+            10.574
+          ],
+          "1D_w0_tension_sigma": 0.166,
+          "1D_wa_tension_sigma_sym": 1.266,
+          "asymmetric_upper_error_check_sig_wa_0p21": {
+            "delta_chi2_2D": 6.276,
+            "equiv_2dof_sigma": 2.02,
+            "1D_wa_tension_sigma_upper": 1.176
+          }
+        },
+        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 2.477,
+          "equiv_2dof_sigma_at_rho_minus0p85": 1.058,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            1.714,
+            3.186
+          ],
+          "1D_w0_tension_sigma": 1.297,
+          "1D_wa_tension_sigma_sym": 0.632
+        }
+      },
+      "forward_H2_Sachs_p1_linear_fv": {
+        "w0_apparent": -0.8209,
+        "wa_apparent": -0.4227,
+        "effective_hypothesis_selection_dof_Delta_k_hyp": 1,
+        "synthetic_curve_cpl_approx_rms_mmag": 0.206,
+        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 3.956,
+          "equiv_2dof_sigma_at_rho_minus0p85": 1.482,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            1.73,
+            5.768
+          ],
+          "1D_w0_tension_sigma": 0.018,
+          "1D_wa_tension_sigma_sym": 1.063,
+          "asymmetric_upper_error_check_sig_wa_0p21": {
+            "delta_chi2_2D": 3.404,
+            "equiv_2dof_sigma": 1.334,
+            "1D_wa_tension_sigma_upper": 0.987
+          }
+        },
+        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 1.425,
+          "equiv_2dof_sigma_at_rho_minus0p85": 0.69,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            1.324,
+            1.606
+          ],
+          "1D_w0_tension_sigma": 1.143,
+          "1D_wa_tension_sigma_sym": 0.791
+        }
+      },
+      "forward_H2_Sachs_p2_quadratic_fv": {
+        "w0_apparent": -0.8309,
+        "wa_apparent": -0.4453,
+        "effective_hypothesis_selection_dof_Delta_k_hyp": 1,
+        "synthetic_curve_cpl_approx_rms_mmag": 0.022,
+        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 2.139,
+          "equiv_2dof_sigma_at_rho_minus0p85": 0.948,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            1.089,
+            3.016
+          ],
+          "1D_w0_tension_sigma": 0.218,
+          "1D_wa_tension_sigma_sym": 0.947,
+          "asymmetric_upper_error_check_sig_wa_0p21": {
+            "delta_chi2_2D": 1.784,
+            "equiv_2dof_sigma": 0.824,
+            "1D_wa_tension_sigma_upper": 0.88
+          }
+        },
+        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 0.963,
+          "equiv_2dof_sigma_at_rho_minus0p85": 0.499,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            1.09,
+            0.954
+          ],
+          "1D_w0_tension_sigma": 0.977,
+          "1D_wa_tension_sigma_sym": 0.881
+        }
+      },
+      "H2a_phenom_integrated_const_alpha": {
         "w0_apparent": -0.8251,
         "wa_apparent": -0.1006,
         "effective_hypothesis_selection_dof_Delta_k_hyp": 0,
@@ -169,69 +291,7 @@
           "1D_wa_tension_sigma_sym": 0.498
         }
       },
-      "H2a_plus_24mmag_Dovekie_calibration": {
-        "w0_apparent": -0.8212,
-        "wa_apparent": -0.1906,
-        "effective_hypothesis_selection_dof_Delta_k_hyp": 1,
-        "synthetic_curve_cpl_approx_rms_mmag": 0.261,
-        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 17.968,
-          "equiv_2dof_sigma_at_rho_minus0p85": 3.835,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            7.833,
-            26.214
-          ],
-          "1D_w0_tension_sigma": 0.024,
-          "1D_wa_tension_sigma_sym": 2.253,
-          "asymmetric_upper_error_check_sig_wa_0p21": {
-            "delta_chi2_2D": 15.471,
-            "equiv_2dof_sigma": 3.517,
-            "1D_wa_tension_sigma_upper": 2.092
-          }
-        },
-        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 5.697,
-          "equiv_2dof_sigma_at_rho_minus0p85": 1.896,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            2.348,
-            8.404
-          ],
-          "1D_w0_tension_sigma": 1.138,
-          "1D_wa_tension_sigma_sym": 0.138
-        }
-      },
-      "H2b_differential_ray_void_maturity_p1": {
-        "w0_apparent": -0.8233,
-        "wa_apparent": -0.2414,
-        "effective_hypothesis_selection_dof_Delta_k_hyp": 1,
-        "synthetic_curve_cpl_approx_rms_mmag": 0.154,
-        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 13.521,
-          "equiv_2dof_sigma_at_rho_minus0p85": 3.249,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            5.965,
-            19.679
-          ],
-          "1D_w0_tension_sigma": 0.066,
-          "1D_wa_tension_sigma_sym": 1.993,
-          "asymmetric_upper_error_check_sig_wa_0p21": {
-            "delta_chi2_2D": 11.607,
-            "equiv_2dof_sigma": 2.966,
-            "1D_wa_tension_sigma_upper": 1.85
-          }
-        },
-        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 3.959,
-          "equiv_2dof_sigma_at_rho_minus0p85": 1.483,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            1.773,
-            5.744
-          ],
-          "1D_w0_tension_sigma": 1.103,
-          "1D_wa_tension_sigma_sym": 0.066
-        }
-      },
-      "H2b_differential_ray_void_maturity_p2": {
+      "H2b_phenom_diff_ray_p2": {
         "w0_apparent": -0.8256,
         "wa_apparent": -0.3399,
         "effective_hypothesis_selection_dof_Delta_k_hyp": 2,
@@ -262,38 +322,7 @@
           "1D_wa_tension_sigma_sym": 0.46
         }
       },
-      "H2b_integrated_distance_void_maturity_p1": {
-        "w0_apparent": -0.8116,
-        "wa_apparent": -0.399,
-        "effective_hypothesis_selection_dof_Delta_k_hyp": 1,
-        "synthetic_curve_cpl_approx_rms_mmag": 0.394,
-        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 6.378,
-          "equiv_2dof_sigma_at_rho_minus0p85": 2.041,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            2.61,
-            9.42
-          ],
-          "1D_w0_tension_sigma": 0.168,
-          "1D_wa_tension_sigma_sym": 1.185,
-          "asymmetric_upper_error_check_sig_wa_0p21": {
-            "delta_chi2_2D": 5.594,
-            "equiv_2dof_sigma": 1.874,
-            "1D_wa_tension_sigma_upper": 1.1
-          }
-        },
-        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 2.284,
-          "equiv_2dof_sigma_at_rho_minus0p85": 0.996,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            1.696,
-            2.861
-          ],
-          "1D_w0_tension_sigma": 1.298,
-          "1D_wa_tension_sigma_sym": 0.696
-        }
-      },
-      "H2b_integrated_distance_void_maturity_p2": {
+      "H2b_phenom_integrated_mod_p2": {
         "w0_apparent": -0.8122,
         "wa_apparent": -0.5717,
         "effective_hypothesis_selection_dof_Delta_k_hyp": 2,
@@ -323,6 +352,13 @@
           "1D_w0_tension_sigma": 1.288,
           "1D_wa_tension_sigma_sym": 1.387
         }
+      }
+    },
+    "inverse_optical_sturm_liouville_reconstruction_check_of_phenom_H2b": {
+      "note": "Exact inverse-optical Sturm-Liouville identity (holds for any smooth D_obs) verifying numerical consistency of phenomenological H2b curves.",
+      "residuals": {
+        "H2b_diff_ray_p2_inverse_reconstruction_max_abs_diff": 2.498e-07,
+        "H2b_int_mod_p2_inverse_reconstruction_max_abs_diff": 2.352e-07
       }
     },
     "real_pantheon_plus_1580_sne_chi2_and_aic_bic_audit": {
@@ -363,7 +399,55 @@
           "Delta_BIC_heuristic": 83.66
         }
       },
-      "H2a_const_alpha_OCSR": {
+      "forward_Dyer_Roeder_no_clock_shift": {
+        "chi2_SN": 1394.32,
+        "Delta_k_continuous_fitted": 0,
+        "Delta_chi2_vs_w_minus1_horizon": 6.99,
+        "Delta_AIC_continuous_k0": 6.99,
+        "Delta_BIC_continuous_k0": 6.99,
+        "heuristic_discrete_selection_sensitivity": {
+          "Delta_k_hyp_assumed": 0,
+          "Delta_AIC_heuristic": 6.99,
+          "Delta_BIC_heuristic": 6.99
+        }
+      },
+      "forward_H2_Sachs_p0_const_alpha": {
+        "chi2_SN": 1389.46,
+        "Delta_k_continuous_fitted": 0,
+        "Delta_chi2_vs_w_minus1_horizon": 2.13,
+        "Delta_AIC_continuous_k0": 2.13,
+        "Delta_BIC_continuous_k0": 2.13,
+        "heuristic_discrete_selection_sensitivity": {
+          "Delta_k_hyp_assumed": 0,
+          "Delta_AIC_heuristic": 2.13,
+          "Delta_BIC_heuristic": 2.13
+        }
+      },
+      "forward_H2_Sachs_p1_linear_fv": {
+        "chi2_SN": 1388.48,
+        "Delta_k_continuous_fitted": 0,
+        "Delta_chi2_vs_w_minus1_horizon": 1.15,
+        "Delta_AIC_continuous_k0": 1.15,
+        "Delta_BIC_continuous_k0": 1.15,
+        "heuristic_discrete_selection_sensitivity": {
+          "Delta_k_hyp_assumed": 1,
+          "Delta_AIC_heuristic": 3.15,
+          "Delta_BIC_heuristic": 8.51
+        }
+      },
+      "forward_H2_Sachs_p2_quadratic_fv": {
+        "chi2_SN": 1387.77,
+        "Delta_k_continuous_fitted": 0,
+        "Delta_chi2_vs_w_minus1_horizon": 0.44,
+        "Delta_AIC_continuous_k0": 0.44,
+        "Delta_BIC_continuous_k0": 0.44,
+        "heuristic_discrete_selection_sensitivity": {
+          "Delta_k_hyp_assumed": 1,
+          "Delta_AIC_heuristic": 2.44,
+          "Delta_BIC_heuristic": 7.81
+        }
+      },
+      "H2a_phenom_integrated_const_alpha": {
         "chi2_SN": 1392.4,
         "Delta_k_continuous_fitted": 0,
         "Delta_chi2_vs_w_minus1_horizon": 5.07,
@@ -375,19 +459,7 @@
           "Delta_BIC_heuristic": 5.07
         }
       },
-      "H2b_diff_ray_p1": {
-        "chi2_SN": 1390.4,
-        "Delta_k_continuous_fitted": 0,
-        "Delta_chi2_vs_w_minus1_horizon": 3.07,
-        "Delta_AIC_continuous_k0": 3.07,
-        "Delta_BIC_continuous_k0": 3.07,
-        "heuristic_discrete_selection_sensitivity": {
-          "Delta_k_hyp_assumed": 1,
-          "Delta_AIC_heuristic": 5.07,
-          "Delta_BIC_heuristic": 10.44
-        }
-      },
-      "H2b_diff_ray_p2": {
+      "H2b_phenom_diff_ray_p2": {
         "chi2_SN": 1389.04,
         "Delta_k_continuous_fitted": 0,
         "Delta_chi2_vs_w_minus1_horizon": 1.71,
@@ -399,19 +471,7 @@
           "Delta_BIC_heuristic": 16.44
         }
       },
-      "H2b_int_mod_p1": {
-        "chi2_SN": 1389.32,
-        "Delta_k_continuous_fitted": 0,
-        "Delta_chi2_vs_w_minus1_horizon": 1.99,
-        "Delta_AIC_continuous_k0": 1.99,
-        "Delta_BIC_continuous_k0": 1.99,
-        "heuristic_discrete_selection_sensitivity": {
-          "Delta_k_hyp_assumed": 1,
-          "Delta_AIC_heuristic": 3.99,
-          "Delta_BIC_heuristic": 9.36
-        }
-      },
-      "H2b_int_mod_p2": {
+      "H2b_phenom_integrated_mod_p2": {
         "chi2_SN": 1387.77,
         "Delta_k_continuous_fitted": 0,
         "Delta_chi2_vs_w_minus1_horizon": 0.44,
@@ -423,6 +483,7 @@
           "Delta_BIC_heuristic": 15.17
         }
       }
-    }
+    },
+    "open_theoretical_frontier": "While the Ricci dust focusing source (3/2)*Omega_m0*(1+z)^5 follows from the null contraction of COV-DIR+QUMOND, both H1 (z(f_acc) = z_acc^hor) and the local two-phase transit-time rule 1/E_ray = (1-alpha_eff)/E_hor + alpha_eff/E_TS remain conditional hypotheses awaiting a unified non-perturbative inhomogeneous 4D metric solution of COV-DIR+QUMOND."
   }
 }
