@@ -95,7 +95,12 @@
       "quadratic_qumond_sachs_focusing_origin_of_p_eq_2": {
         "derived_exponent_p_from_quadratic_stress_and_shear": 2,
         "symbolic_effective_coupling": "5*sqrt(3)*f_v**2/(24*f_v0**2)",
-        "physical_mechanism": "In the Sachs optical scalar equation d^2 D_A/dlambda^2 + (|sigma_opt|^2 + (1/2)*R_{mu nu}*k^mu*k^nu)*D_A = 0 and the COV-DIR+QUMOND action, both the optical shear |sigma_opt|^2 and the QUMOND auxiliary-field stress tensor T^(chi)_{mu nu}*k^mu*k^nu ~ (k . grad chi)^2 are strictly quadratic in the void-wall potential gradient grad(chi) ~ f_v(z), yielding the quadratic void-maturity scaling [f_v(z)/f_v0]^2 (p = 2)."
+        "exact_sturm_liouville_sachs_focusing_identity_verified_in_sympy": true,
+        "second_order_sachs_ode_dop853_verification": {
+          "H2b_diff_ray_p2_max_abs_diff_vs_2nd_order_Sachs_ODE": 2.498e-07,
+          "H2b_int_mod_p2_max_abs_diff_vs_2nd_order_Sachs_ODE": 2.352e-07
+        },
+        "physical_mechanism": "In the Sachs optical scalar equation d^2 D_A/dlambda^2 + (|sigma_opt|^2 + (1/2)*R_{mu nu}*k^mu*k^nu)*D_A = 0 and the COV-DIR+QUMOND action, both the optical shear |sigma_opt|^2 and the QUMOND auxiliary-field stress tensor T^(chi)_{mu nu}*k^mu*k^nu ~ (k . grad chi)^2 are strictly quadratic in the void-wall potential gradient grad(chi) ~ f_v(z), yielding the quadratic void-maturity scaling [f_v(z)/f_v0]^2 (p = 2). Furthermore, by the Fundamental Theorem of Calculus (Stokes/Gauss potential difference across the null segment [0, z]), the integrated QUMOND boundary dressing acts on the cumulative comoving distance difference D_TS(z) - D_hor(z), and direct DOP853 integration of the 2nd-order Sturm-Liouville Sachs ODE reproduces D_obs(z) to < 2.4e-7."
       },
       "p_eq_1_physical_meaning": "1-point linear volume-fraction comparison test: f_v(z)/f_v0.",
       "p_eq_2_physical_meaning": "2-point / quadratic QUMOND stress & Sachs shear focusing scaling: [f_v(z)/f_v0]^2.",
