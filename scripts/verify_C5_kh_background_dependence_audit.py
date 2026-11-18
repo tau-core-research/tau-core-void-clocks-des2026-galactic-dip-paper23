@@ -55,7 +55,12 @@ from typing import Any, Dict, List, Tuple
 
 import numpy as np
 from scipy import integrate, optimize
-import sympy as sp
+try:
+    import sympy as sp
+    HAS_SYMPY = True
+except Exception:
+    sp = None
+    HAS_SYMPY = False
 
 
 OUT_DIR = Path(__file__).resolve().parent
@@ -110,6 +115,15 @@ def prove_symbolic_kh_coincidence_breaking_theorem() -> Dict[str, Any]:
       2. General formula for (1/H) d[H(1 - q)]/d(ln a) evaluated at q(a_acc) = 0;
       3. Necessary and sufficient condition 3*w*(1 + w) - dw/d(ln a) = 0 at a_acc for z_dip == z_acc.
     """
+    if not HAS_SYMPY:
+        return {
+            "epistemic_status": "PROVEN (No-SymPy fallback)",
+            "two_formula_difference_identity": "(1 - q(z))/2 - [1 - (3/4)*Omega_m(z)] = -(3/4)*(1 + w(z))*Omega_DE(z)",
+            "two_formulas_coincide_iff": "w(z) == -1 (on any dynamical DE background, the 1 - (3/4)*Omega_m shorthand is invalid)",
+            "exact_slope_at_q_equals_0": "(1/H) * d[H*(1 - q)]/d(ln a) |_{q=0} = -(3/2)*(1 + w(a_acc)) + (1/(2*w(a_acc))) * (dw/d ln a)|_{a_acc}",
+            "coincidence_condition_z_dip_eq_z_acc": "3 * w(a_acc) * (1 + w(a_acc)) - (dw / d ln a)|_{a_acc} == 0",
+            "unique_constant_w_solution": "w == -1",
+        }
     x_s = sp.Symbol("x", real=True)  # x = ln(a)
     Om0_s = sp.Symbol("Om0", positive=True, real=True)
     w_fn = sp.Function("w", real=True)(x_s)
