@@ -4,6 +4,7 @@
     "live_43_jwst_hst_disks_audit": {
       "source_csv": "df1_z09_jwst_hst_mancerapina2025_43disks.csv",
       "n_galaxies": 43,
+      "observable_type": "Catalog summary-statistic evaluation at r_eval = 2 R_eff with Tacconi+20 gas scaling and error propagation",
       "z_range": [
         0.787,
         1.03
@@ -78,144 +79,294 @@
     ]
   },
   "proposition_3_conditional_optical_hypotheses_H2_and_2D_cpl_audit": {
-    "status": "CONDITIONAL OPTICAL HYPOTHESES (H2a & H2b) \u2014 FULL 2D (w0, wa) & REAL PANTHEON+ AUDIT",
+    "status": "CONDITIONAL OPTICAL HYPOTHESES (H2a & H2b) \u2014 FULL 2D (w0, wa), MODEL-SELECTION PENALTY & REAL PANTHEON+ AUDIT",
     "alpha_ocsr_locked": 0.36084392,
     "dE_TS_dz_at_z0_symbolic": "3*(8*f0**4 + 13*f0**3 - 6*f0**2 + 4*f0 + 8)/(16*f0**4 + 8*f0**3 + 33*f0**2 + 8*f0 + 16)",
     "dE_TS_dz_at_z0_numeric": 0.959784,
     "dE_hor_dz_at_z0_numeric": 0.47295,
     "exact_analytical_w0_app_at_z0": -0.828956,
+    "physical_interpretation_and_model_selection_accounting": {
+      "p_eq_1_physical_meaning": "1-point local volume-fraction weighting: photon beam samples local void fraction f_v(z)/f_v0 at redshift z.",
+      "p_eq_2_physical_meaning": "2-point emitter-observer / quadratic susceptibility weighting: joint void-clock dressing across emitter and observer scales as [f_v(z)/f_v0]^2.",
+      "model_selection_dof_accounting": "Because choosing p in {1, 2} and differential-ray vs. integrated-distance dressing is not yet derived from the 4D COV-DIR+QUMOND Sachs optical scalar equations, we assign an explicit hypothesis-selection penalty Delta_k_hyp in {1, 2} when comparing against baseline LCDM on Pantheon+."
+    },
     "cpl_fits_and_2D_mahalanobis_comparison": {
       "unweighted_pure_Timescape": {
         "w0_apparent": -0.493,
         "wa_apparent": -0.5255,
+        "effective_hypothesis_selection_dof_Delta_k_hyp": 0,
         "synthetic_curve_cpl_approx_rms_mmag": 0.706,
-        "vs_DES2026_DESI_CMB_2D_at_rho_minus0p85": {
-          "delta_chi2_2D": 176.637,
-          "equiv_2dof_sigma": 13.078,
+        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 176.637,
+          "equiv_2dof_sigma_at_rho_minus0p85": 13.078,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            73.851,
+            259.828
+          ],
           "1D_w0_tension_sigma": 6.54,
-          "1D_wa_tension_sigma": 0.536
+          "1D_wa_tension_sigma_sym": 0.536,
+          "asymmetric_upper_error_check_sig_wa_0p21": {
+            "delta_chi2_2D": 174.961,
+            "equiv_2dof_sigma": 13.014,
+            "1D_wa_tension_sigma_upper": 0.498
+          }
         },
-        "vs_PantheonPlus_DESI_CMB_2D_at_rho_minus0p85": {
-          "delta_chi2_2D": 114.356,
-          "equiv_2dof_sigma": 10.45,
-          "1D_w0_tension_sigma": 6.618,
-          "1D_wa_tension_sigma": 1.201
+        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 113.915,
+          "equiv_2dof_sigma_at_rho_minus0p85": 10.429,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            55.598,
+            162.195
+          ],
+          "1D_w0_tension_sigma": 6.608,
+          "1D_wa_tension_sigma_sym": 1.202
         }
       },
       "H2a_constant_weight_alpha_OCSR": {
         "w0_apparent": -0.8251,
         "wa_apparent": -0.1006,
+        "effective_hypothesis_selection_dof_Delta_k_hyp": 0,
         "synthetic_curve_cpl_approx_rms_mmag": 0.16,
-        "vs_DES2026_DESI_CMB_2D_at_rho_minus0p85": {
-          "delta_chi2_2D": 24.902,
-          "equiv_2dof_sigma": 4.616,
+        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 24.902,
+          "equiv_2dof_sigma_at_rho_minus0p85": 4.616,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            11.013,
+            36.224
+          ],
           "1D_w0_tension_sigma": 0.102,
-          "1D_wa_tension_sigma": 2.715
+          "1D_wa_tension_sigma_sym": 2.715,
+          "asymmetric_upper_error_check_sig_wa_0p21": {
+            "delta_chi2_2D": 21.364,
+            "equiv_2dof_sigma": 4.234,
+            "1D_wa_tension_sigma_upper": 2.521
+          }
         },
-        "vs_PantheonPlus_DESI_CMB_2D_at_rho_minus0p85": {
-          "delta_chi2_2D": 8.436,
-          "equiv_2dof_sigma": 2.439,
-          "1D_w0_tension_sigma": 1.083,
-          "1D_wa_tension_sigma": 0.499
+        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 8.316,
+          "equiv_2dof_sigma_at_rho_minus0p85": 2.417,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            3.188,
+            12.426
+          ],
+          "1D_w0_tension_sigma": 1.073,
+          "1D_wa_tension_sigma_sym": 0.498
         }
       },
       "H2a_plus_24mmag_Dovekie_calibration": {
         "w0_apparent": -0.8212,
         "wa_apparent": -0.1906,
+        "effective_hypothesis_selection_dof_Delta_k_hyp": 1,
         "synthetic_curve_cpl_approx_rms_mmag": 0.261,
-        "vs_DES2026_DESI_CMB_2D_at_rho_minus0p85": {
-          "delta_chi2_2D": 17.968,
-          "equiv_2dof_sigma": 3.835,
+        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 17.968,
+          "equiv_2dof_sigma_at_rho_minus0p85": 3.835,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            7.833,
+            26.214
+          ],
           "1D_w0_tension_sigma": 0.024,
-          "1D_wa_tension_sigma": 2.253
+          "1D_wa_tension_sigma_sym": 2.253,
+          "asymmetric_upper_error_check_sig_wa_0p21": {
+            "delta_chi2_2D": 15.471,
+            "equiv_2dof_sigma": 3.517,
+            "1D_wa_tension_sigma_upper": 2.092
+          }
         },
-        "vs_PantheonPlus_DESI_CMB_2D_at_rho_minus0p85": {
-          "delta_chi2_2D": 5.798,
-          "equiv_2dof_sigma": 1.918,
-          "1D_w0_tension_sigma": 1.148,
-          "1D_wa_tension_sigma": 0.139
+        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 5.697,
+          "equiv_2dof_sigma_at_rho_minus0p85": 1.896,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            2.348,
+            8.404
+          ],
+          "1D_w0_tension_sigma": 1.138,
+          "1D_wa_tension_sigma_sym": 0.138
         }
       },
       "H2b_differential_ray_void_maturity_p1": {
         "w0_apparent": -0.8233,
         "wa_apparent": -0.2414,
+        "effective_hypothesis_selection_dof_Delta_k_hyp": 1,
         "synthetic_curve_cpl_approx_rms_mmag": 0.154,
-        "vs_DES2026_DESI_CMB_2D_at_rho_minus0p85": {
-          "delta_chi2_2D": 13.521,
-          "equiv_2dof_sigma": 3.249,
+        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 13.521,
+          "equiv_2dof_sigma_at_rho_minus0p85": 3.249,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            5.965,
+            19.679
+          ],
           "1D_w0_tension_sigma": 0.066,
-          "1D_wa_tension_sigma": 1.993
+          "1D_wa_tension_sigma_sym": 1.993,
+          "asymmetric_upper_error_check_sig_wa_0p21": {
+            "delta_chi2_2D": 11.607,
+            "equiv_2dof_sigma": 2.966,
+            "1D_wa_tension_sigma_upper": 1.85
+          }
         },
-        "vs_PantheonPlus_DESI_CMB_2D_at_rho_minus0p85": {
-          "delta_chi2_2D": 4.042,
-          "equiv_2dof_sigma": 1.504,
-          "1D_w0_tension_sigma": 1.113,
-          "1D_wa_tension_sigma": 0.064
+        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 3.959,
+          "equiv_2dof_sigma_at_rho_minus0p85": 1.483,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            1.773,
+            5.744
+          ],
+          "1D_w0_tension_sigma": 1.103,
+          "1D_wa_tension_sigma_sym": 0.066
         }
       },
       "H2b_differential_ray_void_maturity_p2": {
         "w0_apparent": -0.8256,
         "wa_apparent": -0.3399,
+        "effective_hypothesis_selection_dof_Delta_k_hyp": 2,
         "synthetic_curve_cpl_approx_rms_mmag": 0.089,
-        "vs_DES2026_DESI_CMB_2D_at_rho_minus0p85": {
-          "delta_chi2_2D": 7.0,
-          "equiv_2dof_sigma": 2.168,
+        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 7.0,
+          "equiv_2dof_sigma_at_rho_minus0p85": 2.168,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            3.165,
+            10.136
+          ],
           "1D_w0_tension_sigma": 0.112,
-          "1D_wa_tension_sigma": 1.488
+          "1D_wa_tension_sigma_sym": 1.488,
+          "asymmetric_upper_error_check_sig_wa_0p21": {
+            "delta_chi2_2D": 5.974,
+            "equiv_2dof_sigma": 1.956,
+            "1D_wa_tension_sigma_upper": 1.381
+          }
         },
-        "vs_PantheonPlus_DESI_CMB_2D_at_rho_minus0p85": {
-          "delta_chi2_2D": 1.903,
-          "equiv_2dof_sigma": 0.867,
-          "1D_w0_tension_sigma": 1.075,
-          "1D_wa_tension_sigma": 0.458
+        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 1.85,
+          "equiv_2dof_sigma_at_rho_minus0p85": 0.848,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            1.185,
+            2.444
+          ],
+          "1D_w0_tension_sigma": 1.065,
+          "1D_wa_tension_sigma_sym": 0.46
         }
       },
       "H2b_integrated_distance_void_maturity_p1": {
         "w0_apparent": -0.8116,
         "wa_apparent": -0.399,
+        "effective_hypothesis_selection_dof_Delta_k_hyp": 1,
         "synthetic_curve_cpl_approx_rms_mmag": 0.394,
-        "vs_DES2026_DESI_CMB_2D_at_rho_minus0p85": {
-          "delta_chi2_2D": 6.378,
-          "equiv_2dof_sigma": 2.041,
+        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 6.378,
+          "equiv_2dof_sigma_at_rho_minus0p85": 2.041,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            2.61,
+            9.42
+          ],
           "1D_w0_tension_sigma": 0.168,
-          "1D_wa_tension_sigma": 1.185
+          "1D_wa_tension_sigma_sym": 1.185,
+          "asymmetric_upper_error_check_sig_wa_0p21": {
+            "delta_chi2_2D": 5.594,
+            "equiv_2dof_sigma": 1.874,
+            "1D_wa_tension_sigma_upper": 1.1
+          }
         },
-        "vs_PantheonPlus_DESI_CMB_2D_at_rho_minus0p85": {
-          "delta_chi2_2D": 2.339,
-          "equiv_2dof_sigma": 1.014,
-          "1D_w0_tension_sigma": 1.308,
-          "1D_wa_tension_sigma": 0.695
+        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 2.284,
+          "equiv_2dof_sigma_at_rho_minus0p85": 0.996,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            1.696,
+            2.861
+          ],
+          "1D_w0_tension_sigma": 1.298,
+          "1D_wa_tension_sigma_sym": 0.696
         }
       },
       "H2b_integrated_distance_void_maturity_p2": {
         "w0_apparent": -0.8122,
         "wa_apparent": -0.5717,
+        "effective_hypothesis_selection_dof_Delta_k_hyp": 2,
         "synthetic_curve_cpl_approx_rms_mmag": 0.354,
-        "vs_DES2026_DESI_CMB_2D_at_rho_minus0p85": {
-          "delta_chi2_2D": 0.696,
-          "equiv_2dof_sigma": 0.377,
+        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 0.696,
+          "equiv_2dof_sigma_at_rho_minus0p85": 0.377,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            0.265,
+            1.04
+          ],
           "1D_w0_tension_sigma": 0.156,
-          "1D_wa_tension_sigma": 0.299
+          "1D_wa_tension_sigma_sym": 0.299,
+          "asymmetric_upper_error_check_sig_wa_0p21": {
+            "delta_chi2_2D": 0.631,
+            "equiv_2dof_sigma": 0.346,
+            "1D_wa_tension_sigma_upper": 0.278
+          }
         },
-        "vs_PantheonPlus_DESI_CMB_2D_at_rho_minus0p85": {
-          "delta_chi2_2D": 1.972,
-          "equiv_2dof_sigma": 0.891,
-          "1D_w0_tension_sigma": 1.298,
-          "1D_wa_tension_sigma": 1.386
+        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
+          "delta_chi2_2D_at_rho_minus0p85": 1.966,
+          "equiv_2dof_sigma_at_rho_minus0p85": 0.889,
+          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
+            2.248,
+            1.932
+          ],
+          "1D_w0_tension_sigma": 1.288,
+          "1D_wa_tension_sigma_sym": 1.387
         }
       }
     },
-    "real_pantheon_plus_1580_sne_chi2_audit": {
+    "real_pantheon_plus_1580_sne_chi2_and_aic_bic_audit": {
       "n_supernovae": 1580,
-      "w_minus1_horizon_D_hor": 1387.33,
-      "DES_2026_CPL_w0_minus0p82_wa_minus0p63": 1387.3,
-      "unweighted_pure_Timescape_D_TS": 1470.99,
-      "H2a_const_alpha_OCSR": 1392.4,
-      "H2b_diff_ray_p1": 1390.4,
-      "H2b_diff_ray_p2": 1389.04,
-      "H2b_int_mod_p1": 1389.32,
-      "H2b_int_mod_p2": 1387.77
-    },
-    "theoretical_limitation_note": "Hypotheses H2a and H2b are conditional split-beam optical propagation rules. A first-principles derivation from the 4D COV-DIR+QUMOND metric requires integrating the Sachs optical scalar / Dyer-Roeder focusing equations across an explicit Swiss-cheese or Buchert void-wall metric realization."
+      "w_minus1_horizon_D_hor": {
+        "chi2_SN": 1387.33,
+        "Delta_k_hyp": 0,
+        "Delta_chi2_vs_w_minus1_horizon": -0.0,
+        "Delta_AIC_with_k_hyp_penalty": -0.0,
+        "Delta_BIC_with_k_hyp_penalty": -0.0
+      },
+      "DES_2026_CPL_w0_minus0p82_wa_minus0p63": {
+        "chi2_SN": 1387.3,
+        "Delta_k_hyp": 2,
+        "Delta_chi2_vs_w_minus1_horizon": -0.03,
+        "Delta_AIC_with_k_hyp_penalty": 3.97,
+        "Delta_BIC_with_k_hyp_penalty": 14.7
+      },
+      "unweighted_pure_Timescape_D_TS": {
+        "chi2_SN": 1470.99,
+        "Delta_k_hyp": 0,
+        "Delta_chi2_vs_w_minus1_horizon": 83.66,
+        "Delta_AIC_with_k_hyp_penalty": 83.66,
+        "Delta_BIC_with_k_hyp_penalty": 83.66
+      },
+      "H2a_const_alpha_OCSR": {
+        "chi2_SN": 1392.4,
+        "Delta_k_hyp": 0,
+        "Delta_chi2_vs_w_minus1_horizon": 5.07,
+        "Delta_AIC_with_k_hyp_penalty": 5.07,
+        "Delta_BIC_with_k_hyp_penalty": 5.07
+      },
+      "H2b_diff_ray_p1": {
+        "chi2_SN": 1390.4,
+        "Delta_k_hyp": 1,
+        "Delta_chi2_vs_w_minus1_horizon": 3.07,
+        "Delta_AIC_with_k_hyp_penalty": 5.07,
+        "Delta_BIC_with_k_hyp_penalty": 10.44
+      },
+      "H2b_diff_ray_p2": {
+        "chi2_SN": 1389.04,
+        "Delta_k_hyp": 2,
+        "Delta_chi2_vs_w_minus1_horizon": 1.71,
+        "Delta_AIC_with_k_hyp_penalty": 5.71,
+        "Delta_BIC_with_k_hyp_penalty": 16.44
+      },
+      "H2b_int_mod_p1": {
+        "chi2_SN": 1389.32,
+        "Delta_k_hyp": 1,
+        "Delta_chi2_vs_w_minus1_horizon": 1.99,
+        "Delta_AIC_with_k_hyp_penalty": 3.99,
+        "Delta_BIC_with_k_hyp_penalty": 9.36
+      },
+      "H2b_int_mod_p2": {
+        "chi2_SN": 1387.77,
+        "Delta_k_hyp": 2,
+        "Delta_chi2_vs_w_minus1_horizon": 0.44,
+        "Delta_AIC_with_k_hyp_penalty": 4.44,
+        "Delta_BIC_with_k_hyp_penalty": 15.17
+      }
+    }
   }
 }

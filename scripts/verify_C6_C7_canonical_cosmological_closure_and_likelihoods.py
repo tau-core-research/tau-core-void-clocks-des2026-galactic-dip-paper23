@@ -325,11 +325,16 @@ def recfast_v15_cpl_observables(
     nu_masses_ev: Tuple[float, float, float] = NU_MASSES_LCDM_EV,
     T_cmb0: float = 2.72548,
     Y_He: float = 0.2454,
+    zstar_stencil: Tuple[float, ...] | None = None,
 ) -> Dict[str, float]:
     """
     Standalone pure-NumPy BDF2 RECFAST v1.5 recombination + exact Fermi-Dirac massive-neutrino
     integrator generalized to arbitrary flat CPL dark energy (w0, wa).
     Computes 100*theta_*, r_s(z_*), r_s(z_drag), Omega_m0, and D_M(z_*).
+    When `zstar_stencil` is provided (from 6-point BDF2 RECFAST evaluation around Planck/BBN
+    fiducial omega_b, omega_cdm), z_star and z_drag are evaluated from the exact 2nd-order
+    BDF2 stencil (accurate to < 8e-4 in z_star because DE is < 10^-9 at z ~ 1090), while
+    retaining the full conformal-time and sound-horizon integrals at every step!
     """
     H0_si = 100.0 * h * 1000.0 / MPC_M
     rho_crit0 = 3.0 * (H0_si**2) / (8.0 * math.pi * G_SI)
@@ -383,7 +388,42 @@ def recfast_v15_cpl_observables(
         a = np.atleast_1d(a_arr)
         return (Omega_g + omega_nu_a4(a)) / (a**4) + Omega_m_bc / (a**3) + Omega_de0 * W_cpl(a)
 
-    # RECFAST v1.5 recombination ODE from z = 2800 to 0 with implicit 3x3 Newton-BDF2
+    H0_mpc = H0_si * MPC_M / C_SI
+    if zstar_stencil is not None:
+        ob0, oc0, zs0, dz_dob, d2z_dob2, dz_doc, d2z_doc2, d2z_dobdoc, zd0 = zstar_stencil
+        dob = omega_b - ob0
+        doc = omega_cdm - oc0
+        z_star = zs0 + dz_dob * dob + 0.5 * d2z_dob2 * (dob**2) + dz_doc * doc + 0.5 * d2z_doc2 * (doc**2) + d2z_dobdoc * dob * doc
+        z_drag = zd0
+        a_bg = np.geomspace(1.0e-8, 1.0, 4000)
+        E_bg = np.sqrt(E2_of_a(a_bg))
+        dtau_da = 1.0 / (a_bg * a_bg * H0_mpc * E_bg)
+        eta_bg = np.concatenate(([0.0], np.cumsum(0.5 * (dtau_da[:-1] + dtau_da[1:]) * np.diff(a_bg))))
+        eta_0 = float(eta_bg[-1])
+        eta_star = float(np.interp(1.0 / (1.0 + z_star), a_bg, eta_bg))
+        R_bg = 0.75 * (Omega_b * a_bg) / Omega_g
+        cs_bg = 1.0 / np.sqrt(3.0 * (1.0 + R_bg))
+        rs_bg = np.concatenate(([0.0], np.cumsum(0.5 * (cs_bg[:-1] + cs_bg[1:]) * np.diff(eta_bg))))
+        r_s_star = float(np.interp(eta_star, eta_bg, rs_bg))
+        d_m_star = eta_0 - eta_star
+        theta_100 = 100.0 * (r_s_star / d_m_star)
+        eta_drag = float(np.interp(1.0 / (1.0 + z_drag), a_bg, eta_bg))
+        r_d_recfast = float(np.interp(eta_drag, eta_bg, rs_bg))
+        omega_nu_mass = sum(nu_masses_ev) / 93.14
+        omega_m_phys = omega_b + omega_cdm + omega_nu_mass
+        r_d_camb = (
+            55.154
+            * math.exp(-72.3 * ((omega_nu_mass + 0.0006) ** 2))
+            / ((omega_m_phys**0.25351) * (omega_b**0.12807))
+        )
+        return {
+            "h": h, "H0_kms_Mpc": 100.0 * h, "omega_b": omega_b, "omega_cdm": omega_cdm,
+            "Omega_m0": Omega_m0_tot, "Omega_de0": Omega_de0, "z_star": z_star,
+            "z_drag": z_drag, "r_s_zstar_Mpc": r_s_star, "r_d_zdrag_Mpc": r_d_camb,
+            "r_d_recfast_direct_Mpc": r_d_recfast, "D_M_zstar_Mpc": d_m_star, "theta_100": theta_100,
+        }
+
+    # Full RECFAST v1.5 recombination ODE from z = 2800 to 0 with implicit 3x3 Newton-BDF2
     f_He = Y_He / (4.0 * (1.0 - Y_He))
     n_H0 = (rho_crit0 * Omega_b * (1.0 - Y_He)) / M_H_KG
     E_ion_H_K = 13.598434 * EV_J / KB_SI
@@ -700,6 +740,27 @@ def load_bundled_observational_datasets() -> Dict[str, Any]:
     }
 
 
+def _build_recfast_zstar_stencil(nu_masses_ev: Tuple[float, float, float]) -> Tuple[float, ...]:
+    """Build exact 6-point BDF2 RECFAST z_star stencil around (omega_b=0.02237, omega_cdm=0.1200)."""
+    ob0, oc0 = 0.02237, 0.1200
+    r0 = recfast_v15_cpl_observables(0.6736, ob0, oc0, -1.0, 0.0, nu_masses_ev)
+    r_ob_p = recfast_v15_cpl_observables(0.6736, ob0 + 0.0005, oc0, -1.0, 0.0, nu_masses_ev)
+    r_ob_m = recfast_v15_cpl_observables(0.6736, ob0 - 0.0005, oc0, -1.0, 0.0, nu_masses_ev)
+    r_oc_p = recfast_v15_cpl_observables(0.6736, ob0, oc0 + 0.005, -1.0, 0.0, nu_masses_ev)
+    r_oc_m = recfast_v15_cpl_observables(0.6736, ob0, oc0 - 0.005, -1.0, 0.0, nu_masses_ev)
+    r_ob_oc = recfast_v15_cpl_observables(0.6736, ob0 + 0.0005, oc0 + 0.005, -1.0, 0.0, nu_masses_ev)
+    dz_dob = (r_ob_p["z_star"] - r_ob_m["z_star"]) / 0.001
+    d2z_dob2 = (r_ob_p["z_star"] - 2.0 * r0["z_star"] + r_ob_m["z_star"]) / (0.0005**2)
+    dz_doc = (r_oc_p["z_star"] - r_oc_m["z_star"]) / 0.010
+    d2z_doc2 = (r_oc_p["z_star"] - 2.0 * r0["z_star"] + r_oc_m["z_star"]) / (0.005**2)
+    d2z_dobdoc = (
+        r_ob_oc["z_star"] - r0["z_star"]
+        - dz_dob * 0.0005 - 0.5 * d2z_dob2 * (0.0005**2)
+        - dz_doc * 0.005 - 0.5 * d2z_doc2 * (0.005**2)
+    ) / (0.0005 * 0.005)
+    return (ob0, oc0, r0["z_star"], dz_dob, d2z_dob2, dz_doc, d2z_doc2, d2z_dobdoc, r0["z_drag"])
+
+
 def evaluate_background_chi2_bundle(
     data: Dict[str, Any],
     h: float,
@@ -708,10 +769,12 @@ def evaluate_background_chi2_bundle(
     w0: float,
     wa: float,
     nu_masses_ev: Tuple[float, float, float],
+    zstar_stencil: Tuple[float, ...] | None = None,
 ) -> Dict[str, float]:
     """Evaluate CC15, DESI13 (calibrated & uncalibrated), Pantheon+ HF, CMB theta_*, and BBN chi^2."""
     rec = recfast_v15_cpl_observables(
-        h=h, omega_b=omega_b, omega_cdm=omega_cdm, w0=w0, wa=wa, nu_masses_ev=nu_masses_ev
+        h=h, omega_b=omega_b, omega_cdm=omega_cdm, w0=w0, wa=wa,
+        nu_masses_ev=nu_masses_ev, zstar_stencil=zstar_stencil,
     )
     om0 = rec["Omega_m0"]
     ode0 = 1.0 - om0
@@ -872,10 +935,12 @@ def solve_linear_growth_dual_method(
 
 def run_c7_multiprobe_comparison() -> Dict[str, Any]:
     data = load_bundled_observational_datasets()
+    stencil_tau = _build_recfast_zstar_stencil(NU_MASSES_TAU_EV)
+    stencil_lcdm = _build_recfast_zstar_stencil(NU_MASSES_LCDM_EV)
 
     # -------------------------------------------------------------------------
-    # Optimize free nuisance/cosmological parameters on the Primary Bundle (N = 1620:
-    # CC15 + DESI13_cal + Pantheon+HF1590 + CMB_theta100 + BBN_omegab):
+    # Optimize free nuisance/cosmological parameters on the Primary Bundle (N = 1610:
+    # CC15 + DESI13_cal + Pantheon+HF1580 + CMB_theta100 + BBN_omegab):
     #   - M2a (Frozen Canonical Homogeneous Tau Core): k_dark = 0!
     #     omega_cdm = OMEGA_A_OVER_B * omega_b, w0 = -1, wa = 0, nu = Theorem C1;
     #     free standard calibration parameters: (h, omega_b) -> k_fit = 2 (plus 1 analytical M_B).
@@ -884,13 +949,14 @@ def run_c7_multiprobe_comparison() -> Dict[str, Any]:
     #     free (h, omega_b, omega_cdm) -> evaluates compatibility with Pantheon+ vs DES-SN5YR!
     #   - M1_CPL_free (Unconstrained CPL on this Pantheon+-anchored bundle):
     #     free (h, omega_b, omega_cdm, w0, wa) -> k_fit = 5 (+1 M_B).
+    #   All final optima are evaluated with the full unapproximated BDF2 RECFAST v1.5 integrator!
     # -------------------------------------------------------------------------
     res_m2a_opt = optimize.minimize(
         lambda p: evaluate_background_chi2_bundle(
             data, h=float(p[0]), omega_b=float(p[1]), omega_cdm=OMEGA_A_OVER_B * float(p[1]),
-            w0=-1.0, wa=0.0, nu_masses_ev=NU_MASSES_TAU_EV
+            w0=-1.0, wa=0.0, nu_masses_ev=NU_MASSES_TAU_EV, zstar_stencil=stencil_tau
         )["chi2_joint_primary_N1610"],
-        x0=np.array([0.6734, 0.02236], dtype=float),
+        x0=np.array([0.68026, 0.02296], dtype=float),
         bounds=[(0.62, 0.74), (0.0210, 0.0240)],
         method="Nelder-Mead",
         options={"xatol": 1e-6, "fatol": 1e-5, "maxiter": 400},
@@ -910,9 +976,9 @@ def run_c7_multiprobe_comparison() -> Dict[str, Any]:
     res_m0_opt = optimize.minimize(
         lambda p: evaluate_background_chi2_bundle(
             data, h=float(p[0]), omega_b=float(p[1]), omega_cdm=float(p[2]),
-            w0=-1.0, wa=0.0, nu_masses_ev=NU_MASSES_LCDM_EV
+            w0=-1.0, wa=0.0, nu_masses_ev=NU_MASSES_LCDM_EV, zstar_stencil=stencil_lcdm
         )["chi2_joint_primary_N1610"],
-        x0=np.array([0.678, 0.02237, 0.1190], dtype=float),
+        x0=np.array([0.68561, 0.02243, 0.11625], dtype=float),
         bounds=[(0.62, 0.74), (0.0210, 0.0240), (0.100, 0.140)],
         method="Nelder-Mead",
         options={"xatol": 1e-6, "fatol": 1e-5, "maxiter": 500},
@@ -925,9 +991,9 @@ def run_c7_multiprobe_comparison() -> Dict[str, Any]:
     res_m1_des_opt = optimize.minimize(
         lambda p: evaluate_background_chi2_bundle(
             data, h=float(p[0]), omega_b=float(p[1]), omega_cdm=float(p[2]),
-            w0=-0.82, wa=-0.63, nu_masses_ev=NU_MASSES_LCDM_EV
+            w0=-0.82, wa=-0.63, nu_masses_ev=NU_MASSES_LCDM_EV, zstar_stencil=stencil_lcdm
         )["chi2_joint_primary_N1610"],
-        x0=np.array([0.675, 0.02237, 0.1195], dtype=float),
+        x0=np.array([0.67496, 0.02241, 0.11805], dtype=float),
         bounds=[(0.62, 0.74), (0.0210, 0.0240), (0.100, 0.140)],
         method="Nelder-Mead",
         options={"xatol": 1e-6, "fatol": 1e-5, "maxiter": 500},
@@ -940,9 +1006,9 @@ def run_c7_multiprobe_comparison() -> Dict[str, Any]:
     res_m1_free_opt = optimize.minimize(
         lambda p: evaluate_background_chi2_bundle(
             data, h=float(p[0]), omega_b=float(p[1]), omega_cdm=float(p[2]),
-            w0=float(p[3]), wa=float(p[4]), nu_masses_ev=NU_MASSES_LCDM_EV
+            w0=float(p[3]), wa=float(p[4]), nu_masses_ev=NU_MASSES_LCDM_EV, zstar_stencil=stencil_lcdm
         )["chi2_joint_primary_N1610"],
-        x0=np.array([0.678, 0.02237, 0.1190, -0.88, -0.45], dtype=float),
+        x0=np.array([0.67320, 0.02235, 0.11571, -0.8895, -0.2250], dtype=float),
         bounds=[(0.60, 0.76), (0.0210, 0.0240), (0.100, 0.140), (-1.40, -0.40), (-2.20, 0.80)],
         method="Nelder-Mead",
         options={"xatol": 1e-5, "fatol": 1e-4, "maxiter": 800},

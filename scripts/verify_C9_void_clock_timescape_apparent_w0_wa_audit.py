@@ -2,7 +2,7 @@
 """
 verify_C9_void_clock_timescape_apparent_w0_wa_audit.py
 ======================================================
-Standalone, Zero-Hardcoded-Data Verification Audit for Sub4 (Paper 23):
+Standalone, Zero-Hardcoded-Data Verification Audit for Sub4 (Paper 23, v3):
   "Kodama-Hayward Galactic Acceleration Trough vs. DES Year 6 Dynamical Dark Energy:
    An Exact Background-Dependence Theorem and Conditional Void-Clock Optical Hypotheses"
 
@@ -10,50 +10,43 @@ References Audited:
   1. Lane, Seifert, Ridden-Harper & Wiltshire, MNRAS 536, 1752-1777 (2025) [arXiv:2312.00409]
   2. Seifert, Lane, Galoppo, Ridden-Harper & Wiltshire, MNRAS Letters 537, L55 (2025) [arXiv:2412.15143]
   3. Efstathiou, MNRAS 538, 875 (2025) [arXiv:2408.07175] & DES-Dovekie (Popovic et al. 2025-2026)
-  4. DES Collaboration Year 6 + DESI DR2 + CMB [arXiv:2605.27221] (w0 = -0.82 +/- 0.05, wa = -0.63)
+  4. DES Collaboration Year 6 + DESI DR2 + CMB [arXiv:2605.27221] (w0 = -0.82 +/- 0.05, wa = -0.63^{+0.21}_{-0.18})
   5. Mancera Pina et al. (2025) 43 JWST+HST disk galaxies (bundled in data/df1_z09_jwst_hst_mancerapina2025_43disks.csv)
 
-Epistemic Structure & Live Reproducibility (Referee Revision v2):
+Epistemic Structure & Live Reproducibility (Referee Revision v3):
   - Theorem 1 [PROVEN]:
       * Exact Coincidence-Breaking Identity under general w(a) for
           a_0^KH(z) = (5*sqrt(3)/96) * c * H(z) * |1 - q(z)|,
         and background-independent invariant I_KH(z) = 5*sqrt(3)/96 = 0.0902110.
-      * Live rotation-curve chi^2 computation from bundled raw CSV
-        `data/df1_z09_jwst_hst_mancerapina2025_43disks.csv` (43 JWST/HST disks, 0.79 <= z <= 1.03):
+      * Live rotation-curve summary-statistic chi^2 computation from bundled raw CSV
+        `data/df1_z09_jwst_hst_mancerapina2025_43disks.csv` (43 JWST/HST disks, 0.787 <= z <= 1.03,
+        using catalog flat circular velocities v_circ_flat_kms at r_eval = 2 R_eff, stellar mass,
+        and Tacconi+20 gas-mass scaling):
           - w_hor = -1 apparent-horizon background (with -6.15% dip at z_dip = 0.6316): chi^2 = 106.42
           - DES-CPL (-0.82, -0.63) z=0-anchored ratio (1.1427 at z=0.6316):            chi^2 = 121.64 (Delta_chi^2 = +15.22)
           - DES-CPL (-0.82, -0.63) direct unanchored absolute formula:                 chi^2 = 110.66 (Delta_chi^2 = +4.24,
-            accompanied by a -12.14% drop in local z=0 SPARC scale a_0^KH(0))
-          - Monotonic a_0(z) = a_0(0) * E(z) without |1-q(z)| factor:                  chi^2 = 148.03 (Delta_chi^2 = +41.61)
+            accompanied by a -12.11% drop in local z=0 SPARC scale a_0^KH(0))
+          - Monotonic a_0(z) = a_0(0) * E(z) without |1-q(z)| factor:                  chi^2 = 172.32 (Delta_chi^2 = +65.90)
   - Proposition 2 [PROVEN algebraically under Explicit Transition-Matching Hypothesis H1]:
       * In the Buchert-Wiltshire tracker, q_wall(f_v) = 0 has unique root f_acc = 0.58670773.
-      * Under Hypothesis H1 (matching the wall-frame acceleration onset z(f_acc) to the w_hor = -1
+      * Under Hypothesis H1 (matching wall-frame acceleration onset z(f_acc) to the w_hor = -1
         horizon inflection redshift z_acc^hor = (2*Omega_L0/Omega_m0)^(1/3) - 1 = 0.6315565 at
         Omega_m0 = 0.3153), the present void volume fraction is conditionally locked to
         f_v0 = 0.723358 (72.34%, clock boost gamma_0 = 1.361679).
-      * Full sensitivity table across Omega_m0 in [0.300, 0.330] (including Theorem C2's
-        standalone Omega_m0 = 0.315565 -> z_acc = 0.630889 -> f_v0 = 0.723260).
-  - Proposition 3 [CONDITIONAL Optical Split-Beam / Dyer-Roeder Hypotheses H2a & H2b + Full 2D (w0, wa) Audit]:
-      * Hypothesis H2a (Constant-weight integrated distance mixing D_obs = (1 - alpha_OCSR)*D_hor + alpha_OCSR*D_TS):
-          - Exact z -> 0 slope gives w_0^app(0) = -0.828956.
-          - Synthetic CPL curve-approximation over z in [0.02, 1.20] gives
-            (w_0^app, w_a^app) = (-0.8251, -0.1006) (curve-approximation RMS = 0.160 mmag).
-          - While w_0^app is 0.10 sigma from DES 2026's 1D marginal w_0 = -0.82 +/- 0.05,
-            its shallow w_a^app = -0.1006 is 2.71 sigma from DES 2026's 1D marginal w_a = -0.63 +/- 0.195,
-            yielding a 2D Gaussian Mahalanobis distance Delta_chi^2_2D = 24.92 (at rho = -0.85) against
-            DES Y6 + DESI + CMB, whereas it lies close to the Pantheon+ + DESI + CMB free CPL fit
-            (w_0 = -0.890, w_a = -0.225).
-      * Hypothesis H2b (Void-maturity-modulated coupling alpha_eff(z) = alpha_OCSR * [f_v(z)/f_v0]^p):
-          - Because voids grow from f_v(z >> 1) -> 0 to f_v0 = 0.7234 today with exact logarithmic slope
-            d(ln f_v)/dz|_{z=0} = 3*(f_v0^2 + f_v0 - 2)/(4*f_v0^2 + f_v0 + 4) = -0.331583,
-            weighting by evolving void maturity [f_v(z)/f_v0]^p leaves w_0^app ~ -0.82 invariant while
-            naturally steepening w_a^app:
-              * Differential ray integration (p=1): (w_0^app, w_a^app) = (-0.8233, -0.2415), Delta_chi^2_2D = 13.78
-              * Differential ray integration (p=2): (w_0^app, w_a^app) = (-0.8256, -0.3400), Delta_chi^2_2D = 7.45
-              * Integrated distance modulation (p=1): (w_0^app, w_a^app) = (-0.8116, -0.3991), Delta_chi^2_2D = 4.24
-              * Integrated distance modulation (p=2): (w_0^app, w_a^app) = (-0.8122, -0.5717), Delta_chi^2_2D = 0.17 (0.18 sigma 2D!)
-      * Direct evaluation on the real bundled N = 1,580 Pantheon+ Hubble-flow supernovae (full STAT+SYS
-        Cholesky covariance) + 13 DESI BAO + 15 Moresco Cosmic Chronometers!
+  - Proposition 3 [CONDITIONAL Optical Split-Beam Hypotheses H2a & H2b + Model-Selection Accounting]:
+      * Physical interpretation & model-selection penalty (Delta_k_hyp) of H2b:
+          - Local 1-point differential ray weighting (p=1): photon crosses local void volume fraction
+            f_v(z)/f_v0 at redshift z -> (w_0^app, w_a^app) = (-0.8233, -0.2414).
+          - Two-point emitter-observer / squared void-susceptibility weighting (p=2):
+            joint void-wall clock dressing scales as [f_v(z)/f_v0]^2 ->
+            differential ray: (-0.8256, -0.3399); integrated distance: (-0.8122, -0.5717).
+          - Because selecting p in {0, 1, 2} and differential vs. integrated dressing is not yet
+            derived from the 4D COV-DIR+QUMOND Sachs optical scalar equations, we explicitly penalize
+            H2b by Delta_k_hyp in {1, 2} effective model-selection degrees of freedom (+2 to +4 in AIC,
+            +7.37 to +14.74 in BIC on N=1,580 Pantheon+ supernovae).
+      * Full 2D (w0, wa) Gaussian & Asymmetric Split-Normal Mahalanobis scan across correlation
+        coefficients rho in [-0.60, -0.90] (explicitly noted as an approximate Gaussian compatibility
+        metric rather than the full non-Gaussian DES chains).
 """
 
 from __future__ import annotations
@@ -81,9 +74,8 @@ LN10 = math.log(10.0)
 
 def compute_live_43disks_chi2(csv_path: Path) -> Dict[str, Any]:
     """
-    Live computation of rotation-curve chi^2 across all 43 JWST/HST disk galaxies
+    Live computation of rotation-curve summary-statistic chi^2 across all 43 JWST/HST disk galaxies
     of Mancera Pina et al. (2025) from bundled `data/df1_z09_jwst_hst_mancerapina2025_43disks.csv`.
-    Zero hardcoded numbers!
     """
     rows = list(csv.DictReader(csv_path.open(encoding="utf-8")))
     assert len(rows) == 43, f"Expected 43 galaxies in {csv_path}, found {len(rows)}"
@@ -93,7 +85,6 @@ def compute_live_43disks_chi2(csv_path: Path) -> Dict[str, Any]:
     i_kh = 5.0 * math.sqrt(3.0) / 96.0
     h0_si = 67.36 * 1000.0 / MPC_M
 
-    # Exact z = 0 KH acceleration scale on w = -1 (Omega_m0 = 0.3153) vs DES-CPL (-0.82, -0.63):
     q0_lcdm = 0.5 * (0.3153 + (1.0 + 3.0 * (-1.0)) * 0.6847)
     q0_des = 0.5 * (0.3153 + (1.0 + 3.0 * (-0.82)) * 0.6847)
     a0_kh_0_lcdm = i_kh * C_SI * h0_si * abs(1.0 - q0_lcdm)
@@ -169,6 +160,7 @@ def compute_live_43disks_chi2(csv_path: Path) -> Dict[str, Any]:
     return {
         "source_csv": str(csv_path.name),
         "n_galaxies": len(rows),
+        "observable_type": "Catalog summary-statistic evaluation at r_eval = 2 R_eff with Tacconi+20 gas scaling and error propagation",
         "z_range": [min(float(r["z"]) for r in rows), max(float(r["z"]) for r in rows)],
         "a0_KH_0_w_minus1_m_s2": round(a0_kh_0_lcdm, 15),
         "a0_KH_0_DES_CPL_m_s2": round(a0_kh_0_des, 15),
@@ -183,22 +175,40 @@ def compute_live_43disks_chi2(csv_path: Path) -> Dict[str, Any]:
     }
 
 
-def compute_mahalanobis_2d(
-    w0_pred: float, wa_pred: float, w0_obs: float, wa_obs: float, sig0: float, siga: float, rho: float
-) -> Dict[str, float]:
-    """Compute 2D Gaussian Mahalanobis Delta_chi^2 and 2-dof equivalent sigma."""
-    cov = np.array([[sig0 * sig0, rho * sig0 * siga], [rho * sig0 * siga, siga * siga]], dtype=float)
-    cov_inv = np.linalg.inv(cov)
-    d = np.array([w0_pred - w0_obs, wa_pred - wa_obs], dtype=float)
-    dchi2 = float(d @ cov_inv @ d)
-    pval_2dof = math.exp(-0.5 * dchi2)
-    sig_2dof = float(stats.norm.isf(0.5 * max(pval_2dof, 1e-300)))
-    return {
-        "delta_chi2_2D": round(dchi2, 3),
-        "equiv_2dof_sigma": round(sig_2dof, 3),
+def compute_mahalanobis_2d_scan(
+    w0_pred: float, wa_pred: float, w0_obs: float, wa_obs: float, sig0: float, siga_sym: float, siga_upper: float | None = None
+) -> Dict[str, Any]:
+    """
+    Compute 2D Gaussian Mahalanobis Delta_chi^2 and 2-dof equivalent sigma at rho = -0.85,
+    plus full sensitivity range across rho in [-0.60, -0.90] and asymmetric upper error bar.
+    """
+    def _eval_one(s_a: float, rho: float) -> Tuple[float, float]:
+        cov = np.array([[sig0 * sig0, rho * sig0 * s_a], [rho * sig0 * s_a, s_a * s_a]], dtype=float)
+        cov_inv = np.linalg.inv(cov)
+        d = np.array([w0_pred - w0_obs, wa_pred - wa_obs], dtype=float)
+        dchi2 = float(d @ cov_inv @ d)
+        pval_2dof = math.exp(-0.5 * dchi2)
+        sig_2dof = float(stats.norm.isf(0.5 * max(pval_2dof, 1e-300)))
+        return round(dchi2, 3), round(sig_2dof, 3)
+
+    dchi2_85, sig_85 = _eval_one(siga_sym, -0.85)
+    dchi2_60, _ = _eval_one(siga_sym, -0.60)
+    dchi2_90, _ = _eval_one(siga_sym, -0.90)
+    out: Dict[str, Any] = {
+        "delta_chi2_2D_at_rho_minus0p85": dchi2_85,
+        "equiv_2dof_sigma_at_rho_minus0p85": sig_85,
+        "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [dchi2_60, dchi2_90],
         "1D_w0_tension_sigma": round(abs(w0_pred - w0_obs) / sig0, 3),
-        "1D_wa_tension_sigma": round(abs(wa_pred - wa_obs) / siga, 3),
+        "1D_wa_tension_sigma_sym": round(abs(wa_pred - wa_obs) / siga_sym, 3),
     }
+    if siga_upper is not None and wa_pred > wa_obs:
+        dchi2_up, sig_up = _eval_one(siga_upper, -0.85)
+        out["asymmetric_upper_error_check_sig_wa_0p21"] = {
+            "delta_chi2_2D": dchi2_up,
+            "equiv_2dof_sigma": sig_up,
+            "1D_wa_tension_sigma_upper": round(abs(wa_pred - wa_obs) / siga_upper, 3),
+        }
+    return out
 
 
 def run_c9_audit() -> Dict[str, Any]:
@@ -221,7 +231,6 @@ def run_c9_audit() -> Dict[str, Any]:
 
     dH_wall_dtau = sp.simplify(gamma_of_tbar * sp.diff(H_wall_of_tbar, t_bar))
     q_wall_f = sp.simplify((-1 - dH_wall_dtau / (H_wall_of_tbar ** 2)).subs(t_bar, tbar_sub))
-    q_bar_f = sp.simplify((-1 - sp.diff(H_bar_of_tbar, t_bar) / (H_bar_of_tbar ** 2)).subs(t_bar, tbar_sub))
 
     num_q, _ = sp.fraction(sp.together(q_wall_f))
     roots_q = [complex(r).real for r in sp.Poly(num_q, f).nroots() if r.is_real and 0 < float(r) < 1]
@@ -235,17 +244,14 @@ def run_c9_audit() -> Dict[str, Any]:
             return f0_val
         return float(optimize.brentq(lambda fv: z_of_f(fv, f0_val) - zv, 1e-7, 0.99999))
 
-    # Locked Tau Core constants:
     u_tau = math.sqrt(3.0) / 24.0
     alpha_ocsr = 5.0 * u_tau  # 5*sqrt(3)/24 = 0.3608439182
     omega_m0_tau = 0.3153
     omega_l0_tau = 1.0 - omega_m0_tau
     z_acc_tau = ((2.0 * omega_l0_tau) / omega_m0_tau) ** (1.0 / 3.0) - 1.0  # 0.6315565
 
-    # Solve for f_v0 under Transition-Matching Hypothesis H1: z_of_f(f_acc, f_v0) == z_acc_tau:
     f0_tau = float(optimize.brentq(lambda f0_v: z_of_f(f_acc, f0_v) - z_acc_tau, 0.5, 0.9))  # 0.7233584
 
-    # Sensitivity scan of f_v0 across Omega_m0 in [0.300, 0.330] (including Theorem C2 Omega_m0 = 0.315565):
     om_sensitivity: List[Dict[str, float]] = []
     for om_val in [0.300, 0.306, 0.310, 0.3153, 0.315565, 0.320, 0.330]:
         z_acc_v = ((2.0 * (1.0 - om_val)) / om_val) ** (1.0 / 3.0) - 1.0
@@ -267,9 +273,8 @@ def run_c9_audit() -> Dict[str, Any]:
     dD_dz_at_f0 = sp.simplify((dD_df / (-dz_df)).subs(f, f0))
     assert sp.simplify(dD_dz_at_f0 - 1) == 0
 
-    # Exact symbolic logarithmic slope of void fraction d(ln f_v)/dz at z = 0:
     dlnf_dz_at_z0_sym = sp.simplify((1 / dz_df.subs(f, f0)) / f0)
-    dlnf_dz_at_z0_val = float(dlnf_dz_at_z0_sym.subs(f0, f0_tau))  # -0.331583
+    dlnf_dz_at_z0_val = float(dlnf_dz_at_z0_sym.subs(f0, f0_tau))  # -0.331584
 
     def F_antideriv(fv: float) -> float:
         u = fv ** (1.0 / 3.0)
@@ -303,7 +308,6 @@ def run_c9_audit() -> Dict[str, Any]:
 
     # -------------------------------------------------------------------------
     # 3. CPL Curve-Approximation Fits & Full 2D (w0, wa) Covariance Audit
-    #    for Hypotheses H2a (constant weight) and H2b (void-maturity-modulated weight)
     # -------------------------------------------------------------------------
     z_sn = np.linspace(0.02, 1.20, 120)
 
@@ -317,12 +321,6 @@ def run_c9_audit() -> Dict[str, Any]:
         val, _ = integrate.quad(inv_E, 0.0, zv, epsabs=1e-10, epsrel=1e-10)
         return val
 
-    D_hor = np.array([H0_D_CPL(float(zv), omega_m0_tau, -1.0, 0.0) for zv in z_sn])
-    D_ts = np.array([H0_D_TS_closed(float(zv), f0_tau) for zv in z_sn])
-    fv_sn = np.array([f_of_z(float(zv), f0_tau) for zv in z_sn])
-
-    # Prebuild fine grid for differential line-of-sight integration:
-    #   H0 * dD_obs/dz = [1 - alpha_eff(z)] / E_hor(z) + alpha_eff(z) * d(H0 D_TS)/dz
     z_fine = np.linspace(0.0, 2.50, 2501)
     inv_e_hor_fine = 1.0 / np.sqrt(omega_m0_tau * ((1.0 + z_fine) ** 3) + omega_l0_tau)
     D_hor_fine = integrate.cumulative_trapezoid(inv_e_hor_fine, z_fine, initial=0.0)
@@ -349,7 +347,7 @@ def run_c9_audit() -> Dict[str, Any]:
             return (1.0 - w_eff) * D_hor_fine + w_eff * D_ts_fine
         raise ValueError(mode_name)
 
-    def fit_cpl_and_2d_stats(D_fine_arr: np.ndarray, extra_cal_mmag: float = 0.0) -> Dict[str, Any]:
+    def fit_cpl_and_2d_stats(D_fine_arr: np.ndarray, extra_cal_mmag: float = 0.0, k_hyp_penalty: int = 0) -> Dict[str, Any]:
         D_at_sn = np.interp(z_sn, z_fine, D_fine_arr)
         mu_target = 5.0 * np.log10((1.0 + z_sn) * D_at_sn) + (extra_cal_mmag / 1000.0) * ((z_sn / (1.0 + z_sn)) ** 2)
 
@@ -364,28 +362,27 @@ def run_c9_audit() -> Dict[str, Any]:
         w0_f, wa_f = round(float(r.x[0]), 4), round(float(r.x[1]), 4)
         rms_mmag = round(math.sqrt(r.fun / len(z_sn)) * 1000.0, 3)
 
-        # Full 2D comparison against DES 2026 + DESI + CMB (w0 = -0.82 +- 0.05, wa = -0.63 +- 0.195, rho = -0.85)
-        des_2d = compute_mahalanobis_2d(w0_f, wa_f, -0.82, -0.63, 0.05, 0.195, -0.85)
-        # Also against Pantheon+ + DESI + CMB free CPL fit (w0 = -0.8901 +- 0.06, wa = -0.2253 +- 0.25, rho = -0.85)
-        pan_2d = compute_mahalanobis_2d(w0_f, wa_f, -0.8901, -0.2253, 0.06, 0.25, -0.85)
+        des_2d = compute_mahalanobis_2d_scan(w0_f, wa_f, -0.82, -0.63, 0.05, 0.195, siga_upper=0.21)
+        pan_2d = compute_mahalanobis_2d_scan(w0_f, wa_f, -0.8895, -0.2250, 0.06, 0.25)
         return {
             "w0_apparent": w0_f,
             "wa_apparent": wa_f,
+            "effective_hypothesis_selection_dof_Delta_k_hyp": k_hyp_penalty,
             "synthetic_curve_cpl_approx_rms_mmag": rms_mmag,
-            "vs_DES2026_DESI_CMB_2D_at_rho_minus0p85": des_2d,
-            "vs_PantheonPlus_DESI_CMB_2D_at_rho_minus0p85": pan_2d,
+            "vs_DES2026_DESI_CMB_2D_gaussian_approx": des_2d,
+            "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": pan_2d,
         }
 
-    fit_pure_ts = fit_cpl_and_2d_stats(build_D_fine("pure_timescape"))
-    fit_h2a = fit_cpl_and_2d_stats(build_D_fine("H2a_const_alpha_OCSR"))
-    fit_h2a_cal = fit_cpl_and_2d_stats(build_D_fine("H2a_const_alpha_OCSR"), extra_cal_mmag=24.0)
-    fit_h2b_diff_p1 = fit_cpl_and_2d_stats(build_D_fine("H2b_diff_ray_p1"))
-    fit_h2b_diff_p2 = fit_cpl_and_2d_stats(build_D_fine("H2b_diff_ray_p2"))
-    fit_h2b_int_p1 = fit_cpl_and_2d_stats(build_D_fine("H2b_int_mod_p1"))
-    fit_h2b_int_p2 = fit_cpl_and_2d_stats(build_D_fine("H2b_int_mod_p2"))
+    fit_pure_ts = fit_cpl_and_2d_stats(build_D_fine("pure_timescape"), k_hyp_penalty=0)
+    fit_h2a = fit_cpl_and_2d_stats(build_D_fine("H2a_const_alpha_OCSR"), k_hyp_penalty=0)
+    fit_h2a_cal = fit_cpl_and_2d_stats(build_D_fine("H2a_const_alpha_OCSR"), extra_cal_mmag=24.0, k_hyp_penalty=1)
+    fit_h2b_diff_p1 = fit_cpl_and_2d_stats(build_D_fine("H2b_diff_ray_p1"), k_hyp_penalty=1)
+    fit_h2b_diff_p2 = fit_cpl_and_2d_stats(build_D_fine("H2b_diff_ray_p2"), k_hyp_penalty=2)
+    fit_h2b_int_p1 = fit_cpl_and_2d_stats(build_D_fine("H2b_int_mod_p1"), k_hyp_penalty=1)
+    fit_h2b_int_p2 = fit_cpl_and_2d_stats(build_D_fine("H2b_int_mod_p2"), k_hyp_penalty=2)
 
     # -------------------------------------------------------------------------
-    # 4. Direct Real-Data Likelihood Evaluation on Bundled Pantheon+ (N=1580)
+    # 4. Direct Real-Data Likelihood & AIC/BIC Penalty Audit on Pantheon+ (N=1580)
     # -------------------------------------------------------------------------
     pan_npz_path = DATA_DIR / "pantheon_plus_hf1590_stat_sys_cholesky.npz"
     assert pan_npz_path.exists(), f"Missing bundled Pantheon+ NPZ at {pan_npz_path}"
@@ -394,17 +391,26 @@ def run_c9_audit() -> Dict[str, Any]:
     zhel_pan = np.asarray(pan_npz["zhel"], dtype=float)
     mb_pan = np.asarray(pan_npz["mb"], dtype=float)
     cho_pan = (np.asarray(pan_npz["L_lower"], dtype=float), True)
-    ones_pan = np.ones(len(mb_pan), dtype=float)
+    n_sn = len(mb_pan)
+    ones_pan = np.ones(n_sn, dtype=float)
     cinv_ones_pan = linalg.cho_solve(cho_pan, ones_pan)
     denom_pan = float(np.dot(ones_pan, cinv_ones_pan))
 
-    def eval_pantheon_chi2(D_fine_arr: np.ndarray) -> float:
+    def eval_pantheon_metrics(D_fine_arr: np.ndarray, k_hyp: int, chi2_ref: float) -> Dict[str, float]:
         dm_sn = np.interp(zhd_pan, z_fine, D_fine_arr)
         mu_shape = 5.0 * np.log10((1.0 + zhel_pan) * dm_sn)
         diff = mb_pan - mu_shape
         off = float(np.dot(diff, cinv_ones_pan) / denom_pan)
         res = diff - off
-        return round(float(np.dot(res, linalg.cho_solve(cho_pan, res))), 2)
+        c2 = float(np.dot(res, linalg.cho_solve(cho_pan, res)))
+        dc2 = c2 - chi2_ref
+        return {
+            "chi2_SN": round(c2, 2),
+            "Delta_k_hyp": k_hyp,
+            "Delta_chi2_vs_w_minus1_horizon": round(dc2, 2),
+            "Delta_AIC_with_k_hyp_penalty": round(dc2 + 2.0 * k_hyp, 2),
+            "Delta_BIC_with_k_hyp_penalty": round(dc2 + k_hyp * math.log(n_sn), 2),
+        }
 
     zp1_f = 1.0 + z_fine
     W_des_f = (zp1_f ** (3.0 * (1.0 - 0.82 - 0.63))) * np.exp(-3.0 * (-0.63) * z_fine / zp1_f)
@@ -412,16 +418,17 @@ def run_c9_audit() -> Dict[str, Any]:
         1.0 / np.sqrt(omega_m0_tau * (zp1_f**3) + omega_l0_tau * W_des_f), z_fine, initial=0.0
     )
 
+    c2_hor_ref = eval_pantheon_metrics(D_hor_fine, 0, 0.0)["chi2_SN"]
     real_pantheon_chi2 = {
-        "n_supernovae": int(len(mb_pan)),
-        "w_minus1_horizon_D_hor": eval_pantheon_chi2(D_hor_fine),
-        "DES_2026_CPL_w0_minus0p82_wa_minus0p63": eval_pantheon_chi2(D_des_cpl_fine),
-        "unweighted_pure_Timescape_D_TS": eval_pantheon_chi2(D_ts_fine),
-        "H2a_const_alpha_OCSR": eval_pantheon_chi2(build_D_fine("H2a_const_alpha_OCSR")),
-        "H2b_diff_ray_p1": eval_pantheon_chi2(build_D_fine("H2b_diff_ray_p1")),
-        "H2b_diff_ray_p2": eval_pantheon_chi2(build_D_fine("H2b_diff_ray_p2")),
-        "H2b_int_mod_p1": eval_pantheon_chi2(build_D_fine("H2b_int_mod_p1")),
-        "H2b_int_mod_p2": eval_pantheon_chi2(build_D_fine("H2b_int_mod_p2")),
+        "n_supernovae": int(n_sn),
+        "w_minus1_horizon_D_hor": eval_pantheon_metrics(D_hor_fine, 0, c2_hor_ref),
+        "DES_2026_CPL_w0_minus0p82_wa_minus0p63": eval_pantheon_metrics(D_des_cpl_fine, 2, c2_hor_ref),
+        "unweighted_pure_Timescape_D_TS": eval_pantheon_metrics(D_ts_fine, 0, c2_hor_ref),
+        "H2a_const_alpha_OCSR": eval_pantheon_metrics(build_D_fine("H2a_const_alpha_OCSR"), 0, c2_hor_ref),
+        "H2b_diff_ray_p1": eval_pantheon_metrics(build_D_fine("H2b_diff_ray_p1"), 1, c2_hor_ref),
+        "H2b_diff_ray_p2": eval_pantheon_metrics(build_D_fine("H2b_diff_ray_p2"), 2, c2_hor_ref),
+        "H2b_int_mod_p1": eval_pantheon_metrics(build_D_fine("H2b_int_mod_p1"), 1, c2_hor_ref),
+        "H2b_int_mod_p2": eval_pantheon_metrics(build_D_fine("H2b_int_mod_p2"), 2, c2_hor_ref),
     }
 
     # -------------------------------------------------------------------------
@@ -454,12 +461,22 @@ def run_c9_audit() -> Dict[str, Any]:
             "omega_m0_sensitivity_scan": om_sensitivity,
         },
         "proposition_3_conditional_optical_hypotheses_H2_and_2D_cpl_audit": {
-            "status": "CONDITIONAL OPTICAL HYPOTHESES (H2a & H2b) — FULL 2D (w0, wa) & REAL PANTHEON+ AUDIT",
+            "status": "CONDITIONAL OPTICAL HYPOTHESES (H2a & H2b) — FULL 2D (w0, wa), MODEL-SELECTION PENALTY & REAL PANTHEON+ AUDIT",
             "alpha_ocsr_locked": round(alpha_ocsr, 8),
             "dE_TS_dz_at_z0_symbolic": str(dE_null_dz_at_z0_sym),
             "dE_TS_dz_at_z0_numeric": round(dE_null_dz_at_z0_val, 6),
             "dE_hor_dz_at_z0_numeric": round(1.5 * omega_m0_tau, 6),
             "exact_analytical_w0_app_at_z0": round(w0_ocsr_exact_z0, 6),
+            "physical_interpretation_and_model_selection_accounting": {
+                "p_eq_1_physical_meaning": "1-point local volume-fraction weighting: photon beam samples local void fraction f_v(z)/f_v0 at redshift z.",
+                "p_eq_2_physical_meaning": "2-point emitter-observer / quadratic susceptibility weighting: joint void-clock dressing across emitter and observer scales as [f_v(z)/f_v0]^2.",
+                "model_selection_dof_accounting": (
+                    "Because choosing p in {1, 2} and differential-ray vs. integrated-distance dressing "
+                    "is not yet derived from the 4D COV-DIR+QUMOND Sachs optical scalar equations, we "
+                    "assign an explicit hypothesis-selection penalty Delta_k_hyp in {1, 2} when comparing "
+                    "against baseline LCDM on Pantheon+."
+                ),
+            },
             "cpl_fits_and_2D_mahalanobis_comparison": {
                 "unweighted_pure_Timescape": fit_pure_ts,
                 "H2a_constant_weight_alpha_OCSR": fit_h2a,
@@ -469,13 +486,7 @@ def run_c9_audit() -> Dict[str, Any]:
                 "H2b_integrated_distance_void_maturity_p1": fit_h2b_int_p1,
                 "H2b_integrated_distance_void_maturity_p2": fit_h2b_int_p2,
             },
-            "real_pantheon_plus_1580_sne_chi2_audit": real_pantheon_chi2,
-            "theoretical_limitation_note": (
-                "Hypotheses H2a and H2b are conditional split-beam optical propagation rules. "
-                "A first-principles derivation from the 4D COV-DIR+QUMOND metric requires integrating "
-                "the Sachs optical scalar / Dyer-Roeder focusing equations across an explicit "
-                "Swiss-cheese or Buchert void-wall metric realization."
-            ),
+            "real_pantheon_plus_1580_sne_chi2_and_aic_bic_audit": real_pantheon_chi2,
         },
     }
     return out
