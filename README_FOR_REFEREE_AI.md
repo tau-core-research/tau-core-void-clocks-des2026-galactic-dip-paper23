@@ -1,4 +1,4 @@
-# Referee Audit Package (v3 — Fast 8-Second Complete Suite & Full Model-Selection Audit): Sub4 Wedge Letter (`MNRAS Letters / JCAP`, 2026-11-18)
+# Referee Audit Package (v3 — Fast 8-Second Complete Suite & Full Model-Selection Audit): Sub4 Letter (`MNRAS Letters / JCAP`, 2026-11-18)
 **Title:** *Kodama–Hayward Galactic Acceleration Trough vs. DES Year 6 Dynamical Dark Energy: An Exact Background-Dependence Theorem and Conditional Void-Clock Optical Hypotheses*  
 **Author:** Jozsef Olcsak (`ORCID: 0009-0003-7311-6522`)
 
