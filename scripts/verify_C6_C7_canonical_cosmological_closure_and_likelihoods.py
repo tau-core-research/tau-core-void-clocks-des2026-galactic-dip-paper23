@@ -938,6 +938,24 @@ def run_c7_multiprobe_comparison() -> Dict[str, Any]:
     stencil_tau = _build_recfast_zstar_stencil(NU_MASSES_TAU_EV)
     stencil_lcdm = _build_recfast_zstar_stencil(NU_MASSES_LCDM_EV)
 
+    # Out-of-sample error validation of the 6-point BDF2 RECFAST z_star stencil across the optimization domain:
+    oos_points = [
+        (0.6736, 0.02210, 0.1150, NU_MASSES_LCDM_EV, stencil_lcdm),
+        (0.6856, 0.02243, 0.1163, NU_MASSES_LCDM_EV, stencil_lcdm),
+        (0.6750, 0.02265, 0.1235, NU_MASSES_LCDM_EV, stencil_lcdm),
+        (0.6650, 0.02195, 0.1245, NU_MASSES_LCDM_EV, stencil_lcdm),
+        (0.6803, 0.02296, OMEGA_A_OVER_B * 0.02296, NU_MASSES_TAU_EV, stencil_tau),
+        (0.6734, 0.02235, OMEGA_A_OVER_B * 0.02235, NU_MASSES_TAU_EV, stencil_tau),
+    ]
+    max_zstar_stencil_err = 0.0
+    max_theta100_stencil_err = 0.0
+    for h_t, ob_t, oc_t, nu_t, st_t in oos_points:
+        ex_t = recfast_v15_cpl_observables(h_t, ob_t, oc_t, -1.0, 0.0, nu_t, zstar_stencil=None)
+        ap_t = recfast_v15_cpl_observables(h_t, ob_t, oc_t, -1.0, 0.0, nu_t, zstar_stencil=st_t)
+        max_zstar_stencil_err = max(max_zstar_stencil_err, abs(ex_t["z_star"] - ap_t["z_star"]))
+        max_theta100_stencil_err = max(max_theta100_stencil_err, abs(ex_t["theta_100"] - ap_t["theta_100"]))
+    assert max_zstar_stencil_err < 2.0e-3 and max_theta100_stencil_err < 5.0e-6
+
     # -------------------------------------------------------------------------
     # Optimize free nuisance/cosmological parameters on the Primary Bundle (N = 1610:
     # CC15 + DESI13_cal + Pantheon+HF1580 + CMB_theta100 + BBN_omegab):
@@ -1228,6 +1246,12 @@ def run_c7_multiprobe_comparison() -> Dict[str, Any]:
     chi2_43_des_ratio = eval_43disks_chi2("DES_CPL_KH_z0_anchored_ratio")
 
     return {
+        "recfast_stencil_out_of_sample_validation": {
+            "n_independent_test_points": len(oos_points),
+            "max_abs_err_z_star": round(max_zstar_stencil_err, 7),
+            "max_abs_err_100_theta_star": round(max_theta100_stencil_err, 9),
+            "final_optima_evaluated_with_full_unapproximated_BDF2_RECFAST": True,
+        },
         "primary_non_overlapping_likelihood_comparison": {
             "epistemic_status": "NUMERICAL / EMPIRICAL",
             "datasets_included": [

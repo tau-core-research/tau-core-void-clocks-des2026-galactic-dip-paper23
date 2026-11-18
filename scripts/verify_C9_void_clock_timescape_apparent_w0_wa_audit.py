@@ -406,10 +406,15 @@ def run_c9_audit() -> Dict[str, Any]:
         dc2 = c2 - chi2_ref
         return {
             "chi2_SN": round(c2, 2),
-            "Delta_k_hyp": k_hyp,
+            "Delta_k_continuous_fitted": 0,
             "Delta_chi2_vs_w_minus1_horizon": round(dc2, 2),
-            "Delta_AIC_with_k_hyp_penalty": round(dc2 + 2.0 * k_hyp, 2),
-            "Delta_BIC_with_k_hyp_penalty": round(dc2 + k_hyp * math.log(n_sn), 2),
+            "Delta_AIC_continuous_k0": round(dc2, 2),
+            "Delta_BIC_continuous_k0": round(dc2, 2),
+            "heuristic_discrete_selection_sensitivity": {
+                "Delta_k_hyp_assumed": k_hyp,
+                "Delta_AIC_heuristic": round(dc2 + 2.0 * k_hyp, 2),
+                "Delta_BIC_heuristic": round(dc2 + k_hyp * math.log(n_sn), 2),
+            },
         }
 
     zp1_f = 1.0 + z_fine

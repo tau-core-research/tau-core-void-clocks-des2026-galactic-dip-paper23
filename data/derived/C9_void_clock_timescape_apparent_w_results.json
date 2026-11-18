@@ -313,59 +313,99 @@
       "n_supernovae": 1580,
       "w_minus1_horizon_D_hor": {
         "chi2_SN": 1387.33,
-        "Delta_k_hyp": 0,
+        "Delta_k_continuous_fitted": 0,
         "Delta_chi2_vs_w_minus1_horizon": -0.0,
-        "Delta_AIC_with_k_hyp_penalty": -0.0,
-        "Delta_BIC_with_k_hyp_penalty": -0.0
+        "Delta_AIC_continuous_k0": -0.0,
+        "Delta_BIC_continuous_k0": -0.0,
+        "heuristic_discrete_selection_sensitivity": {
+          "Delta_k_hyp_assumed": 0,
+          "Delta_AIC_heuristic": -0.0,
+          "Delta_BIC_heuristic": -0.0
+        }
       },
       "DES_2026_CPL_w0_minus0p82_wa_minus0p63": {
         "chi2_SN": 1387.3,
-        "Delta_k_hyp": 2,
+        "Delta_k_continuous_fitted": 0,
         "Delta_chi2_vs_w_minus1_horizon": -0.03,
-        "Delta_AIC_with_k_hyp_penalty": 3.97,
-        "Delta_BIC_with_k_hyp_penalty": 14.7
+        "Delta_AIC_continuous_k0": -0.03,
+        "Delta_BIC_continuous_k0": -0.03,
+        "heuristic_discrete_selection_sensitivity": {
+          "Delta_k_hyp_assumed": 2,
+          "Delta_AIC_heuristic": 3.97,
+          "Delta_BIC_heuristic": 14.7
+        }
       },
       "unweighted_pure_Timescape_D_TS": {
         "chi2_SN": 1470.99,
-        "Delta_k_hyp": 0,
+        "Delta_k_continuous_fitted": 0,
         "Delta_chi2_vs_w_minus1_horizon": 83.66,
-        "Delta_AIC_with_k_hyp_penalty": 83.66,
-        "Delta_BIC_with_k_hyp_penalty": 83.66
+        "Delta_AIC_continuous_k0": 83.66,
+        "Delta_BIC_continuous_k0": 83.66,
+        "heuristic_discrete_selection_sensitivity": {
+          "Delta_k_hyp_assumed": 0,
+          "Delta_AIC_heuristic": 83.66,
+          "Delta_BIC_heuristic": 83.66
+        }
       },
       "H2a_const_alpha_OCSR": {
         "chi2_SN": 1392.4,
-        "Delta_k_hyp": 0,
+        "Delta_k_continuous_fitted": 0,
         "Delta_chi2_vs_w_minus1_horizon": 5.07,
-        "Delta_AIC_with_k_hyp_penalty": 5.07,
-        "Delta_BIC_with_k_hyp_penalty": 5.07
+        "Delta_AIC_continuous_k0": 5.07,
+        "Delta_BIC_continuous_k0": 5.07,
+        "heuristic_discrete_selection_sensitivity": {
+          "Delta_k_hyp_assumed": 0,
+          "Delta_AIC_heuristic": 5.07,
+          "Delta_BIC_heuristic": 5.07
+        }
       },
       "H2b_diff_ray_p1": {
         "chi2_SN": 1390.4,
-        "Delta_k_hyp": 1,
+        "Delta_k_continuous_fitted": 0,
         "Delta_chi2_vs_w_minus1_horizon": 3.07,
-        "Delta_AIC_with_k_hyp_penalty": 5.07,
-        "Delta_BIC_with_k_hyp_penalty": 10.44
+        "Delta_AIC_continuous_k0": 3.07,
+        "Delta_BIC_continuous_k0": 3.07,
+        "heuristic_discrete_selection_sensitivity": {
+          "Delta_k_hyp_assumed": 1,
+          "Delta_AIC_heuristic": 5.07,
+          "Delta_BIC_heuristic": 10.44
+        }
       },
       "H2b_diff_ray_p2": {
         "chi2_SN": 1389.04,
-        "Delta_k_hyp": 2,
+        "Delta_k_continuous_fitted": 0,
         "Delta_chi2_vs_w_minus1_horizon": 1.71,
-        "Delta_AIC_with_k_hyp_penalty": 5.71,
-        "Delta_BIC_with_k_hyp_penalty": 16.44
+        "Delta_AIC_continuous_k0": 1.71,
+        "Delta_BIC_continuous_k0": 1.71,
+        "heuristic_discrete_selection_sensitivity": {
+          "Delta_k_hyp_assumed": 2,
+          "Delta_AIC_heuristic": 5.71,
+          "Delta_BIC_heuristic": 16.44
+        }
       },
       "H2b_int_mod_p1": {
         "chi2_SN": 1389.32,
-        "Delta_k_hyp": 1,
+        "Delta_k_continuous_fitted": 0,
         "Delta_chi2_vs_w_minus1_horizon": 1.99,
-        "Delta_AIC_with_k_hyp_penalty": 3.99,
-        "Delta_BIC_with_k_hyp_penalty": 9.36
+        "Delta_AIC_continuous_k0": 1.99,
+        "Delta_BIC_continuous_k0": 1.99,
+        "heuristic_discrete_selection_sensitivity": {
+          "Delta_k_hyp_assumed": 1,
+          "Delta_AIC_heuristic": 3.99,
+          "Delta_BIC_heuristic": 9.36
+        }
       },
       "H2b_int_mod_p2": {
         "chi2_SN": 1387.77,
-        "Delta_k_hyp": 2,
+        "Delta_k_continuous_fitted": 0,
         "Delta_chi2_vs_w_minus1_horizon": 0.44,
-        "Delta_AIC_with_k_hyp_penalty": 4.44,
-        "Delta_BIC_with_k_hyp_penalty": 15.17
+        "Delta_AIC_continuous_k0": 0.44,
+        "Delta_BIC_continuous_k0": 0.44,
+        "heuristic_discrete_selection_sensitivity": {
+          "Delta_k_hyp_assumed": 2,
+          "Delta_AIC_heuristic": 4.44,
+          "Delta_BIC_heuristic": 15.17
+        }
       }
     }
   }

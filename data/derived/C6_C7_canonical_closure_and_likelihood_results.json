@@ -24,6 +24,12 @@
     }
   },
   "task_C7_multiprobe_likelihood_and_growth_comparison": {
+    "recfast_stencil_out_of_sample_validation": {
+      "n_independent_test_points": 6,
+      "max_abs_err_z_star": 0.0015587,
+      "max_abs_err_100_theta_star": 3.094e-06,
+      "final_optima_evaluated_with_full_unapproximated_BDF2_RECFAST": true
+    },
     "primary_non_overlapping_likelihood_comparison": {
       "epistemic_status": "NUMERICAL / EMPIRICAL",
       "datasets_included": [
