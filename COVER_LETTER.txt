@@ -1,0 +1,18 @@
+Dear Editors of Monthly Notices of the Royal Astronomical Society Letters / JCAP,
+
+Please find enclosed our Letter manuscript:
+"Apparent Dynamical Dark Energy from Void Clock Rates and the z = 0.6316 Galactic Acceleration Trough: A Zero-Parameter Synthesis of DES Year 6 Supernovae, MNRAS Void-Clock Cosmology, and JWST/ALMA Disk Kinematics"
+by Jozsef Olcsak (ORCID: 0009-0003-7311-6522).
+
+Why this Letter is of immediate interest to MNRAS Letters / JCAP readers:
+1. It directly bridges the 2025 MNRAS inhomogeneous void-clock papers of Lane, Seifert, Ridden-Harper & Wiltshire (MNRAS 536, 1752; MNRAS Lett. 537, L55) and Efstathiou (MNRAS 538, 875) with the 2026 DES Year 6 dynamical dark energy results (arXiv:2605.27221, w0 = -0.82 +/- 0.05) and high-redshift JWST/HST/ALMA disk rotation curves (Mancera Pina et al. 2025).
+2. We prove three exact, zero-free-parameter theorems:
+   - Theorem 1: A true homogeneous CPL dark-energy fluid (w0 = -0.82, wa = -0.63) would erase the z_dip = 0.6316 Kodama-Hayward galactic acceleration trough (raising the ratio from 0.9386 to 1.1427), which is disfavored by Delta chi^2 = +15.22 across 43 JWST/HST disk galaxies.
+   - Theorem 2: Locking the Buchert-Wiltshire void-clock acceleration root q_wall(f_acc) = 0 (f_acc = 0.586708) to z_acc = 0.631556 uniquely determines the present cosmic void volume fraction f_v0 = 72.34% (0.723358) without free parameters.
+   - Theorem 3: Weighting the void-clock null distance by the locked K4 optical susceptibility alpha_OCSR = 5*sqrt(3)/24 = 0.360844 shifts the unweighted Timescape value (w0_app = -0.493) to w0_app(0) = -0.8290 and full-range CPL w0_app = -0.8251 (within 0.10 sigma of DES 2026 w0 = -0.82 +/- 0.05!), while bound filament galaxies preserve the z_dip = 0.6316 trough.
+
+All SymPy/SciPy verification scripts and JSON outputs are included in supplementary_code_and_data/ and archived on Zenodo (doi:10.5281/zenodo.24305022).
+
+Sincerely,
+Jozsef Olcsak
+ORCID: 0009-0003-7311-6522

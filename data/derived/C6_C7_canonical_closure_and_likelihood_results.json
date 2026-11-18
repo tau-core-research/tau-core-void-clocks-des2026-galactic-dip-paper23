@@ -1,0 +1,207 @@
+{
+  "program": "Program_C_Cosmology_Dynamical_DE_and_DES_2026",
+  "script": "verify_C6_C7_canonical_cosmological_closure_and_likelihoods.py",
+  "date": "2026-11-18",
+  "task_C6_homogeneous_flrw_closure_audit": {
+    "homogeneous_flrw_minisuperspace_theorem": {
+      "epistemic_status": "PROVEN",
+      "dual_method_offshell_lambda_vs_reduced_lagrangian_exact_match": true,
+      "addot_cancels_identically_in_friedmann_constraint": true,
+      "F_munu_on_FLRW": "0 (identically zero)",
+      "QUMOND_sector_on_FLRW": "h^{mu nu} d_mu phi_N d_nu chi == 0, y == 0, V_QUMOND(0) == 0 (identically zero)",
+      "lambda_multiplier_on_shell": "3*M_Pl**2*c2_reg*(N(t)*a(t)*Derivative(a(t), (t, 2)) - N(t)*Derivative(a(t), t)**2 - a(t)*Derivative(N(t), t)*Derivative(a(t), t))/(2*c**2*N(t)**3*a(t)**2)",
+      "exact_H2_solution_from_Sub1_Eq2": "2*c**2*(Lambda*M_Pl**2*a(t)**3 + rho_0)/(3*M_Pl**2*(3*c2_reg + 2)*a(t)**3)",
+      "G_cosmo_over_G_N_exact_formula_from_Sub1_Eq2": "2/(3*c2_reg + 2)",
+      "G_cosmo_over_G_N_at_c2_reg_1e_minus_8": 0.9999999850000002,
+      "abs_frac_shift_G_cosmo_at_c2_reg_1e_minus_8": 1.4999999797815633e-08,
+      "ir_regulator_eps1e_minus_12_vacuum_fraction_Delta_Omega": 7.549742899343261e-25,
+      "generates_time_varying_dark_energy_W_V_on_homogeneous_FLRW": false
+    },
+    "source_side_cosmological_closure_classification": {
+      "epistemic_status": "UNRESOLVED",
+      "canonical_homogeneous_branch_M2a": "In Theorem C2 / F30 / F52 / F53, Omega_{A,eff}/Omega_b = (213*sqrt(3)-20)/65 = 5.368105 enters as pressureless cold dust (w_A = 0, rho_A ~ a^-3) from apparent-horizon KMS susceptibility, while Cai-Kim-Hayward Clausius integration yields a strictly constant integration constant Lambda_eff (w_DE == -1 identically).",
+      "inhomogeneous_void_clock_landscape_branch_M2b": "Paper 20's weak-field Poisson void clock shifts are 35.81 ppm (95th pct), 55.69 ppm (Eridanus), and 484.04 ppm (max), computed atop an already-assumed flat LCDM background (Omega_Lambda0 = 0.6847). A O(10^-5 - 10^-4) weak-field potential perturbation cannot produce O(1) background acceleration (Omega_DE ~ 0.685) or a non-monotonic W_DES(a) peaking at z = 0.4 without a non-perturbative covariant spatial-averaging / Buchert-type closure derived from COV-DIR+QUMOND, which does not exist in the current Tau Core corpus."
+    }
+  },
+  "task_C7_multiprobe_likelihood_and_growth_comparison": {
+    "primary_non_overlapping_likelihood_comparison": {
+      "epistemic_status": "NUMERICAL / EMPIRICAL",
+      "datasets_included": [
+        "Moresco et al. (2020) 15 Cosmic Chronometers (full 15x15 stat+IMF+SPS covariance)",
+        "DESI Gaussian BAO 13 measurements (full 13x13 covariance + RECFAST v1.5 r_d)",
+        "Pantheon+ Hubble-Flow SNe Ia (z_HD > 0.01, non-calibrators, N=1590, full STAT+SYS covariance)",
+        "Planck PR3 acoustic scale 100*theta_* = 1.04110 +- 0.00031 (standalone RECFAST v1.5)",
+        "Cooke et al. (2018) primordial Deuterium BBN omega_b = 0.022353 +- 0.00037"
+      ],
+      "total_data_points_N": 1610,
+      "critical_supernova_dataset_distinction": "Bundled SN Ia data on disk is Pantheon+ (Brout et al. 2022), whereas DES 2026 (arXiv:2605.27221) uses DES-SN5YR + DES Y6 BAO + DES Y6 3x2pt. Consistent with the published DESI/DES literature, replacing DES-SN5YR with Pantheon+ weakens the CPL dynamical-DE preference from ~3.0 sigma down to mild \u0394\u03c7^2 \u2248 -3.6 (AIC-neutral, BIC-disfavored), whereas against DES 2026's published DES+DESI+CMB posterior, BOTH M0 (LCDM) and M2a (Frozen Homogeneous Tau Core, w_DE = -1) stand at ~3.0 sigma (\u0394\u03c7^2 \u2248 +11.8 to +13.1 for 2 extra CPL parameters).",
+      "models": [
+        {
+          "model_id": "M0_Flat_LCDM",
+          "epistemic_status": "EMPIRICAL_BASELINE",
+          "k_total_including_MB": 4,
+          "k_dark_sector": 1,
+          "H0_kms_Mpc": 68.5612,
+          "Omega_m0": 0.29633,
+          "w0": -1.0,
+          "wa": 0.0,
+          "r_d_Mpc": 147.958,
+          "theta_100": 1.04112,
+          "chi2_CC15": 6.322,
+          "chi2_DESI13_cal": 10.734,
+          "chi2_DESI13_shape": 10.288,
+          "chi2_PantheonPlus_1580": 1390.569,
+          "chi2_CMB_theta100": 0.005,
+          "chi2_BBN": 0.038,
+          "chi2_joint_primary_N1610": 1407.668,
+          "Delta_chi2_vs_M0": 0.0,
+          "Delta_AIC_vs_M0": 0.0,
+          "Delta_BIC_vs_M0": 0.0
+        },
+        {
+          "model_id": "M1a_CPL_DES2026_Fixed_w0_minus0p82_wa_minus0p63",
+          "epistemic_status": "EMPIRICAL_BENCHMARK",
+          "k_total_including_MB": 6,
+          "k_dark_sector": 3,
+          "H0_kms_Mpc": 67.4961,
+          "Omega_m0": 0.30972,
+          "w0": -0.82,
+          "wa": -0.63,
+          "r_d_Mpc": 147.467,
+          "theta_100": 1.04112,
+          "chi2_CC15": 6.589,
+          "chi2_DESI13_cal": 9.835,
+          "chi2_DESI13_shape": 9.528,
+          "chi2_PantheonPlus_1580": 1386.969,
+          "chi2_CMB_theta100": 0.004,
+          "chi2_BBN": 0.028,
+          "chi2_joint_primary_N1610": 1403.424,
+          "Delta_chi2_vs_M0": -4.244,
+          "Delta_AIC_vs_M0": -0.244,
+          "Delta_BIC_vs_M0": 10.524
+        },
+        {
+          "model_id": "M1b_CPL_Free_PantheonPlus_DESI_CC_CMB",
+          "epistemic_status": "EMPIRICAL_FIT",
+          "k_total_including_MB": 6,
+          "k_dark_sector": 3,
+          "H0_kms_Mpc": 67.3199,
+          "Omega_m0": 0.30608,
+          "w0": -0.8895,
+          "wa": -0.225,
+          "r_d_Mpc": 148.052,
+          "theta_100": 1.0411,
+          "chi2_CC15": 6.394,
+          "chi2_DESI13_cal": 8.684,
+          "chi2_DESI13_shape": 8.684,
+          "chi2_PantheonPlus_1580": 1386.059,
+          "chi2_CMB_theta100": 0.0,
+          "chi2_BBN": 0.0,
+          "chi2_joint_primary_N1610": 1401.136,
+          "Delta_chi2_vs_M0": -6.532,
+          "Delta_AIC_vs_M0": -2.532,
+          "Delta_BIC_vs_M0": 8.236
+        },
+        {
+          "model_id": "M2a_Canonical_Homogeneous_Tau_Profiled_h_omegab",
+          "epistemic_status": "CONDITIONAL_HOMOGENEOUS_SPINE",
+          "k_total_including_MB": 3,
+          "k_dark_sector": 0,
+          "H0_kms_Mpc": 68.0259,
+          "Omega_m0": 0.30063,
+          "w0": -1.0,
+          "wa": 0.0,
+          "r_d_Mpc": 148.465,
+          "theta_100": 1.04118,
+          "chi2_CC15": 6.296,
+          "chi2_DESI13_cal": 11.525,
+          "chi2_DESI13_shape": 10.405,
+          "chi2_PantheonPlus_1580": 1389.619,
+          "chi2_CMB_theta100": 0.065,
+          "chi2_BBN": 2.694,
+          "chi2_joint_primary_N1610": 1410.2,
+          "Delta_chi2_vs_M0": 2.531,
+          "Delta_AIC_vs_M0": 0.531,
+          "Delta_BIC_vs_M0": -4.853
+        },
+        {
+          "model_id": "M2a_Strict_Frozen_Theorem_C2_Tau",
+          "epistemic_status": "CONDITIONAL_ZERO_PARAM_LOCK",
+          "k_total_including_MB": 1,
+          "k_dark_sector": 0,
+          "H0_kms_Mpc": 67.3388,
+          "Omega_m0": 0.31533,
+          "w0": -1.0,
+          "wa": 0.0,
+          "r_d_Mpc": 146.918,
+          "theta_100": 1.04105,
+          "chi2_CC15": 6.193,
+          "chi2_DESI13_cal": 34.723,
+          "chi2_DESI13_shape": 14.295,
+          "chi2_PantheonPlus_1580": 1387.325,
+          "chi2_CMB_theta100": 0.025,
+          "chi2_BBN": 0.0,
+          "chi2_joint_primary_N1610": 1428.266,
+          "Delta_chi2_vs_M0": 20.597,
+          "Delta_AIC_vs_M0": 14.597,
+          "Delta_BIC_vs_M0": -1.555
+        },
+        {
+          "model_id": "M2b_Dynamical_Void_TimeLandscape_Tau_Branch",
+          "epistemic_status": "UNRESOLVED_MISSING_SOURCE_CLOSURE",
+          "k_total_including_MB": "UNCLOSED",
+          "k_dark_sector": "UNCLOSED",
+          "H0_kms_Mpc": "N/A",
+          "Omega_m0": "N/A",
+          "w0": "UNCLOSED",
+          "wa": "UNCLOSED",
+          "r_d_Mpc": "N/A",
+          "theta_100": "N/A",
+          "chi2_CC15": "UNCLOSED",
+          "chi2_DESI13_cal": "UNCLOSED",
+          "chi2_DESI13_shape": "UNCLOSED",
+          "chi2_PantheonPlus_1580": "UNCLOSED",
+          "chi2_CMB_theta100": "UNCLOSED",
+          "chi2_BBN": "UNCLOSED",
+          "chi2_joint_primary_N1610": "UNCLOSED",
+          "Delta_chi2_vs_M0": "UNCLOSED",
+          "Delta_AIC_vs_M0": "UNCLOSED",
+          "Delta_BIC_vs_M0": "UNCLOSED"
+        }
+      ]
+    },
+    "separate_growth_and_survey_overlap_audit": {
+      "epistemic_status": "NUMERICAL / EMPIRICAL",
+      "why_kept_separate": "SDSS DR16 BOSS/eBOSS galaxies and quasars overlap in sky footprint and redshift (0.15 <= z <= 1.48) with DESI Northern-sky tracers; adding SDSS BAO/RSD directly to DESI BAO without a cross-survey covariance matrix would double-count cosmic variance.",
+      "dual_growth_ode_verification_max_diff": 5.615508058554042e-13,
+      "sigma8_0_early_anchored_shift_M1_DES_vs_M0": {
+        "M0_LCDM_D1_raw": 0.7767564272917477,
+        "M1_DES_CPL_D1_raw": 0.7856738035345936,
+        "M1_early_anchored_sigma8_0": 0.8204116498511519,
+        "pct_growth_suppression_or_boost": 1.1480273518865551
+      },
+      "sdss_6pt_fsigma8_chi2": {
+        "M0_LCDM": 6.197193001297673,
+        "M1_DES_CPL_fixed_s8": 6.023187948858293,
+        "M1_DES_CPL_early_anchored_s8": 5.670879347754449,
+        "M2a_Canonical_Tau": 5.978692631200921
+      },
+      "sdss_dr16_multitracer_6x6_chi2": {
+        "M0_LCDM": 11.465423637114323,
+        "M1_DES_CPL_early_anchored": 12.774273994426544,
+        "M2a_Canonical_Tau": 11.663500404200928
+      },
+      "lensing_slip_audit": {
+        "canonical_COV_DIR_linear_slip_Sigma": 1.0,
+        "paper10_Sigma_lens_status": "UNCLOSED_PHENOMENOLOGICAL_SHELL (endpoint-disabled in Paper 10)"
+      }
+    },
+    "high_z_disk_kinematics_sensitivity_43_mancera_pina_disks": {
+      "epistemic_status": "NUMERICAL / EMPIRICAL",
+      "chi2_M2a_LCDM_background_KH_COCA": 106.41909205967329,
+      "chi2_DES_CPL_background_KH_direct_abs": 110.6593426427925,
+      "chi2_DES_CPL_background_KH_z0_anchored_ratio": 121.63941396143377,
+      "interpretation": "Under direct absolute a_0^KH(z) = (5*sqrt(3)/96)*c*H(z)*|1-q(z)|, DES-CPL shifts absolute a_0^KH at z ~ 0.9 by +6.2% (increasing 43-disk chi^2 modestly), while simultaneously dropping z = 0 local a_0^KH(0) by -12.1%! Conversely, if a_0(0) is anchored at z = 0 and scaled by the +21% boosted DES-CPL ratio, high-z disk chi^2 degrades much more strongly."
+    }
+  }
+}

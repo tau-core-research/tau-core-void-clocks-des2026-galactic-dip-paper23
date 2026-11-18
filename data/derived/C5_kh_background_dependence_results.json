@@ -1,0 +1,190 @@
+{
+  "program": "Program_C_Cosmology_Dynamical_DE_and_DES_2026",
+  "script": "verify_C5_kh_background_dependence_audit.py",
+  "date": "2026-11-18",
+  "tex_corpus_3_minus_q_audit": {
+    "epistemic_status": "PROVEN",
+    "tex_directory": "/Volumes/EXTERNAL/Research/Tau Core/all_papers_bundle/TeX_Sources",
+    "total_tex_files_scanned": 50,
+    "three_minus_q_instances_found": 0,
+    "three_minus_q_hits": [],
+    "one_minus_q_verified_occurrences_count": 21,
+    "one_minus_q_sample_locations": [
+      "00_MASTER_SYNTHESIS_2026_11_12.tex:108",
+      "00_MASTER_SYNTHESIS_2026_11_12.tex:581",
+      "Tau_Core_Accessible_Scientific_Overview_v27_EN.tex:79",
+      "Tau_Core_Kozerheto_Tudomanyos_Tajekoztato_v26_HU.tex:93",
+      "Tau_Core_Kozerheto_Tudomanyos_Tajekoztato_v26_HU.tex:212",
+      "Tau_Core_Paper_20_Euclid_Cosmic_Time_Landscape_EN.tex:125",
+      "Tau_Core_Paper_20_Euclid_Cosmic_Time_Landscape_EN.tex:132",
+      "Tau_Core_Paper_20_Euclid_Cosmic_Time_Landscape_HU.tex:131",
+      "Tau_Core_Paper_20_Euclid_Cosmic_Time_Landscape_HU.tex:138",
+      "Tau_Core_Paper_21_Black_Hole_Cosmology_Duality_EN.tex:51",
+      "Tau_Core_Paper_21_Black_Hole_Cosmology_Duality_EN.tex:87",
+      "Tau_Core_Paper_21_Black_Hole_Cosmology_Duality_EN.tex:188"
+    ]
+  },
+  "symbolic_coincidence_breaking_theorem": {
+    "epistemic_status": "PROVEN",
+    "two_formula_difference_identity": "(1 - q(z))/2 - [1 - (3/4)*Omega_m(z)] = -(3/4)*(1 + w(z))*Omega_DE(z)",
+    "two_formulas_coincide_iff": "w(z) == -1 (on any dynamical DE background, the 1 - (3/4)*Omega_m shorthand is invalid)",
+    "exact_slope_at_q_equals_0": "(1/H) * d[H*(1 - q)]/d(ln a) |_{q=0} = -(3/2)*(1 + w(a_acc)) + (1/(2*w(a_acc))) * (dw/d ln a)|_{a_acc}",
+    "coincidence_condition_z_dip_eq_z_acc": "3 * w(a_acc) * (1 + w(a_acc)) - (dw / d ln a)|_{a_acc} == 0",
+    "unique_constant_w_solution": "w == -1"
+  },
+  "numerical_and_mc_background_audit": {
+    "dual_method_ode_vs_analytic_verification": {
+      "epistemic_status": "PROVEN / NUMERICAL",
+      "max_abs_diff_LCDM_ratio_z0_to_14p18": 1.1866063687193673e-12,
+      "max_abs_diff_DES_CPL_ratio_z0_to_14p18": 1.4175327578413999e-12
+    },
+    "paper20_lcdm_reference": {
+      "Omega_m0": 0.3153,
+      "z_acc": 0.6315564992697738,
+      "a0_KH_ratio_at_z_acc": 0.938550259164996,
+      "a0_KH_ratio_at_LCDM_zdip_0p6316": 0.9385502591649961,
+      "a0_KH_0_m_s2": 9.01539775181563e-11,
+      "a0_KH_at_0p6316_m_s2": 8.461403896442083e-11,
+      "one_minus_q0": 1.52705,
+      "df_dz_at_z0": -0.24926829749999996,
+      "stationary_points_z_ge_0": [
+        {
+          "z_extremum": 0.6315564992697744,
+          "kind": "local_minimum",
+          "a0_KH_ratio_at_extremum": 0.938550259164996,
+          "a0_KH_m_s2_at_extremum": 8.461403896442082e-11,
+          "q_at_extremum": 4.440892098500626e-16,
+          "d2f_dz2": 0.5384018655337002
+        }
+      ]
+    },
+    "tau_c2_lcdm_reference": {
+      "Omega_m0": 0.315565,
+      "z_acc": 0.6308892083508163,
+      "a0_KH_ratio_at_z_acc": 0.9386129440621258,
+      "a0_KH_ratio_at_LCDM_zdip_0p6316": 0.9386130226293502,
+      "a0_KH_0_m_s2": 9.013050991325569e-11,
+      "a0_KH_at_0p6316_m_s2": 8.459767034080553e-11,
+      "one_minus_q0": 1.5266525,
+      "df_dz_at_z0": -0.24928964424375005,
+      "stationary_points_z_ge_0": [
+        {
+          "z_extremum": 0.6308892083508164,
+          "kind": "local_minimum",
+          "a0_KH_ratio_at_extremum": 0.9386129440621258,
+          "a0_KH_m_s2_at_extremum": 8.459766325950154e-11,
+          "q_at_extremum": 1.1102230246251565e-16,
+          "d2f_dz2": 0.5387382540279759
+        }
+      ]
+    },
+    "des2026_cpl_omega_m_scan": {
+      "epistemic_status": "NUMERICAL",
+      "exact_Omega_m0_reproducing_1p14272_at_z0p6315565": 0.3153030738224255,
+      "exact_Omega_m0_reproducing_1p14272_at_z0p632": 0.3152013063130535,
+      "physical_decomposition_of_ratio_jump_at_Om03153": {
+        "LCDM_a0_KH_0_m_s2": 9.01539775181563e-11,
+        "DES_CPL_a0_KH_0_m_s2": 7.923968154238338e-11,
+        "z0_denominator_drop_pct": -12.106283356799054,
+        "LCDM_abs_a0_KH_at_z0p6316_m_s2": 8.461403896442082e-11,
+        "DES_CPL_abs_a0_KH_at_z0p6316_m_s2": 9.054873980526686e-11,
+        "abs_a0_KH_shift_at_z0p6316_pct": 7.013848899638871,
+        "LCDM_normalized_ratio_at_z0p6316": 0.938550259164996,
+        "DES_CPL_normalized_ratio_at_z0p6316": 1.142719632925765,
+        "normalized_ratio_jump_pct": 21.753696380885685
+      },
+      "scan_rows": [
+        {
+          "Omega_m0": 0.3,
+          "z_acc": 0.7768487161466658,
+          "a0_KH_ratio_at_z_acc": 1.1427852438573989,
+          "a0_KH_ratio_at_LCDM_zdip_0p6316": 1.141169090053454,
+          "a0_KH_0_m_s2": 8.035071765967763e-11,
+          "a0_KH_at_0p6316_m_s2": 9.169375535683629e-11,
+          "one_minus_q0": 1.361,
+          "df_dz_at_z0": 0.895761,
+          "stationary_points_z_ge_0": []
+        },
+        {
+          "Omega_m0": 0.306,
+          "z_acc": 0.7589881569035277,
+          "a0_KH_ratio_at_z_acc": 1.1438212560602465,
+          "a0_KH_ratio_at_LCDM_zdip_0p6316": 1.141711117574717,
+          "a0_KH_0_m_s2": 7.991501722152301e-11,
+          "a0_KH_at_0p6316_m_s2": 9.123986362298779e-11,
+          "one_minus_q0": 1.3536199999999998,
+          "df_dz_at_z0": 0.8882119043999999,
+          "stationary_points_z_ge_0": []
+        },
+        {
+          "Omega_m0": 0.31,
+          "z_acc": 0.7472266111693432,
+          "a0_KH_ratio_at_z_acc": 1.1444596148057733,
+          "a0_KH_ratio_at_LCDM_zdip_0p6316": 1.1421198752118722,
+          "a0_KH_0_m_s2": 7.962455026275328e-11,
+          "a0_KH_at_0p6316_m_s2": 9.094078140989721e-11,
+          "one_minus_q0": 1.3487,
+          "df_dz_at_z0": 0.8832396900000001,
+          "stationary_points_z_ge_0": []
+        },
+        {
+          "Omega_m0": 0.3153,
+          "z_acc": 0.7318135184663713,
+          "a0_KH_ratio_at_z_acc": 1.1452405746663743,
+          "a0_KH_ratio_at_LCDM_zdip_0p6316": 1.1427196329774212,
+          "a0_KH_0_m_s2": 7.923968154238338e-11,
+          "a0_KH_at_0p6316_m_s2": 9.054873980936008e-11,
+          "one_minus_q0": 1.342181,
+          "df_dz_at_z0": 0.8767260767610001,
+          "stationary_points_z_ge_0": []
+        },
+        {
+          "Omega_m0": 0.32,
+          "z_acc": 0.7183013558488021,
+          "a0_KH_ratio_at_z_acc": 1.145870847304295,
+          "a0_KH_ratio_at_LCDM_zdip_0p6316": 1.1433067384219286,
+          "a0_KH_0_m_s2": 7.889838286582892e-11,
+          "a0_KH_at_0p6316_m_s2": 9.020505278109545e-11,
+          "one_minus_q0": 1.3363999999999998,
+          "df_dz_at_z0": 0.8710209599999998,
+          "stationary_points_z_ge_0": []
+        },
+        {
+          "Omega_m0": 0.33,
+          "z_acc": 0.6900105423057973,
+          "a0_KH_ratio_at_z_acc": 1.1470147637235757,
+          "a0_KH_ratio_at_LCDM_zdip_0p6316": 1.1447278717573237,
+          "a0_KH_0_m_s2": 7.817221546890459e-11,
+          "a0_KH_at_0p6316_m_s2": 8.948591384427409e-11,
+          "one_minus_q0": 1.3241,
+          "df_dz_at_z0": 0.85910481,
+          "stationary_points_z_ge_0": []
+        }
+      ]
+    },
+    "mc_uncertainty_propagation_DES_DESI_CMB": {
+      "epistemic_status": "NUMERICAL / EMPIRICAL",
+      "n_mc": 100000,
+      "priors": {
+        "w0": "-0.82 +- 0.05",
+        "wa": "-0.63 +- 0.195",
+        "rho_w0_wa": -0.85,
+        "Omega_m0": "0.306 +- 0.008"
+      },
+      "ratio_at_z0p6316_median_68_95": {
+        "median": 1.1410993453848473,
+        "p16": 1.0787913084051857,
+        "p84": 1.209304471097938,
+        "p2p5": 1.022213110448205,
+        "p97p5": 1.2823573774491666
+      },
+      "fraction_of_draws_with_initial_z0_decrease_da0dz_lt_0": 0.00275
+    },
+    "sign_audit_and_background_independent_invariant": {
+      "epistemic_status": "PROVEN",
+      "invariant_definition": "I_KH(z) := a_0^KH(z) / [c * H(z) * |1 - q(z)|] = 5*sqrt(3)/96",
+      "invariant_exact_value": 0.09021097956087902,
+      "sign_change_condition_for_1_minus_q": "1 - q(z) = (1/2) * (1 - 3 * w_tot(z)) changes sign IFF total cosmic EOS w_tot(z) > +1/3 (stiff/kination fluid). In standard radiation + matter + DE cosmology, q(z) < 1 for all finite z >= 0, approaching q -> 1^- in deep radiation domination (where R = 0 and a_0^KH / (c H) -> 0)."
+    }
+  }
+}

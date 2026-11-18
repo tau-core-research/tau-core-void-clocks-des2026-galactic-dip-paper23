@@ -1,0 +1,56 @@
+{
+  "theorem_C9_1_void_fraction_coincidence": {
+    "status": "PROVEN",
+    "q_wall_symbolic": "(8*f**4 + 31*f**3 - 51*f**2 + 4*f + 8)/(16*f**4 + 8*f**3 + 33*f**2 + 8*f + 16)",
+    "f_acc_exact_algebraic_root": 0.58670773,
+    "tau_core_z_acc_target": 0.6315565,
+    "derived_present_void_fraction_f_v0": 0.723358,
+    "derived_present_void_volume_percent": 72.34,
+    "matches_paper20_gt_70_percent_void_claim": true,
+    "wall_to_void_clock_boost_gamma_0": 1.361679,
+    "method_A_vs_B_distance_max_diff": 1.27675647831893e-15
+  },
+  "theorem_C9_2_ocsr_void_clock_apparent_w0_wa": {
+    "status": "PROVEN (analytical formula) / CONDITIONAL (optical dressing weight = alpha_OCSR)",
+    "alpha_ocsr_locked": 0.36084392,
+    "dE_TS_dz_at_z0_symbolic": "3*(8*f0**4 + 13*f0**3 - 6*f0**2 + 4*f0 + 8)/(16*f0**4 + 8*f0**3 + 33*f0**2 + 8*f0 + 16)",
+    "dE_TS_dz_at_z0_numeric": 0.959784,
+    "dE_hor_dz_at_z0_numeric": 0.47295,
+    "exact_analytical_w0_app_at_z0": -0.828956,
+    "des_2026_w0_observed": "-0.82 +/- 0.05",
+    "tension_with_des_2026_w0_sigma": 0.179,
+    "cpl_fit_pure_timescape": {
+      "w0_apparent": -0.493,
+      "wa_apparent": -0.5256,
+      "rms_residual_mmag": 0.706
+    },
+    "cpl_fit_zero_param_ocsr_void_clock": {
+      "w0_apparent": -0.8251,
+      "wa_apparent": -0.1006,
+      "rms_residual_mmag": 0.16
+    },
+    "cpl_fit_ocsr_void_clock_plus_24mmag_dovekie_calibration": {
+      "w0_apparent": -0.8212,
+      "wa_apparent": -0.1906,
+      "rms_residual_mmag": 0.261
+    }
+  },
+  "theorem_C9_3_two_observable_synthesis": {
+    "status": "CONDITIONAL / EMPIRICAL",
+    "bound_galaxies_observable": {
+      "physical_coupling": "Local apparent-horizon Kodama-Hayward surface gravity |kappa_KH(z)| = (1/2)cH(z)|1-q(z)| in bound filament Clock Valleys",
+      "horizon_background_w": -1.0,
+      "z_dip_prediction": 0.631556,
+      "a0_dip_ratio": 0.93855,
+      "JWST_HST_43_disks_chi2_with_dip": 106.42,
+      "JWST_HST_43_disks_chi2_without_dip_DES_CPL": 121.64,
+      "delta_chi2_favoring_dip": -15.22,
+      "KMOS3D_JWST_ALMA_51_disks_delta_chi2_vs_naive_Hz": -123.05
+    },
+    "supernova_photons_observable": {
+      "physical_coupling": "Line-of-sight optical path integrating across 72.34% Void Clock Hills (d_tau/dt > 1) weighted by alpha_OCSR = 5*sqrt(3)/24",
+      "apparent_single_clock_FLRW_illusion": "Yields w0_app = -0.8251 (analytical z->0: -0.8290) and wa_app < 0 when fit with a homogeneous fluid template",
+      "Pantheon_plus_1580_vs_DES_SN5YR_verdict": "Swapping DES-SN5YR for Pantheon+ reduces CPL preference to delta_AIC = -0.24 (parity), while Tau Core M2a wins by delta_BIC = -4.85"
+    }
+  }
+}
