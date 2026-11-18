@@ -71,8 +71,13 @@ I_KH_EXACT = 5.0 * math.sqrt(3.0) / 96.0
 
 
 def audit_tex_sources_for_3_minus_q() -> Dict[str, Any]:
-    """Scan all .tex files in all_papers_bundle/TeX_Sources/ for any `(3 - q)` occurrences."""
-    tex_files = sorted(TEX_DIR.glob("*.tex"))
+    """Scan all .tex files in all_papers_bundle/TeX_Sources/ (or local package root when standalone) for `(3 - q)`."""
+    if TEX_DIR.exists():
+        scan_dir = TEX_DIR
+        tex_files = sorted(TEX_DIR.glob("*.tex"))
+    else:
+        scan_dir = OUT_DIR.parent
+        tex_files = sorted(scan_dir.glob("*.tex"))
     pat_3mq = re.compile(r"3\s*-\s*q")
     pat_1mq = re.compile(r"1\s*-\s*q")
     hits_3mq: List[Dict[str, Any]] = []
@@ -89,7 +94,7 @@ def audit_tex_sources_for_3_minus_q() -> Dict[str, Any]:
     assert len(hits_3mq) == 0, f"Found unexpected 3-q instances: {hits_3mq}"
     return {
         "epistemic_status": "PROVEN",
-        "tex_directory": str(TEX_DIR),
+        "tex_directory": str(scan_dir),
         "total_tex_files_scanned": len(tex_files),
         "three_minus_q_instances_found": len(hits_3mq),
         "three_minus_q_hits": hits_3mq,

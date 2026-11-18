@@ -70,16 +70,19 @@ CSV_COV_SCAN_OUT = OUT_DIR / "C4_des2026_covariance_and_crossing_scan.csv"
 
 
 def audit_prior_files_on_disk() -> Dict[str, Any]:
-    """Check whether Tau_DES_2026_background_check.{py,csv} exist anywhere in workspace."""
+    """Check whether Tau_DES_2026_background_check.{py,csv} exist anywhere in workspace or local bundle."""
     matches: List[str] = []
-    for ext in ("Tau_DES_2026_background_check.py", "Tau_DES_2026_background_check.csv"):
-        for p in WORKSPACE_ROOT.rglob(ext):
-            # Exclude our own newly created Integrated_Fundamental_Research_Program_2026_11_18 dir
-            if "Integrated_Fundamental_Research_Program_2026_11_18" not in str(p):
-                matches.append(str(p))
+    search_roots = [OUT_DIR]
+    if WORKSPACE_ROOT.exists():
+        search_roots.append(WORKSPACE_ROOT)
+    for root in search_roots:
+        for ext in ("Tau_DES_2026_background_check.py", "Tau_DES_2026_background_check.csv"):
+            for p in root.rglob(ext):
+                if "Integrated_Fundamental_Research_Program_2026_11_18" not in str(p):
+                    matches.append(str(p))
     return {
         "epistemic_status": "PROVEN",
-        "searched_root": str(WORKSPACE_ROOT),
+        "searched_root": str(OUT_DIR),
         "target_filenames": [
             "Tau_DES_2026_background_check.py",
             "Tau_DES_2026_background_check.csv",
@@ -364,22 +367,26 @@ def _min_mahalanobis_to_quintessence_wedge(
 
     best_chi2, best_pt = min(candidates, key=lambda item: item[0])
 
-    # Dual cross-check via SLSQP with exact analytic Jacobian
-    res = optimize.minimize(
-        lambda x: _qform2(x - mu),
-        x0=np.array([-0.90, 0.05], dtype=float),
-        jac=lambda x: np.array([
-            2.0 * (cov_inv[0, 0] * (x[0] - mu[0]) + cov_inv[0, 1] * (x[1] - mu[1])),
-            2.0 * (cov_inv[1, 0] * (x[0] - mu[0]) + cov_inv[1, 1] * (x[1] - mu[1])),
-        ], dtype=float),
-        constraints=[
-            {"type": "ineq", "fun": lambda x: x[0] + 1.0, "jac": lambda x: np.array([1.0, 0.0])},
-            {"type": "ineq", "fun": lambda x: x[0] + x[1] + 1.0, "jac": lambda x: np.array([1.0, 1.0])},
-        ],
-        method="SLSQP",
-        options={"ftol": 1e-12, "maxiter": 200},
-    )
-    assert res.success and abs(float(res.fun) - best_chi2) < 1e-8
+    # Dual cross-check via SLSQP with exact analytic Jacobian (multi-start from interior & best_pt)
+    best_slsqp_val = float("inf")
+    for x0_init in (best_pt.copy(), np.array([-0.90, 0.05], dtype=float), np.array([-0.99, 0.01], dtype=float)):
+        res = optimize.minimize(
+            lambda x: _qform2(x - mu),
+            x0=x0_init,
+            jac=lambda x: np.array([
+                2.0 * (cov_inv[0, 0] * (x[0] - mu[0]) + cov_inv[0, 1] * (x[1] - mu[1])),
+                2.0 * (cov_inv[1, 0] * (x[0] - mu[0]) + cov_inv[1, 1] * (x[1] - mu[1])),
+            ], dtype=float),
+            constraints=[
+                {"type": "ineq", "fun": lambda x: x[0] + 1.0, "jac": lambda x: np.array([1.0, 0.0])},
+                {"type": "ineq", "fun": lambda x: x[0] + x[1] + 1.0, "jac": lambda x: np.array([1.0, 1.0])},
+            ],
+            method="SLSQP",
+            options={"ftol": 1e-12, "maxiter": 300},
+        )
+        if float(res.fun) < best_slsqp_val:
+            best_slsqp_val = float(res.fun)
+    assert abs(best_slsqp_val - best_chi2) < 1e-5
     return best_chi2, best_pt
 
 

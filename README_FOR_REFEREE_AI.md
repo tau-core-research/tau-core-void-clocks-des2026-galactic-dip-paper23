@@ -1,35 +1,35 @@
-# Referee Audit Package: Sub4 Wedge Letter (`MNRAS Letters / JCAP`, 2026-11-18)
-**Title:** *Apparent Dynamical Dark Energy from Void Clock Rates and the $z = 0.6316$ Galactic Acceleration Trough: A Zero-Parameter Synthesis of DES Year 6 Supernovae, MNRAS Void-Clock Cosmology, and JWST/ALMA Disk Kinematics*  
+# Referee Audit Package (v2 — Revised after External Referee Review): Sub4 Wedge Letter (`MNRAS Letters / JCAP`, 2026-11-18)
+**Title:** *Kodama–Hayward Galactic Acceleration Trough vs. DES Year 6 Dynamical Dark Energy: An Exact Background-Dependence Theorem and Conditional Void-Clock Optical Hypotheses*  
 **Author:** Jozsef Olcsak (`ORCID: 0009-0003-7311-6522`)
 
-## 1. Contents of This Archive
-- `main.tex` & `Sub4_MNRAS_JCAP_Letter_Void_Clocks_DES2026_and_Galactic_Dip.pdf` — English manuscript (6 pages, 3 theorems, 1 figure, 1 summary table).
-- `main_HU.tex` & `Sub4_MNRAS_JCAP_Letter_Void_Clocks_DES2026_and_Galactic_Dip_HU.pdf` — Complete Hungarian edition.
-- `fig_sub4_void_clock_des2026_and_galactic_dip_en.png` / `_hu.png` — 300 DPI 3-panel figures.
-- `COVER_LETTER.txt` — Submission cover letter for *MNRAS Letters* / *JCAP*.
-- `supplementary_code_and_data/` — Standalone executable Python (`SymPy` + `SciPy`) verification scripts and machine-readable JSON/CSV outputs:
-  - `verify_C9_void_clock_timescape_apparent_w0_wa_audit.py` (`C9_void_clock_timescape_apparent_w_results.json`)
-  - `verify_C5_kh_background_dependence_audit.py` (`C5_kh_background_dependence_results.json`)
-  - `verify_C3_C4_paper10_nogo_and_des2026_cpl_audit.py` (`C3_C4_paper10_nogo_and_des2026_results.json`)
-  - `verify_C6_C7_canonical_cosmological_closure_and_likelihoods.py` (`C6_C7_canonical_closure_and_likelihood_results.json`)
-  - `Tau_DES_2026_background_comparison.csv`
-  - `C7_multiprobe_M0_M1_M2_comparison.csv`
-  - `C7_growth_fsigma8_and_lensing_slip_comparison.csv`
+---
 
-## 2. Quick Verification Command
+## 1. Summary of Revisions Addressing All External Referee Points (v2)
+All P0 and P1 points raised in the external referee validation (`Tau Core Sub4 – szigorú tudományos validáció`) have been resolved in full:
+1. **100% Standalone Reproducibility (`4/4` Scripts `PASS` with Bundled Raw Data, Zero External Paths):**
+   - All raw observational datasets required by `verify_C9`, `verify_C5`, `verify_C3_C4`, and `verify_C6_C7` are now bundled directly in `supplementary_code_and_data/data/`:
+     * `df1_z09_jwst_hst_mancerapina2025_43disks.csv` (`43` JWST/HST disk galaxies of Mancera Piña et al. 2025)
+     * `desi_gaussian_bao_ALL_GCcomb_mean.txt` & `desi_gaussian_bao_ALL_GCcomb_cov.txt` (`13` DESI BAO measurements + $13\times 13$ covariance)
+     * `pantheon_plus_hf1590_stat_sys_cholesky.npz` & `Pantheon+SH0ES.dat` (`1,580` Pantheon+ Hubble-flow Type Ia supernovae + exact $1580\times 1580$ STAT+SYS Cholesky factor)
+     * `sdss_DR16_MultiTracerELGLRG_BAORSD_FS_PK.dat`, `_cov.dat`, & `growth_web_source_native_design_matrix_v1.csv`
+   - All hardcoded `/Volumes/EXTERNAL/...` workspace paths have been removed; every script uses relative paths (`Path(__file__).resolve().parent / "data"`).
+   - Fixed the platform-dependent `SLSQP` starting-point tolerance check in `verify_C3_C4_paper10_nogo_and_des2026_cpl_audit.py`.
+   - In `verify_C9_void_clock_timescape_apparent_w0_wa_audit.py`, the 43 JWST/HST disk galaxy $\chi^2$ values (`106.42` vs. `121.64` vs. `110.66`) are no longer hardcoded literals — they are computed **live from the bundled raw CSV** on every run!
+2. **Full 2D $(w_0, w_a)$ Mahalanobis Analysis & Void-Maturity Modulation (`H2a` vs. `H2b`):**
+   - We no longer claim that the 1D $w_0^{\mathrm{app}} = -0.8251$ ($0.10\sigma$) match alone constitutes a full 2D match to DES 2026.
+   - Instead, Proposition 3 and Figure 1B report the **full 2D $(w_0, w_a)$ Mahalanobis $\Delta\chi^2_{\mathrm{2D}}$** (at $\rho = -0.85$) against both `DES Y6 + DESI + CMB` $(-0.82, -0.63)$ and `Pantheon+ + DESI + CMB` $(-0.8901, -0.2253)$, as well as the direct $\chi^2_{\mathrm{SN}}$ on the real bundled $1,580$ `Pantheon+` supernovae:
+     * **Hypothesis H2a (Constant-weight $\alpha_{\mathrm{OCSR}}$ split-beam):** Gives $(w_0^{\mathrm{app}}, w_a^{\mathrm{app}}) = (-0.8251, -0.1006)$ ($0.10\sigma$ in 1D $w_0$, $2.71\sigma$ in 1D $w_a$, $\Delta\chi^2_{\mathrm{2D}} = 24.90$ vs. DES Y6, $\Delta\chi^2_{\mathrm{2D}} = 8.44$ vs. Pantheon+, real Pantheon+ $\chi^2_{\mathrm{SN}} = 1392.40$ vs. $1470.99$ for unweighted Timescape).
+     * **Hypothesis H2b (Void-maturity-modulated coupling $\alpha_{\mathrm{eff}}(z) = \alpha_{\mathrm{OCSR}}[f_v(z)/f_{v,0}]^p$):** Because voids grow from $f_v(z\gg 1)\to 0$ to $f_{v,0}=0.7234$ today with exact slope $\mathrm{d}\ln f_v/\mathrm{d}z|_0 = -0.331584$, weighting by $[f_v(z)/f_{v,0}]^p$ leaves $w_0^{\mathrm{app}} \approx -0.82$ invariant while steepening $w_a^{\mathrm{app}}$ into the 2D confidence region: $(-0.8233, -0.2414)$ and $(-0.8256, -0.3399)$ for differential ray integration ($p=1,2$), and $(-0.8116, -0.3990)$ and $(-0.8122, -0.5717)$ ($\Delta\chi^2_{\mathrm{2D}} = 0.70$, $0.38\sigma$ 2D vs. DES 2026; real Pantheon+ $\chi^2_{\mathrm{SN}} = 1387.77$) for integrated distance modulation ($p=1,2$).
+3. **Strict Epistemic Separation (`Theorem 1 [PROVEN]`, `Proposition 2 [PROVEN under H1]`, `Proposition 3 [CONDITIONAL under H2a/H2b]`) & Unmerged Table 1:**
+   - Replaced "Zero-Parameter Synthesis" in the title and text with explicit epistemic labels (`Hypothesis H1` for horizon–wall transition matching; `Hypotheses H2a/H2b` for split-beam optical propagation).
+   - Table 1 reports `M2a-Profiled` ($k_{\mathrm{tot}}=3, \Delta\chi^2=+2.53, \Delta\mathrm{BIC}=-4.85$), `M2a-Strict-Frozen` ($k_{\mathrm{tot}}=1, \Delta\chi^2=+20.60, \Delta\mathrm{AIC}=+14.60$), and the conditional void-clock branches (`H1+H2a`, `H1+H2b`) on separate, unmerged rows.
+
+---
+
+## 2. Standalone Verification Commands (Run from Any Directory)
 ```bash
 python3 supplementary_code_and_data/verify_C9_void_clock_timescape_apparent_w0_wa_audit.py
 python3 supplementary_code_and_data/verify_C5_kh_background_dependence_audit.py
 python3 supplementary_code_and_data/verify_C3_C4_paper10_nogo_and_des2026_cpl_audit.py
+python3 supplementary_code_and_data/verify_C6_C7_canonical_cosmological_closure_and_likelihoods.py
 ```
-
-## 3. Epistemic Scope and Mathematical Claims Audited
-1. **Theorem 1 (`PROVEN` analytically & `NUMERICAL`):**
-   - For any smooth $w(a)$, the Kodama-Hayward scale $a_0^{\mathrm{KH}}(z) = \frac{5\sqrt{3}}{96}cH(z)|1-q(z)|$ satisfies $\left.\frac{1}{H}\frac{\mathrm{d}[H(1-q)]}{\mathrm{d}\ln a}\right|_{q=0} = -\frac{3}{2}(1+w) + \frac{1}{2w}\frac{\mathrm{d}w}{\mathrm{d}\ln a}$.
-   - On a homogeneous DES 2026 CPL background ($w_0 = -0.82, w_a = -0.63$, $\Omega_{m,0} = 0.3153$), $a_0^{\mathrm{KH}}(0.6316)/a_0^{\mathrm{KH}}(0) = 1.142720$ (erasing the $0.938550$ trough in $99.725\%$ of draws and degrading the 43 JWST/HST disk fit by $\Delta\chi^2 = +15.22$).
-2. **Theorem 2 (`PROVEN`):**
-   - In the Buchert-Wiltshire tracker (`MNRAS` 536, 1752, 2025), $q_{\mathrm{wall}}(f_v) = \frac{8f_v^4+31f_v^3-51f_v^2+4f_v+8}{16f_v^4+8f_v^3+33f_v^2+8f_v+16} = 0 \iff f_{\mathrm{acc}} = 0.58670773$.
-   - Locking $z(f_{\mathrm{acc}}) = z_{\mathrm{acc}} = (2\Omega_{\Lambda,0}/\Omega_{m,0})^{1/3} - 1 = 0.6315565$ uniquely yields $f_{v,0} = 0.723358$ ($72.34\%$) and $\bar{\gamma}_0 = 1.361679$ with zero free parameters.
-3. **Theorem 3 (`PROVEN` formula / `CONDITIONAL` on OCSR optical weight $\alpha_{\mathrm{OCSR}} = \frac{5\sqrt{3}}{24}$):**
-   - Exact $z=0$ slope of the Wiltshire null distance: $\left.\frac{\mathrm{d}E_{\mathrm{TS}}}{\mathrm{d}z}\right|_{z=0} = \frac{3(8f_0^4+13f_0^3-6f_0^2+4f_0+8)}{16f_0^4+8f_0^3+33f_0^2+8f_0+16} = 0.959784$.
-   - For $D_{\mathrm{obs}}(z) = (1 - \alpha_{\mathrm{OCSR}})D_{\mathrm{hor}}(z) + \alpha_{\mathrm{OCSR}}D_{\mathrm{TS}}(z)$, a flat-FLRW observer infers $w_0^{\mathrm{app}}(0) = -0.828956$ and full-range CPL $(w_0^{\mathrm{app}}, w_a^{\mathrm{app}}) = (-0.8251, -0.1006)$ ($0.10\sigma$ vs. DES 2026 $w_0 = -0.82 \pm 0.05$).

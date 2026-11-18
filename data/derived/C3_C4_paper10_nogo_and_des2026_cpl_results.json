@@ -4,7 +4,7 @@
   "date": "2026-11-18",
   "prior_files_audit": {
     "epistemic_status": "PROVEN",
-    "searched_root": "/Volumes/EXTERNAL/Research/Tau Core",
+    "searched_root": "/Volumes/EXTERNAL/Research/Tau Core/Journal_Submission_Packages_2026_11_17/Sub4_MNRAS_JCAP_Letter_Void_Clocks_DES2026_and_Galactic_Dip/supplementary_code_and_data",
     "target_filenames": [
       "Tau_DES_2026_background_check.py",
       "Tau_DES_2026_background_check.csv"

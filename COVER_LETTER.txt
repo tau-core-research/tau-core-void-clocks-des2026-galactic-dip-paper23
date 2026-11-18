@@ -1,17 +1,17 @@
 Dear Editors of Monthly Notices of the Royal Astronomical Society Letters / JCAP,
 
-Please find enclosed our Letter manuscript:
-"Apparent Dynamical Dark Energy from Void Clock Rates and the z = 0.6316 Galactic Acceleration Trough: A Zero-Parameter Synthesis of DES Year 6 Supernovae, MNRAS Void-Clock Cosmology, and JWST/ALMA Disk Kinematics"
+Please find enclosed our revised Letter manuscript (v2):
+"Kodama-Hayward Galactic Acceleration Trough vs. DES Year 6 Dynamical Dark Energy: An Exact Background-Dependence Theorem and Conditional Void-Clock Optical Hypotheses"
 by Jozsef Olcsak (ORCID: 0009-0003-7311-6522).
 
 Why this Letter is of immediate interest to MNRAS Letters / JCAP readers:
-1. It directly bridges the 2025 MNRAS inhomogeneous void-clock papers of Lane, Seifert, Ridden-Harper & Wiltshire (MNRAS 536, 1752; MNRAS Lett. 537, L55) and Efstathiou (MNRAS 538, 875) with the 2026 DES Year 6 dynamical dark energy results (arXiv:2605.27221, w0 = -0.82 +/- 0.05) and high-redshift JWST/HST/ALMA disk rotation curves (Mancera Pina et al. 2025).
-2. We prove three exact, zero-free-parameter theorems:
-   - Theorem 1: A true homogeneous CPL dark-energy fluid (w0 = -0.82, wa = -0.63) would erase the z_dip = 0.6316 Kodama-Hayward galactic acceleration trough (raising the ratio from 0.9386 to 1.1427), which is disfavored by Delta chi^2 = +15.22 across 43 JWST/HST disk galaxies.
-   - Theorem 2: Locking the Buchert-Wiltshire void-clock acceleration root q_wall(f_acc) = 0 (f_acc = 0.586708) to z_acc = 0.631556 uniquely determines the present cosmic void volume fraction f_v0 = 72.34% (0.723358) without free parameters.
-   - Theorem 3: Weighting the void-clock null distance by the locked K4 optical susceptibility alpha_OCSR = 5*sqrt(3)/24 = 0.360844 shifts the unweighted Timescape value (w0_app = -0.493) to w0_app(0) = -0.8290 and full-range CPL w0_app = -0.8251 (within 0.10 sigma of DES 2026 w0 = -0.82 +/- 0.05!), while bound filament galaxies preserve the z_dip = 0.6316 trough.
+1. It directly bridges the 2025 MNRAS inhomogeneous void-clock papers of Lane, Seifert, Ridden-Harper & Wiltshire (MNRAS 536, 1752; MNRAS Lett. 537, L55) and Efstathiou (MNRAS 538, 875) with the 2026 DES Year 6 dynamical dark energy results (arXiv:2605.27221, w0 = -0.82 +/- 0.05, wa = -0.63) and high-redshift JWST/HST disk rotation curves (Mancera Pina et al. 2025).
+2. With strict epistemic separation between proven mathematical theorems and conditional physical hypotheses, we establish:
+   - Theorem 1 (PROVEN & reproduced live on the bundled 43-galaxy catalog): For the Kodama-Hayward scale a_0^KH(z) = (5*sqrt(3)/96)*c*H(z)*|1-q(z)|, coincidence between the galactic trough z_dip and acceleration onset q(z_acc)=0 holds iff 3w(1+w) = dw/d(ln a) at z_acc. A homogeneous DES 2026 CPL fluid erases the w_hor = -1 trough (0.93855 -> 1.14272 at z=0.6316), which is disfavored across the 43 JWST/HST disk galaxies by Delta chi^2 = +15.22 (z=0-anchored) or Delta chi^2 = +4.24 plus a -12.11% drop in local a_0(0) (unanchored).
+   - Proposition 2 (PROVEN under Explicit Transition-Matching Hypothesis H1): Matching the Buchert-Wiltshire wall-acceleration root q_wall(f_acc) = 0 (f_acc = 0.586708) to z_acc^hor = 0.631556 conditionally fixes the present cosmic void volume fraction to f_v0 = 72.34% (0.723358) with no additional free parameters.
+   - Proposition 3 (CONDITIONAL Optical Hypotheses H2a & H2b + Full 2D (w0, wa) & Real Pantheon+ Audit): Constant-weight alpha_OCSR = 5*sqrt(3)/24 optical mixing (H2a) yields w_0^app(0) = -0.8290 and CPL fit (-0.8251, -0.1006) (0.10 sigma in 1D w0, Delta chi^2_2D = 24.90 vs. DES-SN5YR, 8.44 vs. Pantheon+), while void-maturity modulation alpha_eff(z) = alpha_OCSR*[f_v(z)/f_v0]^p (H2b) preserves w_0^app ~ -0.82 and steepens w_a^app to -0.24 to -0.57 (Delta chi^2_2D = 0.70 to 13.52; real Pantheon+ chi^2_SN = 1387.77 vs. 1470.99 for unweighted Timescape).
 
-All SymPy/SciPy verification scripts and JSON outputs are included in supplementary_code_and_data/ and archived on Zenodo (doi:10.5281/zenodo.24305022).
+All four SymPy/SciPy verification scripts and all raw observational datasets are bundled in supplementary_code_and_data/ and run 100% standalone without external dependencies.
 
 Sincerely,
 Jozsef Olcsak

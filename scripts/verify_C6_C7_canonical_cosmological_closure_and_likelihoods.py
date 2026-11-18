@@ -63,9 +63,10 @@ import sympy as sp
 
 
 OUT_DIR = Path(__file__).resolve().parent
+LOCAL_DATA_DIR = OUT_DIR / "data"
 WORKSPACE_ROOT = Path("/Volumes/EXTERNAL/Research/Tau Core")
 SUITE_DIR = WORKSPACE_ROOT / "all_papers_bundle" / "Verification_Suite"
-DATA_DIR = SUITE_DIR / "data"
+DATA_DIR = LOCAL_DATA_DIR if LOCAL_DATA_DIR.exists() else (SUITE_DIR / "data")
 P10_DIR = WORKSPACE_ROOT / "tau-core-cosmology-friedmann-readout-paper10"
 
 JSON_OUT = OUT_DIR / "C6_C7_canonical_closure_and_likelihood_results.json"
@@ -611,42 +612,63 @@ def load_bundled_observational_datasets() -> Dict[str, Any]:
     cho_desi = linalg.cho_factor(cov_desi)
 
     # 3. Pantheon+ Hubble-Flow Type Ia SNe (z_HD > 0.01 & IS_CALIBRATOR == 0) + Full STAT+SYS Covariance
-    pan_dir = P10_DIR / "data" / "raw" / "pantheon_plus" / "pantheon_plus_mu_covariance"
-    pan_lines = (pan_dir / "Pantheon+SH0ES.dat").read_text(encoding="utf-8").splitlines()
-    hdr = pan_lines[0].split()
-    idx_zhd = hdr.index("zHD")
-    idx_zhel = hdr.index("zHEL")
-    idx_mb = hdr.index("m_b_corr")
-    idx_cal = hdr.index("IS_CALIBRATOR")
+    local_pan_npz = LOCAL_DATA_DIR / "pantheon_plus_hf1590_stat_sys_cholesky.npz"
+    if local_pan_npz.exists():
+        pan_npz = np.load(local_pan_npz)
+        zhd_arr = np.asarray(pan_npz["zhd"], dtype=float)
+        zhel_arr = np.asarray(pan_npz["zhel"], dtype=float)
+        mb_arr = np.asarray(pan_npz["mb"], dtype=float)
+        cho_pan_hf = (np.asarray(pan_npz["L_lower"], dtype=float), True)
+        ones_pan = np.ones(len(mb_arr), dtype=float)
+        cinv_ones_pan = linalg.cho_solve(cho_pan_hf, ones_pan)
+        denom_pan = float(np.dot(ones_pan, cinv_ones_pan))
+        n_pan_hf = len(mb_arr)
+    else:
+        pan_dir = P10_DIR / "data" / "raw" / "pantheon_plus" / "pantheon_plus_mu_covariance"
+        pan_lines = (pan_dir / "Pantheon+SH0ES.dat").read_text(encoding="utf-8").splitlines()
+        hdr = pan_lines[0].split()
+        idx_zhd = hdr.index("zHD")
+        idx_zhel = hdr.index("zHEL")
+        idx_mb = hdr.index("m_b_corr")
+        idx_cal = hdr.index("IS_CALIBRATOR")
 
-    zhd_all, zhel_all, mb_all, keep_idx = [], [], [], []
-    for row_i, line in enumerate(pan_lines[1:]):
-        if not line.strip():
-            continue
-        p = line.split()
-        zhd_v = float(p[idx_zhd])
-        iscal = int(p[idx_cal])
-        if zhd_v > 0.01 and iscal == 0:
-            keep_idx.append(row_i)
-            zhd_all.append(zhd_v)
-            zhel_all.append(float(p[idx_zhel]))
-            mb_all.append(float(p[idx_mb]))
+        zhd_all, zhel_all, mb_all, keep_idx = [], [], [], []
+        for row_i, line in enumerate(pan_lines[1:]):
+            if not line.strip():
+                continue
+            p = line.split()
+            zhd_v = float(p[idx_zhd])
+            iscal = int(p[idx_cal])
+            if zhd_v > 0.01 and iscal == 0:
+                keep_idx.append(row_i)
+                zhd_all.append(zhd_v)
+                zhel_all.append(float(p[idx_zhel]))
+                mb_all.append(float(p[idx_mb]))
 
-    keep_arr = np.array(keep_idx, dtype=int)
-    cov_pan_raw = np.loadtxt(pan_dir / "Pantheon+SH0ES_STAT+SYS.cov", skiprows=1)
-    n_pan_tot = 1701
-    cov_pan_full = cov_pan_raw.reshape((n_pan_tot, n_pan_tot))
-    cov_pan_hf = cov_pan_full[np.ix_(keep_arr, keep_arr)]
-    cho_pan_hf = linalg.cho_factor(cov_pan_hf)
-    ones_pan = np.ones(len(keep_arr), dtype=float)
-    cinv_ones_pan = linalg.cho_solve(cho_pan_hf, ones_pan)
-    denom_pan = float(np.dot(ones_pan, cinv_ones_pan))
+        keep_arr = np.array(keep_idx, dtype=int)
+        cov_pan_raw = np.loadtxt(pan_dir / "Pantheon+SH0ES_STAT+SYS.cov", skiprows=1)
+        n_pan_tot = 1701
+        cov_pan_full = cov_pan_raw.reshape((n_pan_tot, n_pan_tot))
+        cov_pan_hf = cov_pan_full[np.ix_(keep_arr, keep_arr)]
+        cho_pan_hf = linalg.cho_factor(cov_pan_hf)
+        ones_pan = np.ones(len(keep_arr), dtype=float)
+        cinv_ones_pan = linalg.cho_solve(cho_pan_hf, ones_pan)
+        denom_pan = float(np.dot(ones_pan, cinv_ones_pan))
+        zhd_arr = np.array(zhd_all, dtype=float)
+        zhel_arr = np.array(zhel_all, dtype=float)
+        mb_arr = np.array(mb_all, dtype=float)
+        n_pan_hf = len(keep_arr)
 
     # 4. SDSS DR16 Multi-Tracer BAO+RSD 6x6 & SDSS Final 6-pt f*sigma_8
-    sdss_mt_path = (
-        P10_DIR / "data" / "raw" / "sdss_multitracer_bao_rsd" / "dr16_lrg_elg"
-        / "MultiTracer_PK_BAORSD_measurements"
-    )
+    if (LOCAL_DATA_DIR / "sdss_DR16_MultiTracerELGLRG_BAORSD_FS_PK.dat").exists():
+        sdss_mt_path = LOCAL_DATA_DIR
+        sdss_fs8_csv = LOCAL_DATA_DIR / "growth_web_source_native_design_matrix_v1.csv"
+    else:
+        sdss_mt_path = (
+            P10_DIR / "data" / "raw" / "sdss_multitracer_bao_rsd" / "dr16_lrg_elg"
+            / "MultiTracer_PK_BAORSD_measurements"
+        )
+        sdss_fs8_csv = P10_DIR / "data" / "derived" / "growth_web_source_native_design_matrix_v1.csv"
     sdss_mt_vals = []
     for line in (sdss_mt_path / "sdss_DR16_MultiTracerELGLRG_BAORSD_FS_PK.dat").read_text(encoding="utf-8").splitlines():
         if not line.strip():
@@ -657,7 +679,7 @@ def load_bundled_observational_datasets() -> Dict[str, Any]:
     cho_sdss_mt = linalg.cho_factor(cov_sdss_mt)
 
     sdss_fs8_rows = []
-    with (P10_DIR / "data" / "derived" / "growth_web_source_native_design_matrix_v1.csv").open(encoding="utf-8") as f:
+    with sdss_fs8_csv.open(encoding="utf-8") as f:
         for r in csv.DictReader(f):
             sdss_fs8_rows.append((r["sample"], float(r["z_eff"]), float(r["fsigma8"]), float(r["fsigma8_sigma"])))
 
@@ -665,10 +687,10 @@ def load_bundled_observational_datasets() -> Dict[str, Any]:
         "cc15": {"z": z_cc15, "Hz": h_cc15, "cho": cho_cc15},
         "desi13": {"rows": desi_rows, "cho": cho_desi},
         "pantheon_hf": {
-            "n": len(keep_arr),
-            "zhd": np.array(zhd_all, dtype=float),
-            "zhel": np.array(zhel_all, dtype=float),
-            "mb": np.array(mb_all, dtype=float),
+            "n": n_pan_hf,
+            "zhd": zhd_arr,
+            "zhel": zhel_arr,
+            "mb": mb_arr,
             "cho": cho_pan_hf,
             "cinv_ones": cinv_ones_pan,
             "denom": denom_pan,
