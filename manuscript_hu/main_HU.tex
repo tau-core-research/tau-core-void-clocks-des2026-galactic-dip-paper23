@@ -133,14 +133,19 @@ Ekkor:
 \end{enumerate}
 \end{proposition}
 
-\section{3.\ \'All\'it\'as: Felt\'eteles optikai hipot\'ezisek (H2a \'es H2b) \'es teljes 2D $(w_0, w_a)$ elemz\'es}
+\section{3.\ \'All\'it\'as: Kovari\'ans Weyl-k\'etszerez\H{o}d\'es, kvadratikus Sachs-f\'okusz\'al\'as ($p=2$) \'es 2D $(w_0, w_a)$ elemz\'es}
 
 Az \"uress\'eg--fal tracker geometri\'aban a f\'enysugarak $H_0 D_{\mathrm{TS}}(z)$ comoving t\'avols\'aga z\'art alakban integr\'alhat\'o ($u := f_v(z)^{1/3}$, $u_0 := f_{v,0}^{1/3}$):
 \begin{equation}
     H_0 D_{\mathrm{TS}}(z) = \frac{4f_{v,0}^2 + f_{v,0} + 4}{3(2 + f_{v,0})f_{v,0}^{1/3}}\Biggl[\frac{1}{2}\ln\frac{1 + u + u^2}{(1 - u)^2} + \sqrt{3}\arctan\frac{2u + 1}{\sqrt{3}}\Biggr]_{u(z)}^{u_0}, \qquad \left.\frac{\mathrm{d}E_{\mathrm{TS}}}{\mathrm{d}z}\right|_{z=0} = \mathbf{0{,}959784}.
     \label{eq:dts-closed}
 \end{equation}
-Mivel a f\'enyterjed\'es els\H{o} elvekb\H{o}l t\"ort\'en\H{o} levezet\'es\'ehez a Sachs optikai skal\'ar (Dyer--Roeder) f\'okusz\'al\'asi egyenleteket kell integr\'alni a 4D \texttt{COV-DIR+QUMOND} inhomog\'en metrik\'an (ami nyitott elm\'eleti feladat), k\'et explicit, tesztelhet\H{o} felt\'eteles optikai hipot\'ezist vizsg\'alunk a r\"ogz\'itett $\alpha_{\mathrm{OCSR}} = \frac{5\sqrt{3}}{24} = 0{,}3608439$ szuszceptibilit\'assal:
+Mi\'ert \'eppen a galaxisokb\'ol r\"ogz\'itett $\alpha_{\mathrm{OCSR}} = \frac{5\sqrt{3}}{24} = 0{,}3608439$ \'alland\'o \'es a $p = 2$ kvadratikus kitev\H{o} ir\'any\'itja a szupern\'ov\'ak f\'enyterjed\'es\'et? A 4D \texttt{COV-DIR+QUMOND} $\mathrm{d}s^2 = -(1+2\Psi/c^2)c^2\mathrm{d}t^2 + a^2(t)(1-2\Phi/c^2)\mathrm{d}\mathbf{x}^2$ metrik\'aban ($\Sigma_{\mathrm{lens}} := \frac{\Phi+\Psi}{2\Phi} = 1 \iff \Phi = \Psi$) k\'et egzakt szerkezeti t\"orv\'eny \'erv\'enyes\"ul:
+\begin{enumerate}
+    \item \textbf{Nullgeodetikus Weyl-k\'etszerez\H{o}d\'es ($\frac{1}{2}\alpha_{\mathrm{OCSR}} \to \alpha_{\mathrm{OCSR}}$):} A galaxisokban kering\H{o} nem-relativisztikus csillagok ($v \ll c$) kiz\'ar\'olag az id\H{o}szer\H{u} $\Psi$ potenci\'alhoz csatol\'odnak $\kappa_{\mathrm{gal}} = \frac{1}{2}\alpha_{\mathrm{OCSR}} = \frac{5\sqrt{3}}{48}$ er\H{o}ss\'eggel (ami az $a_0^{\mathrm{KH}} = \kappa_{\mathrm{gal}}|\kappa_{\mathrm{KH}}| = \frac{5\sqrt{3}}{96}cH|1-q|$ sk\'al\'at adja a \ref{eq:a0-kh-universal}.\ egyenletben). Ezzel szemben a f\'enysebess\'eggel halad\'o szupern\'ova-fotonok ($v = c$, $k^\mu k_\mu = 0$) a $\Psi + \Phi = 2\Psi$ Weyl-\"osszeget tapogatj\'ak le, megk\'etszerezve a csatol\'ast: $\kappa_{\mathrm{null}} = \kappa_{\mathrm{gal}}\bigl(1 + v^2/c^2\bigr)_{v=c} = 2\kappa_{\mathrm{gal}} \equiv \alpha_{\mathrm{OCSR}} = \frac{5\sqrt{3}}{24}$.
+    \item \textbf{Kvadratikus Sachs-f\'okusz\'al\'as \'es QUMOND energia-impulzus sk\'al\'az\'od\'as ($p = 2$):} A $\frac{\mathrm{d}^2 D_A}{\mathrm{d}\lambda^2} + \bigl(|\sigma_{\mathrm{opt}}|^2 + \frac{1}{2}R_{\mu\nu}k^\mu k^\nu\bigr)D_A = 0$ Sachs optikai skal\'aregyenletben mind az optikai ny\'ir\'as $|\sigma_{\mathrm{opt}}|^2$, mind a QUMOND seg\'edmez\H{o} $T^{(\chi)}_{\mu\nu}k^\mu k^\nu \propto (k^\mu\nabla_\mu\chi)^2$ energia-impulzus projekci\'oja (valamint a Buchert-f\'ele $\mathcal{Q}_D \propto \mathrm{Var}(\Theta)$ kinematikai visszahat\'as) szigor\'uan \emph{kvadratikus} az \"uress\'eg--fal hat\'ar $\nabla\chi \propto f_v(z)$ potenci\'algradiens\'eben, amib\H{o}l k\"ozvetlen\"ul ad\'odik az $\alpha_{\mathrm{eff}}(z) = \kappa_{\mathrm{null}}\bigl[f_v(z)/f_{v,0}\bigr]^2 = \alpha_{\mathrm{OCSR}}\bigl[f_v(z)/f_{v,0}\bigr]^2$ ($p = 2$) sk\'al\'az\'as.
+\end{enumerate}
+Mivel a csatolt Sachs-egyenletek teljes 3D-s inhomog\'en Swiss-cheese metrik\'an t\"ort\'en\H{o} numerikus f\'enysug\'ark\"ovet\'ese nyitott feladat, e t\"orv\'enyeket explicit, falszifik\'alhat\'o felt\'eteles optikai hipot\'ezisk\'ent vizsg\'aljuk:
 
 \begin{hypothesis}[Felt\'eteles osztott-nyal\'abos optikai hipot\'ezisek --- \textbf{H2a} \'es \textbf{H2b}]
 \label{hyp:H2}

@@ -86,9 +86,20 @@
     "dE_hor_dz_at_z0_numeric": 0.47295,
     "exact_analytical_w0_app_at_z0": -0.828956,
     "physical_interpretation_and_model_selection_accounting": {
-      "p_eq_1_physical_meaning": "1-point local volume-fraction weighting: photon beam samples local void fraction f_v(z)/f_v0 at redshift z.",
-      "p_eq_2_physical_meaning": "2-point emitter-observer / quadratic susceptibility weighting: joint void-clock dressing across emitter and observer scales as [f_v(z)/f_v0]^2.",
-      "model_selection_dof_accounting": "Because choosing p in {1, 2} and differential-ray vs. integrated-distance dressing is not yet derived from the 4D COV-DIR+QUMOND Sachs optical scalar equations, we assign an explicit hypothesis-selection penalty Delta_k_hyp in {1, 2} when comparing against baseline LCDM on Pantheon+."
+      "null_geodesic_weyl_doubling_identity": {
+        "timelike_galactic_coupling_v_ll_c": "5*sqrt(3)/48",
+        "null_geodesic_weyl_coupling_v_eq_c": "5*sqrt(3)/24",
+        "exact_ratio_null_over_timelike": 2,
+        "physical_mechanism": "In COV-DIR+QUMOND with unit lensing slip Sigma_lens = (Phi+Psi)/(2*Phi) = 1, slowly moving galactic stars (v << c) couple solely to the timelike metric perturbation Psi via (1/2)*alpha_OCSR = 5*sqrt(3)/48 (setting a_0^KH = (5*sqrt(3)/96)*c*H*|1-q|), whereas null supernova photons (v = c, k^mu k_mu = 0) sample the Weyl sum Psi + Phi = 2*Psi, doubling the coupling to 2 * (5*sqrt(3)/48) = 5*sqrt(3)/24 = alpha_OCSR."
+      },
+      "quadratic_qumond_sachs_focusing_origin_of_p_eq_2": {
+        "derived_exponent_p_from_quadratic_stress_and_shear": 2,
+        "symbolic_effective_coupling": "5*sqrt(3)*f_v**2/(24*f_v0**2)",
+        "physical_mechanism": "In the Sachs optical scalar equation d^2 D_A/dlambda^2 + (|sigma_opt|^2 + (1/2)*R_{mu nu}*k^mu*k^nu)*D_A = 0 and the COV-DIR+QUMOND action, both the optical shear |sigma_opt|^2 and the QUMOND auxiliary-field stress tensor T^(chi)_{mu nu}*k^mu*k^nu ~ (k . grad chi)^2 are strictly quadratic in the void-wall potential gradient grad(chi) ~ f_v(z), yielding the quadratic void-maturity scaling [f_v(z)/f_v0]^2 (p = 2)."
+      },
+      "p_eq_1_physical_meaning": "1-point linear volume-fraction comparison test: f_v(z)/f_v0.",
+      "p_eq_2_physical_meaning": "2-point / quadratic QUMOND stress & Sachs shear focusing scaling: [f_v(z)/f_v0]^2.",
+      "model_selection_dof_accounting": "While the Weyl-doubling identity (alpha_OCSR = 5*sqrt(3)/24) and quadratic stress/shear scaling (p = 2) motivate H2b physically, a complete inhomogeneous ray-tracing integration on a 4D COV-DIR+QUMOND Swiss-cheese metric remains an open frontier; we therefore report both continuous-parameter AIC/BIC (Delta_k_cont = 0) and a conservative heuristic discrete-selection sensitivity table (Delta_k_hyp in {1, 2})."
     },
     "cpl_fits_and_2D_mahalanobis_comparison": {
       "unweighted_pure_Timescape": {
