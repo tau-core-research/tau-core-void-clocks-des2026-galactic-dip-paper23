@@ -318,9 +318,12 @@ def make_figure(lang: str, res_json: Dict[str, Any], locus_data, bin_data) -> Pa
         _add_cov_ellipse(ax, m["w0_hat"], m["wa_hat"], m["sigma_w0_hessian"], m["sigma_wa_hessian"], m["rho_w0_wa_hessian"], 2.2957, col, col, label=lbl + " (68%/95%)", alpha=0.17, lw=1.35)
         _add_cov_ellipse(ax, m["w0_hat"], m["wa_hat"], m["sigma_w0_hessian"], m["sigma_wa_hessian"], m["rho_w0_wa_hessian"], 6.1801, "none", col, alpha=0.0, lw=0.85, ls="--")
 
+    # Linder (2015, PRD 91, 063006, Eq. 3) non-phantom algebraic thawing effective CPL projection:
+    w0_l15 = np.linspace(-1.0, -0.60, 12)
+    wa_l15 = -0.78 * (1.0 + w0_l15)
+    ax.plot(w0_l15, wa_l15, color="#8e44ad", ls=":", lw=1.8, zorder=5,
+            label=("Linder (2015) non-phantom thawing (k=5)" if lang == "en" else "Linder (2015) nem-fantom thawing (k=5)"))
     w0_line = np.linspace(-1.0, -0.60, 100)
-    ax.plot(w0_line, -1.58 * (1.0 + w0_line), color="#8e44ad", ls=":", lw=1.8, zorder=5,
-            label=("Thawing quintessence wₐ = −1.58(1+w₀) (k=5)" if lang == "en" else "Thawing kvintesszencia wₐ = −1,58(1+w₀) (k=5)"))
     ax.plot(w0_line, -3.30 * (1.0 + w0_line), color="#7f8c8d", ls="-.", lw=1.55, zorder=5,
             label=("Phantom-crossing line wₐ = −3.3(1+w₀) (k=5)" if lang == "en" else "Fantom-átlépő egyenes wₐ = −3,3(1+w₀) (k=5)"))
 
@@ -395,7 +398,7 @@ def write_latex_tables_snippet(res_json: Dict[str, Any]) -> Path:
             "H2_vol_p2_free_alpha_k5",
             "Const_Weight_H2a_p0_free_alpha_k5",
             "Smooth_wCDM_k5",
-            "Smooth_Thawing_Quintessence_k5",
+            "Smooth_Linder2015_NonPhantom_Thawing_k5",
             "Smooth_PhantomCrossing_CPL_DegLine_k5",
             "M1b_Free_CPL_k6",
         ]:

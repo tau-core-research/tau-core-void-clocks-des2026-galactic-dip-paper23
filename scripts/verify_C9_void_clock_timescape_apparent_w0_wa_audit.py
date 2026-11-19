@@ -700,9 +700,9 @@ def run_multi_sn_joint_likelihood_suite(data: Dict[str, Any], f_acc: float) -> D
             w0_rec, wa_rec = p1, p2
         elif mode == "wCDM":
             w0_rec, wa_rec = p1, 0.0
-        elif mode == "Thawing_Quint_k5":
-            w0_rec = p1
-            wa_rec = -1.58 * (1.0 + w0_rec)
+        elif mode == "Linder2015_Thawing_k5":
+            # Linder (2015, PRD 91, 063006, Eq. 3): 1+w(a) = (1+w0)*a*((1+b)/(1+b*a^{-3}))^{2/3}, b=0.5, w0 >= -1
+            w0_rec, wa_rec = -1.0, 0.0
         elif mode == "CPL_DegLine_k5":
             w0_rec = p1
             wa_rec = -3.30 * (1.0 + w0_rec)
@@ -738,15 +738,27 @@ def run_multi_sn_joint_likelihood_suite(data: Dict[str, Any], f_acc: float) -> D
         u_star = math.log1p(rec["z_star"])
         fv0_used = 0.0
 
-        if mode in ("CPL", "wCDM", "Thawing_Quint_k5", "CPL_DegLine_k5"):
+        if mode in ("CPL", "wCDM", "Linder2015_Thawing_k5", "CPL_DegLine_k5"):
             a_nodes = 1.0 / zp1_nodes
-            de_nodes = (zp1_nodes ** (3.0 * (1.0 + w0_rec + wa_rec))) * np.exp(-3.0 * wa_rec * (1.0 - a_nodes))
+            if mode == "Linder2015_Thawing_k5":
+                b_l15 = 0.5
+                de_nodes = np.exp(
+                    3.0 * (1.0 + p1) * ((1.0 + b_l15) - ((1.0 + b_l15) ** (2.0 / 3.0)) * ((a_nodes**3 + b_l15) ** (1.0 / 3.0)))
+                )
+            else:
+                de_nodes = (zp1_nodes ** (3.0 * (1.0 + w0_rec + wa_rec))) * np.exp(-3.0 * wa_rec * (1.0 - a_nodes))
             E_nodes = np.sqrt(Om_r * (zp1_nodes**4) + om0 * (zp1_nodes**3) + om_de * de_nodes)
             dD_dz_nodes = 1.0 / E_nodes
             D_nodes = integrate.cumulative_trapezoid(zp1_nodes * dD_dz_nodes, u_nodes, initial=0.0)
             dH_dimless_nodes = dD_dz_nodes
-            delta_star_dimless = 0.0
-            dm_obs_zstar_mpc = rec["D_M_zstar_Mpc"]
+            if mode == "Linder2015_Thawing_k5":
+                E_lcdm_nodes = np.sqrt(Om_r * (zp1_nodes**4) + om0 * (zp1_nodes**3) + om_de)
+                D_lcdm_nodes = integrate.cumulative_trapezoid(zp1_nodes / E_lcdm_nodes, u_nodes, initial=0.0)
+                delta_star_dimless = float(np.interp(u_star, u_nodes, D_nodes - D_lcdm_nodes))
+                dm_obs_zstar_mpc = rec["D_M_zstar_Mpc"] + dh_mpc * delta_star_dimless
+            else:
+                delta_star_dimless = 0.0
+                dm_obs_zstar_mpc = rec["D_M_zstar_Mpc"]
         else:
             alpha_val = p1
             fv0_used = float(fixed_fv0) if fixed_fv0 is not None else fv0_from_om0_H1(om0)
@@ -909,10 +921,10 @@ def run_multi_sn_joint_likelihood_suite(data: Dict[str, Any], f_acc: float) -> D
         c_p = fit_3param_fixed_p1(sn, p_hat + dp, mode, cmb_prior, include_cc, fixed_fv0, rd_mode, res.x[:3])["chi2_total"]
         c_m = fit_3param_fixed_p1(sn, p_hat - dp, mode, cmb_prior, include_cc, fixed_fv0, rd_mode, res.x[:3])["chi2_total"]
         sig_p = math.sqrt(2.0 * dp * dp / max(c_p - 2.0 * c_0 + c_m, 1e-9))
-        if mode in ("wCDM", "Thawing_Quint_k5", "CPL_DegLine_k5"):
+        if mode in ("wCDM", "Linder2015_Thawing_k5", "CPL_DegLine_k5"):
             out["w0_hat"] = p_hat
             out["sigma_w0"] = sig_p
-            out["wa_hat"] = 0.0 if mode == "wCDM" else (-1.58 * (1.0 + p_hat) if mode == "Thawing_Quint_k5" else -3.30 * (1.0 + p_hat))
+            out["wa_hat"] = 0.0 if mode == "wCDM" else (None if mode == "Linder2015_Thawing_k5" else -3.30 * (1.0 + p_hat))
         else:
             out["alpha_hat"] = p_hat
             out["sigma_alpha"] = sig_p
@@ -993,7 +1005,8 @@ def run_multi_sn_joint_likelihood_suite(data: Dict[str, Any], f_acc: float) -> D
             res["look_elsewhere_3p_corrected_sigma"] = round(z_lee_3models, 2)
         if "w0_hat" in raw:
             res["w0_hat"] = round(raw["w0_hat"], 4)
-            res["wa_hat"] = round(raw["wa_hat"], 4)
+            if raw.get("wa_hat") is not None:
+                res["wa_hat"] = round(raw["wa_hat"], 4)
             if "sigma_w0_hessian" in raw:
                 res["sigma_w0_hessian"] = round(raw["sigma_w0_hessian"], 4)
                 res["sigma_wa_hessian"] = round(raw["sigma_wa_hessian"], 4)
@@ -1008,23 +1021,38 @@ def run_multi_sn_joint_likelihood_suite(data: Dict[str, Any], f_acc: float) -> D
             res["Delta_BIC_vs_CPL"] = round((raw["chi2_total"] - c_cpl) + dk_vs_cpl * math.log(n_points), 3)
         return res
 
-    # A) BAO + Planck18 ONLY (ZERO SUPERNOVAE) FIT & OUT-OF-SAMPLE SN PREDICTIVE SPLIT:
+    # A) BAO + Planck18 ONLY (ZERO SUPERNOVAE) FIT & OUT-OF-SAMPLE SN PREDICTIVE SUITE (ALL 1-PARAM TEMPLATES):
     f_bc_lcdm = fit_3param_fixed_p1(None, 0.0, "H2_vol_p1", "PL3_MCMC", rd_mode="CAMB")
-    f_bc_h2v = fit_4param_k5_model(None, "H2_vol_p1", "PL3_MCMC", rd_mode="CAMB", init_p1=0.52)
-    out_of_sample_sn: Dict[str, Any] = {}
-    for sn_k, sn_ds in data["sn_compilations"].items():
-        csn0 = eval_sn_chi2_direct(sn_ds, f_bc_lcdm["spl_D"](sn_ds["ln1pz_hd"]))
-        csn1 = eval_sn_chi2_direct(sn_ds, f_bc_h2v["spl_D"](sn_ds["ln1pz_hd"]))
-        out_of_sample_sn[sn_k] = {
-            "LCDM_BAO_CMB_predicted_SN_chi2": round(csn0, 2),
-            "H2_vol_BAO_CMB_predicted_SN_chi2": round(csn1, 2),
-            "out_of_sample_Delta_chi2_SN": round(csn1 - csn0, 2),
-        }
+    c0_bc = f_bc_lcdm["chi2_total"]
+
+    def _bc_entry(fit_res: Dict[str, Any], k_no_mb: int) -> Dict[str, Any]:
+        s = summarize_fit(fit_res, c0_bc, k_no_mb + 1, 16)
+        s["k_params"] = k_no_mb
+        s["Delta_AIC_vs_LCDM"] = round((fit_res["chi2_total"] - c0_bc) + 2.0 * (k_no_mb - 3), 3)
+        s["Delta_BIC_vs_LCDM"] = round((fit_res["chi2_total"] - c0_bc) + (k_no_mb - 3) * math.log(16), 3)
+        oos = {}
+        for sn_k, sn_ds in data["sn_compilations"].items():
+            csn0 = eval_sn_chi2_direct(sn_ds, f_bc_lcdm["spl_D"](sn_ds["ln1pz_hd"]))
+            csn1 = eval_sn_chi2_direct(sn_ds, fit_res["spl_D"](sn_ds["ln1pz_hd"]))
+            oos[sn_k] = {
+                "predicted_SN_chi2": round(csn1, 2),
+                "out_of_sample_Delta_chi2_SN_vs_LCDM": round(csn1 - csn0, 2),
+            }
+        s["out_of_sample_SN_predictions"] = oos
+        return s
+
+    f_bc_p0 = fit_4param_k5_model(None, "H2a_const_p0", "PL3_MCMC", rd_mode="CAMB", init_p1=0.09, dp=0.01)
+    f_bc_p1 = fit_4param_k5_model(None, "H2_vol_p1", "PL3_MCMC", rd_mode="CAMB", init_p1=0.52)
+    f_bc_p2 = fit_4param_k5_model(None, "H2_vol_p2", "PL3_MCMC", rd_mode="CAMB", init_p1=0.75)
+    f_bc_cpl_deg = fit_4param_k5_model(None, "CPL_DegLine_k5", "PL3_MCMC", rd_mode="CAMB", init_p1=-0.75, p1_bounds=(-1.25, -0.45), dp=0.015)
+
     bao_cmb_only_block = {
         "N_BAO_plus_CMB": 16,
-        "LCDM_k3_no_MB": summarize_fit(f_bc_lcdm, f_bc_lcdm["chi2_total"], 4, 16),
-        "H2_vol_p1_k4_no_MB": summarize_fit(f_bc_h2v, f_bc_lcdm["chi2_total"], 5, 16),
-        "out_of_sample_SN_predictions_at_BAO_CMB_MLE": out_of_sample_sn,
+        "LCDM_no_MB_k3": _bc_entry(f_bc_lcdm, 3),
+        "H2a_p0_no_MB_k4": _bc_entry(f_bc_p0, 4),
+        "H2_vol_p1_no_MB_k4": _bc_entry(f_bc_p1, 4),
+        "H2_vol_p2_no_MB_k4": _bc_entry(f_bc_p2, 4),
+        "PhantomCrossing_CPL_DegLine_no_MB_k4": _bc_entry(f_bc_cpl_deg, 4),
     }
 
     # B) PRIMARY AUDIT ACROSS ALL 4 SN COMPILATIONS (CAMB-calibrated r_d = 147.102 Mpc at fiducial):
@@ -1044,9 +1072,9 @@ def run_multi_sn_joint_likelihood_suite(data: Dict[str, Any], f_acc: float) -> D
         f_h2v_p2 = fit_4param_k5_model(sn_ds, "H2_vol_p2", "PL3_MCMC", rd_mode="CAMB", init_p1=0.55)
         f_h2a_p0_free = fit_4param_k5_model(sn_ds, "H2a_const_p0", "PL3_MCMC", rd_mode="CAMB", init_p1=0.085, dp=0.01)
 
-        # k = 5 smooth dark-energy benchmarks:
+        # k = 5 smooth dark-energy benchmarks (with truly non-phantom Linder 2015 Eq. 3 algebraic thawing, w0 >= -1):
         f_wcdm = fit_4param_k5_model(sn_ds, "wCDM", "PL3_MCMC", rd_mode="CAMB", init_p1=-0.96, p1_bounds=(-1.45, -0.55), dp=0.02)
-        f_thaw = fit_4param_k5_model(sn_ds, "Thawing_Quint_k5", "PL3_MCMC", rd_mode="CAMB", init_p1=-0.91, p1_bounds=(-1.35, -0.50), dp=0.015)
+        f_thaw = fit_4param_k5_model(sn_ds, "Linder2015_Thawing_k5", "PL3_MCMC", rd_mode="CAMB", init_p1=-0.92, p1_bounds=(-1.0, -0.50), dp=0.015)
         f_cpl_deg = fit_4param_k5_model(sn_ds, "CPL_DegLine_k5", "PL3_MCMC", rd_mode="CAMB", init_p1=-0.82, p1_bounds=(-1.25, -0.50), dp=0.015)
 
         # Fixed-weight boundary limits (k = 4):
@@ -1075,7 +1103,7 @@ def run_multi_sn_joint_likelihood_suite(data: Dict[str, Any], f_acc: float) -> D
             "H2_vol_p2_free_alpha_k5": summarize_fit(f_h2v_p2, c0, 5, n_pts, c_cpl),
             "Const_Weight_H2a_p0_free_alpha_k5": summarize_fit(f_h2a_p0_free, c0, 5, n_pts, c_cpl),
             "Smooth_wCDM_k5": summarize_fit(f_wcdm, c0, 5, n_pts, c_cpl),
-            "Smooth_Thawing_Quintessence_k5": summarize_fit(f_thaw, c0, 5, n_pts, c_cpl),
+            "Smooth_Linder2015_NonPhantom_Thawing_k5": summarize_fit(f_thaw, c0, 5, n_pts, c_cpl),
             "Smooth_PhantomCrossing_CPL_DegLine_k5": summarize_fit(f_cpl_deg, c0, 5, n_pts, c_cpl),
             "M1b_Free_CPL_k6": summarize_fit(f_cpl, c0, 6, n_pts, c_cpl),
             "Unit_VoidModulated_Limit_alpha1_p1_k4": summarize_fit(f_unit_p1, c0, 4, n_pts, c_cpl),
@@ -1287,7 +1315,7 @@ def run_3d_void_sightline_audit(data: Dict[str, Any]) -> Dict[str, Any]:
     fv_in = trace_1d_void_fraction(u_in, np.full(len(u_in), 30.0), r_in)
     fv_bg = trace_1d_void_fraction(u_bg, np.full(len(u_bg), 30.0), np.full(len(u_bg), 300.0))
 
-    def gls_dedup_stats(z_arr, y_arr, cov_mat, fv_arr, ra_arr, dec_arr, n_raw_rows: int, n_perm: int = 500) -> Dict[str, Any]:
+    def gls_dedup_stats(z_arr, y_arr, cov_mat, fv_arr, n_raw_rows: int) -> Dict[str, Any]:
         cho = linalg.cho_factor(cov_mat, lower=True)
         z_c = z_arr - np.mean(z_arr)
         fv_c = fv_arr - np.mean(fv_arr)
@@ -1299,34 +1327,6 @@ def run_3d_void_sightline_audit(data: Dict[str, Any]) -> Dict[str, Any]:
         slope, err_slope = float(bh[2]), math.sqrt(float(cb[2, 2]))
         z_score = slope / err_slope
 
-        # Sky-patch block permutation (4 RA quartiles x 2 DEC halves = 8 sky patches) preserving spatial clustering:
-        ra_bins = np.digitize(ra_arr, np.quantile(ra_arr, [0.25, 0.50, 0.75]))
-        dec_bins = (dec_arr >= np.median(dec_arr)).astype(int)
-        patch_ids = 2 * ra_bins + dec_bins
-        uniq_patches = [ np.where(patch_ids == pid)[0] for pid in range(8) if np.any(patch_ids == pid) ]
-
-        rng = np.random.default_rng(20261119)
-        cnt_iid = 0
-        cnt_block = 0
-        for _ in range(n_perm):
-            fv_iid = rng.permutation(fv_c)
-            Xp = np.column_stack([np.ones(len(z_arr)), z_c, fv_iid])
-            cbp = linalg.inv(np.einsum("ni,nj->ij", Xp, linalg.cho_solve(cho, Xp)))
-            bhp = np.einsum("ij,nj,n->i", cbp, Xp, Cinv_y)
-            if abs(float(bhp[2]) / math.sqrt(float(cbp[2, 2]))) >= abs(z_score):
-                cnt_iid += 1
-
-            # Spatial patch cyclic/shuffle block permutation + within-patch z-rank matching:
-            perm_order = rng.permutation(len(uniq_patches))
-            fv_blk = np.empty_like(fv_c)
-            pool = np.concatenate([fv_c[uniq_patches[k]] for k in perm_order])
-            fv_blk[:] = pool[:len(fv_c)]
-            Xb = np.column_stack([np.ones(len(z_arr)), z_c, fv_blk])
-            cbb = linalg.inv(np.einsum("ni,nj->ij", Xb, linalg.cho_solve(cho, Xb)))
-            bhb = np.einsum("ij,nj,n->i", cbb, Xb, Cinv_y)
-            if abs(float(bhb[2]) / math.sqrt(float(cbb[2, 2]))) >= abs(z_score):
-                cnt_block += 1
-
         return {
             "N_lightcurve_rows": int(n_raw_rows),
             "N_unique_SNe": int(len(z_arr)),
@@ -1335,12 +1335,10 @@ def run_3d_void_sightline_audit(data: Dict[str, Any]) -> Dict[str, Any]:
             "z_controlled_GLS_slope_dmu_dfv_mag": round(slope, 4),
             "sigma_slope_mag": round(err_slope, 4),
             "slope_t_stat_sigma": round(z_score, 2),
-            "two_sided_permutation_p_value": round((1.0 + cnt_iid) / (1.0 + n_perm), 4),
-            "sky_patch_block_permutation_p_value": round((1.0 + cnt_block) / (1.0 + n_perm), 4),
         }
 
-    stats_in = gls_dedup_stats(z_in, y_in, cov_in, fv_in, ra_in, dec_in, len(idx_in_raw))
-    stats_bg = gls_dedup_stats(z_bg, y_bg, cov_bg, fv_bg, ra_bg, dec_bg, len(idx_bg_raw))
+    stats_in = gls_dedup_stats(z_in, y_in, cov_in, fv_in, len(idx_in_raw))
+    stats_bg = gls_dedup_stats(z_bg, y_bg, cov_bg, fv_bg, len(idx_bg_raw))
 
     # Combined deduplicated NGC sample (N_unique = len(z_in) + len(z_bg)) with full cross-covariance:
     idx_comb_raw = np.concatenate([idx_in_raw, idx_bg_raw])
@@ -1422,10 +1420,12 @@ def run_3d_void_sightline_audit(data: Dict[str, Any]) -> Dict[str, Any]:
             "predicted_slope_dmu_dfv_bg_shell_z0p10_at_z0p30_mag": round(dmu_th_bg_sdss, 4),
             "predicted_slope_dmu_dfv_deep_z0p70_tracker_mag": round(dmu_th_deep_z07, 4),
             "status_note": (
-                "Exploratory low-redshift null check ONLY: at z <= 0.105 the theoretical H2-vol sightline signal "
-                f"({dmu_th_bg_sdss:+.3f} to {dmu_th_in_sdss:+.3f} mag) has ~0.3-0.4 sigma expected SNR relative to "
-                f"the +- {esl_comb:.3f} mag uncertainty of N = {n1+n2} unique Pantheon+ SNe, and low-z void boundary "
-                "peculiar velocities (Bolejko et al. 2013, PRL 110, 021302) contribute comparable variance."
+                "Exploratory low-redshift null check ONLY: at z <= 0.105 the directional sightline signal "
+                f"({dmu_th_bg_sdss:+.3f} to {dmu_th_in_sdss:+.3f} mag under an anisotropic ray-wise extension) has "
+                f"~0.3-0.4 sigma expected SNR relative to the +- {esl_comb:.3f} mag uncertainty of N = {n1+n2} unique "
+                "Pantheon+ SNe, and low-z void-boundary peculiar velocities (Bolejko et al. 2013, PRL 110, 021302) "
+                "contribute comparable variance. The -0.052 mag deep z <= 0.70 curve requires an explicit directional "
+                "extension beyond sky-averaged Eq. (4)."
             ),
         },
     }
