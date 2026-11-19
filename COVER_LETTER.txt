@@ -1,56 +1,59 @@
-Dear Editors,
+Dear Editors and Referees,
 
-Please find enclosed the revised manuscript (v7.0),
+Please find enclosed the revised manuscript (v8.0),
 
   "Void-Volume-Weighted Optical Distances Confronting DESI BAO, Compressed Planck CMB,
    and Four Type Ia Supernova Compilations"
 
-by Jozsef Olcsak, prepared as a regular research article for JCAP, Physical Review D, or
-The Open Journal of Astrophysics.
+by Jozsef Olcsak, prepared as a regular research article for JCAP (and formatted in full
+compliance with JCAP/IOP author guidelines, including keywords, single-command code/figure
+reproducibility, and AI-assistance disclosure).
 
-Following constructive referee feedback on v6.0, this v7.0 revision streamlines the paper
-into a focused, self-contained cosmological analysis and incorporates four major empirical
-and methodological upgrades:
+We thank both Referees for their remarkably thorough, independent code verification and
+penetrating physical/statistical critiques of v7.0. Every technical, mathematical, statistical,
+and reproducibility issue raised by Referee 1 and Referee 2 has been resolved in v8.0:
 
-1. Honest k = 5 Parameter Accounting & Restrained Academic Framing:
-   - Galactic disk-kinematics material and external algebraic coupling priors have been
-     completely separated out so this manuscript focuses strictly on late-time cosmological
-     distances with standard academic prose.
-   - Because p = 1 void-volume weighting is adopted after redshift-independent weighting
-     (p = 0) fails CMB + BAO constraints, H2-vol and Forward H2-Sachs are penalized
-     throughout as k = 5 models (one free parameter alpha beyond k = 4 flat LCDM, and one
-     fewer than k = 6 CPL), with post-data model-selection caveats stated explicitly.
+1. Head-to-Head k = 5 Dark-Energy Controls & Background Geometric Degeneracy (Referees 1 & 2):
+   - Added explicit head-to-head k = 5 smooth dark-energy benchmarks across all four datasets:
+     (i) constant-w wCDM (w_a = 0), (ii) canonical NEC-obeying slow-roll thawing quintessence
+     (w_a = -1.58*(1 + w_0), Caldwell & Linder 2005), and (iii) an empirical phantom-crossing
+     CPL degeneracy line (w_a = -3.3*(1 + w_0)).
+   - H2-vol (p = 1, k = 5) outperforms canonical non-phantom thawing quintessence by
+     Delta_chi^2 = -6.99 to -9.64 across all four compilations, while matching the empirical
+     phantom-crossing line within |Delta_chi^2| <= 1.73. The manuscript states explicitly that
+     sky-averaged background probes cannot distinguish inhomogeneous void clocks from a smooth
+     phantom-crossing effective w_eff(z), though H2-vol produces that steep trajectory without
+     violating the Null Energy Condition.
 
-2. Full Compressed Planck 2018 CMB Priors & Explicit H_0 / f_{v,0} Sensitivity:
-   - Replaces the single theta_* prior with the full marginalized 3x3 Planck 2018
-     TT,TE,EE+lowE MCMC covariance on (omega_b, omega_c, 100*theta_*), cross-checked
-     independently against the Chen, Huang & Wang (2019, JCAP 02, 028) (R, l_A, omega_b)
-     distance prior.
-   - Explicitly documents common-H_0 vs. bare-Hbar_0 normalization and demonstrates
-     robustness across fixed f_{v,0} in [0.72, 0.80] (including Wiltshire's 0.762 benchmark)
-     without requiring transition-matching calibration H1.
+2. Removal of p = 0 Strawman, Unconstrained alpha, & Look-Elsewhere Accounting (Referees 1 & 2):
+   - Removed the fixed-alpha p = 0 strawman from the Abstract and text; tabulated free-alpha
+     p = 0, p = 1, and p = 2 side-by-side in Table 1 with unconstrained alpha in [-0.3, 1.25]
+     and 3-trial look-elsewhere-corrected significances alongside true p = 0, alpha = 1 pure
+     Timescape and unit-weight p = 1, alpha = 1 limits.
 
-3. Multi-Compilation Concordance Across Pantheon+, DES-Dovekie, DES-SN5YR, and Union3:
-   - Bundling and fitting all four public SN Ia datasets jointly with DESI BAO and Planck
-     2018 priors yields mutually consistent mixing weights:
-       * Pantheon+:   alpha_hat = 0.422 +- 0.127 (Delta_chi^2 = -10.96, Delta_BIC = -3.59)
-       * DES-Dovekie: alpha_hat = 0.432 +- 0.122 (Delta_chi^2 = -12.66, Delta_BIC = -5.14)
-       * DES-SN5YR:   alpha_hat = 0.545 +- 0.121 (Delta_chi^2 = -20.30, Delta_BIC = -12.78)
-       * Union3:      alpha_hat = 0.594 +- 0.141 (Delta_chi^2 = -15.15, Delta_BIC = -11.51)
-     matching 2-parameter CPL in total chi^2 within <= 2.1 on every sample (Delta_BIC =
-     -3.76 to -9.51 relative to CPL) and reproducing the DES-Dovekie + DESI + Planck CPL
-     result (-0.818 +- 0.057, -0.644 +- 0.228) directly from public data.
+3. Exact Polynomial Factorization, Recombination Scaling, CAMB r_d, & Unstitched Sachs (Referee 2):
+   - Factored (f_v - 1)*(8*f_v^3 + 39*f_v^2 - 12*f_v - 8) = 0 analytically in verify_C9 to
+     eliminate floating-point rounding of f_v = 1 in Python 3.9 / NumPy 1.26.
+   - Corrected the early-matter scaling to f_v(z) ~ (1+z)^{-3/2} with f_v(z_* = 1089.9) = 8.68e-5,
+     and reported the non-zero cumulative shift Delta D_M(z_*) ~ -10.6 to -14.0 Mpc.
+   - Adopted CAMB-calibrated r_d (147.102 Mpc at fiducial Planck parameters) on a unified
+     log-grid u = ln(1+z) in [0, ln(1201)] (zero z = 2.5 stitch), reporting Aubourg et al. (2015)
+     r_d and +-0.15% r_d sensitivity plus unstitched Hamiltonian Sachs Ricci-focusing diagnostics,
+     and corrected the `+lensing` provenance label in `planck2018_compressed_priors.json`.
 
-4. Direct 3D Cosmic-Void Sightline Ray-Tracing Test (Pantheon+ x SDSS DR7 VoidFinder):
-   - Cross-correlating N = 311 Pantheon+ sightlines through the 39,735 3D VoidFinder
-     spheres of Douglass, Veyrat & BenZvi (2023, ApJS 265, 7) yields a z-detrended GLS
-     slope d(Delta_mu)/d(f_{v,LOS}) = -0.058 +- 0.036 mag (-1.59 sigma), matching the
-     negative sign predicted by faster void clocks while remaining statistically consistent
-     with both the small z <= 0.105 single-shell expectation (-0.007 to -0.014 mag) and
-     noise, and establishing a -0.053 mag (> 5 sigma) forecast for DESI + Euclid/LSST.
+4. BAO+CMB-Only Out-of-Sample SN Test, Full f_{v,0} Scan, & Exploratory Null Check (Referees 1 & 2):
+   - Reported the DESI BAO + Planck18 fit without SNe (Delta_chi^2 = -7.43, alpha_hat = 0.521)
+     and its parameter-free out-of-sample SN improvement across all four datasets (-1.48 to -11.60),
+     explicitly framing the four overlapping SN compilations as a calibration sensitivity check.
+   - Tabulated the full non-selective f_{v,0} in [0.60, 0.84] scan showing the strong (alpha, f_{v,0})
+     degeneracy, and explained the physical assumption of common-H_0 vs. bare-Hbar_0 normalization.
+   - Deduplicated repeated survey light curves (311 rows -> N_unique = 280 SNe), added 8-patch
+     sky-block permutations, cited Bolejko et al. (2013, PRL 110, 021302), and framed the
+     z <= 0.105 SDSS DR7 VoidFinder analysis strictly as a ~0.37 sigma exploratory null check.
 
-All raw data and the standalone NumPy/SciPy verification script (~35 s runtime, supporting
-`--no-asserts` for custom prior exploration) are bundled in `supplementary_code_and_data/`.
+5. Single-Command Reproducibility (Referee 2):
+   - Running `python3 supplementary_code_and_data/verify_C9_void_clock_timescape_apparent_w0_wa_audit.py`
+     now regenerates the JSON output, LaTeX table summaries, and Figure 1 PNGs in one command.
 
 Sincerely,
 Jozsef Olcsak

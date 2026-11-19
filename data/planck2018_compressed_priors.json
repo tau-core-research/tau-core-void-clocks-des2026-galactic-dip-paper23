@@ -1,0 +1,62 @@
+{
+  "planck2018_mcmc_3x3_omegab_omegac_100thetastar": {
+    "source": "Planck Collaboration 2020 (A&A 641, A6, Table 2 col 6) base_plikHM_TTTEEE_lowl_lowE_lensing MCMC chains 3x3 covariance + posterior mean",
+    "param_order": [
+      "omega_b",
+      "omega_cdm",
+      "100_theta_star"
+    ],
+    "mean": [
+      0.022373,
+      0.119994,
+      1.0411
+    ],
+    "cov": [
+      [
+        2.1238517e-08,
+        -9.0296572e-08,
+        1.7632299e-08
+      ],
+      [
+        -9.0296572e-08,
+        1.3879427e-06,
+        -1.2602979e-07
+      ],
+      [
+        1.7632299e-08,
+        -1.2602979e-07,
+        9.7141363e-08
+      ]
+    ]
+  },
+  "chen_huang_wang_2019_R_lA_omegab": {
+    "source": "Chen, Huang & Wang (2019, JCAP 02, 028, arXiv:1808.05724, Appendix A Distance_invcov.txt)",
+    "param_order": [
+      "R",
+      "l_A",
+      "omega_b"
+    ],
+    "mean": [
+      1.750235,
+      301.4707,
+      0.02235976
+    ],
+    "invcov": [
+      [
+        94392.3971,
+        -1360.4913,
+        1664517.2916
+      ],
+      [
+        -1360.4913,
+        161.4349,
+        3671.618
+      ],
+      [
+        1664517.2916,
+        3671.618,
+        79719182.5162
+      ]
+    ]
+  }
+}

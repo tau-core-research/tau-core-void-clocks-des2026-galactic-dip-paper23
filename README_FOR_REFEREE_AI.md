@@ -1,35 +1,29 @@
-# Referee & Reproducibility Guide (v7.0 — JCAP / PRD / OJA Cosmology Edition)
+# Referee & Reproducibility Guide (v8.0 — JCAP Major Revision)
 
-## 1. One-Command Standalone Verification (`NumPy` + `SciPy` Only)
+## 1. True Single-Command Regeneration (JSON + LaTeX Tables + Figure 1)
 
-Run the entire multi-compilation cosmological likelihood and 3D void-sightline ray-tracing suite from raw bundled data (~30–45 seconds on a single laptop CPU core; requires **only** `numpy` and `scipy`):
+Execute the complete multi-compilation likelihood, dark-energy control, out-of-sample SN split, and deduplicated 3D void-sightline pipeline from bundled public data (~1–3 minutes on a single CPU core; core audit requires only `numpy` and `scipy`, and automatically calls bundled `generate_sub4_figures_and_tables.py` if `matplotlib` is installed):
 
 ```bash
 python3 supplementary_code_and_data/verify_C9_void_clock_timescape_apparent_w0_wa_audit.py
 ```
 
-If you modify priors, parameters, or datasets in a copy of the script for custom cross-checks, no hardcoded dataset $\chi^2$ assertions exist, and mathematical unit-test assertions can also be disabled via:
+Custom flags for independent experimentation:
+- `--no-asserts`: disables unit-test assertions when testing modified priors or formulas.
+- `--no-figures`: runs only the pure `NumPy`/`SciPy` numerical audit without `matplotlib`.
 
-```bash
-python3 supplementary_code_and_data/verify_C9_void_clock_timescape_apparent_w0_wa_audit.py --no-asserts
-```
-
-The complete machine-readable output is written to `supplementary_code_and_data/C9_void_clock_timescape_apparent_w_results.json`.
+Generated outputs:
+1. `supplementary_code_and_data/C9_void_clock_timescape_apparent_w_results.json`
+2. `supplementary_code_and_data/generated_tables_v8.tex`
+3. `fig_sub4_void_clock_des2026_and_galactic_dip_en.png` & `fig_sub4_void_clock_des2026_and_galactic_dip_hu.png`
 
 ---
 
-## 2. Summary of v7.0 Upgrades Addressing External Review of v6.0
+## 2. Point-by-Point Checklist of v8.0 Fixes for Referees 1 & 2
 
-1. **Focused Scope & Restrained JCAP/PRD Style:**
-   - Removed all galactic rotation-curve / 43-disk material (retained in companion galactic work) and removed all algebraic simplex priors ($\alpha_0 = 5\sqrt{3}/24$) and corpus self-citations.
-   - Replaced emphatic labels and boldface rhetoric with standard academic prose.
-2. **Honest $k = 5$ Parameter Accounting:**
-   - `H2-vol` ($p = 1$) and `Forward H2-Sachs` ($p = 1$) are penalized throughout as $k = 5$ models ($h, \omega_b, \omega_c, M_B, \alpha$; $\Delta k = +1$ over $k = 4$ flat $\Lambda$CDM, $\Delta k = -1$ vs. $k = 6$ CPL), explicitly noting post-data selection of $p = 1$ after $p = 0$ failed CMB+BAO.
-3. **Full Compressed Planck 2018 Priors & $H_0$ / $f_{v,0}$ Sensitivity:**
-   - Primary CMB: marginalized $3\times 3$ `Planck 2018 TT,TE,EE+lowE` MCMC covariance on $(\omega_b, \omega_c, 100\theta_*)$ (`planck2018_compressed_priors.json`).
-   - Cross-check CMB: `Chen, Huang & Wang (2019, JCAP 02, 028)` $(R, \ell_A, \omega_b)$ inverse covariance, plus reproduction of the referee's diagonal $\theta_* + \mathrm{BBN} + \omega_c + \mathrm{CC15}$ check ($\chi^2_{\Lambda\mathrm{CDM}} = 1413.85$, $\Delta\chi^2 = -11.31$, $\hat{\alpha} = 0.425 \pm 0.125$).
-   - Explicitly tests unnormalized bare-$\bar{H}_0$ weighting ($\hat{\alpha} = 0.000 \pm 0.043$) and fixed $f_{v,0} \in [0.65, 0.80]$ without `H1` ($f_{v,0} = 0.762$ gives $\Delta\chi^2 = -11.27$).
-4. **All Four Public Type Ia Supernova Compilations Bundled & Fitted:**
-   - `Pantheon+` ($N = 1,580$), `DES-Dovekie` recalibrated ($N = 1,820$), `DES-SN5YR` 2024 ($N = 1,829$), and `Union3` ($N = 22$ spline nodes) yield mutually consistent $\hat{\alpha} \in [0.422, 0.594]$ with $\Delta\chi^2 = -10.96, -12.66, -20.30, -15.15$ ($\Delta\mathrm{BIC} = -3.59, -5.14, -12.78, -11.51$ vs. $\Lambda$CDM, and $-3.76$ to $-9.51$ vs. CPL).
-5. **Direct 3D Cosmic-Void Sightline Ray-Tracing (`Pantheon+` $\times$ `SDSS DR7 VoidFinder`):**
-   - Exact 1D chord-union ray-tracing through the $39,735$ 3D comoving spheres of Douglass, Veyrat & BenZvi (2023, *ApJS* 265, 7; `sdss_dr7_voidfinder_planck2018_3d_catalog.npz`) across $N = 311$ NGC interior sightlines gives $\mathrm{d}\Delta\mu/\mathrm{d}f_{v,\mathrm{LOS}} = -0.058 \pm 0.036\;\mathrm{mag}$ ($-1.59\sigma$), matching the predicted sign while remaining statistically consistent with both the small $z \le 0.105$ single-shell amplitude ($-0.007$ to $-0.014\;\mathrm{mag}$) and noise.
+1. **Bug Fix for Python 3.9 / NumPy 1.26 (`f_acc` Root):** Factored $(f_v - 1)(8f_v^3 + 39f_v^2 - 12f_v - 8) = 0$ analytically so $f_v = 1$ can never round below unity (`f_acc = 0.5867077311`).
+2. **Exact Recombination Scaling & Cumulative $\Delta D_M(z_*)$:** Fixed $f_v(z) \propto (1+z)^{-3/2}$ ($f_v(1089.92) = 8.68\times 10^{-5}$) and reported the non-zero cumulative shift $\Delta D_M(z_*) \simeq -10.6$ to $-14.0\;\mathrm{Mpc}$ explicitly.
+3. **CAMB $r_d$ Baseline & $+lensing$ Provenance:** Calibrated baseline $r_d$ to exact CAMB ($147.102\;\mathrm{Mpc}$ at Planck fiducial) on a smooth all-$z$ log-grid $u = \ln(1+z) \in [0, \ln 1201]$ (zero $z = 2.5$ stitch), added Aubourg et al. (2015) and $\pm 0.15\%$ $r_d$ sensitivity checks, and updated `planck2018_compressed_priors.json` to `TT,TE,EE+lowE+lensing` (Table 2 col. 6).
+4. **Head-to-Head $k = 5$ Dark-Energy Controls & No $p = 0$ Strawman:** Tabulated free-$\alpha$ $p = 0, 1, 2$ alongside $w$CDM ($k = 5$), canonical NEC-obeying thawing quintessence $w_a = -1.58(1+w_0)$ ($k = 5$; `H2-vol` improves by $\Delta\chi^2 = -6.99$ to $-9.64$), and the empirical phantom-crossing CPL degeneracy line $w_a = -3.3(1+w_0)$ ($k = 5$; $|\Delta\chi^2| \le 1.73$, demonstrating background geometric degeneracy).
+5. **`BAO + Planck18`-Only Out-of-Sample SN Test & Full $f_{v,0} \in [0.60, 0.84]$ Scan:** Added the zero-SN `BAO + CMB` fit ($\Delta\chi^2 = -7.43$, $\hat{\alpha} = 0.521$) with parameter-free out-of-sample improvements on all four SN datasets ($\Delta\chi^2_{\mathrm{SN}} = -1.48$ to $-11.60$), documented compilation overlap (`DES-Dovekie` shares $\sim 94\%$ of CIDs with `DES-SN5YR`), and reported the full $f_{v,0} \in [0.60, 0.84]$ scan showing strong $(\alpha, f_{v,0})$ degeneracy.
+6. **Deduplicated Exploratory 3D Sightline Null Check:** Contracted duplicate survey rows ($311 \to N_{\mathrm{unique}} = 280$ physical SNe), added 8-patch sky-block permutations, cited Bolejko et al. (2013, *PRL* 110, 021302), removed `">5\sigma"` claims, and reported the $z \le 0.105$ test strictly as a $\sim 0.37\sigma$ exploratory null check.
