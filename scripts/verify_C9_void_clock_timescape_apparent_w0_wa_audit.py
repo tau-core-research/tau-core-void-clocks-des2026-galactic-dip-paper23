@@ -2,7 +2,7 @@
 """
 verify_C9_void_clock_timescape_apparent_w0_wa_audit.py
 ======================================================
-Self-Contained, Reproducible Multi-Probe Verification Suite (v11.0) for:
+Self-Contained, Reproducible Multi-Probe Verification Suite (v12.0) for:
   "Void-Volume-Weighted Optical Distances Confronting DESI BAO, Compressed Planck CMB,
    and Four Type Ia Supernova Compilations"
 
@@ -1482,10 +1482,12 @@ def run_3d_void_sightline_audit(data: Dict[str, Any]) -> Dict[str, Any]:
     fv_asd = trace_custom_spheres(as_all[:, :3], as_all[:, 3], u_asd, np.full(len(u_asd), 150.0), r_asd)
     stats_astra_0p20_0p95 = gls_dedup_stats(z_asd, y_asd, cov_asd, fv_asd, len(idx_as_deep))
 
-    # Strict LRG-only check: LRG void centers (footprint) AND LRG effective-radius spheres ONLY, explicit 0.42 <= z <= 0.95:
-    idx_as_lrg = np.where(in_as_lrg & (zhd >= 0.42) & (zhd <= 0.95))[0]
+    # Strict LRG-only check: LRG void centers (footprint) AND LRG effective-radius spheres ONLY,
+    # explicit 0.42 <= z <= 0.95 with matched inner shell r_lrg_min = r(z=0.42) (~1129.3 Mpc/h) and >= 10 Mpc/h path:
+    r_lrg_min = float(2997.92458 * H0_D_CPL_vec(np.array([0.42]), -1.0, 0.0, 0.3153)[0])
+    idx_as_lrg = np.where(in_as_lrg & (zhd >= 0.42) & (zhd <= 0.95) & (r_sn_mpch >= r_lrg_min + 10.0))[0]
     z_asl, r_asl, y_asl, cov_asl, u_asl, _, _ = deduplicate_by_cid(idx_as_lrg)
-    fv_asl = trace_custom_spheres(as_lrg[:, :3], as_lrg[:, 3], u_asl, np.full(len(u_asl), 1150.0), r_asl)
+    fv_asl = trace_custom_spheres(as_lrg[:, :3], as_lrg[:, 3], u_asl, np.full(len(u_asl), r_lrg_min), r_asl)
     stats_astra_lrg_0p42_0p95 = gls_dedup_stats(z_asl, y_asl, cov_asl, fv_asl, len(idx_as_lrg))
 
     # Exact unique-SN overlap between DESIVAST and ASTRA-DESI DR1 (correlated cross-checks, not independent):
@@ -1659,8 +1661,8 @@ def run_audit(run_asserts: bool = True, generate_figures: bool = True) -> Dict[s
     elapsed = round(time.perf_counter() - t_start, 2)
     results = {
         "audit_version": (
-            "v11.0 (Exact 100*theta_* Planck PR3 Cov, Linder 2015 Non-Phantom Thawing, "
-            "Uniform BAO+CMB Out-of-Sample SN Split, & Exact-z / LRG-Only Deep 3D DESI DR1 Void Sightlines)"
+            "v12.0 (Final JCAP Submission: Exact 100*theta_* Planck PR3 Cov, Linder 2015 Non-Phantom Thawing, "
+            "Uniform BAO+CMB Out-of-Sample SN Split, & Matched-Boundary Exact-z Deep 3D DESI DR1 Void Sightlines)"
         ),
         "runtime_seconds": elapsed,
         "section_1_wiltshire_benchmarks_and_recombination_scaling": {
@@ -1691,7 +1693,7 @@ def run_audit(run_asserts: bool = True, generate_figures: bool = True) -> Dict[s
 
     JSON_OUT.write_text(json.dumps(results, indent=2), encoding="utf-8")
     print(json.dumps(results, indent=2))
-    print(f"\n[PASS] v11.0 Verification Suite completed in {elapsed:.2f}s -> {JSON_OUT}")
+    print(f"\n[PASS] v12.0 Verification Suite completed in {elapsed:.2f}s -> {JSON_OUT}")
 
     if generate_figures:
         try:
@@ -1704,7 +1706,7 @@ def run_audit(run_asserts: bool = True, generate_figures: bool = True) -> Dict[s
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Standalone v11.0 Void-Weighted Cosmology Verification Suite")
+    parser = argparse.ArgumentParser(description="Standalone v12.0 Void-Weighted Cosmology Verification Suite")
     parser.add_argument("--no-asserts", action="store_true", help="Disable unit-test assertions for custom prior exploration")
     parser.add_argument("--no-figures", action="store_true", help="Skip regenerating Figure 1 PNGs and LaTeX table snippets")
     args = parser.parse_args()

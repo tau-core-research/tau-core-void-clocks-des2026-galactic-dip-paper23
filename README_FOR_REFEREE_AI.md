@@ -1,4 +1,4 @@
-# Referee & Reproducibility Guide (v11.0 — Final JCAP Submission-Ready Edition)
+# Referee & Reproducibility Guide (v12.0 — Final JCAP Submission-Ready Edition)
 
 ## 1. Single-Command Verification & Planck PR3 Chain Extraction
 
@@ -22,6 +22,6 @@ python3 supplementary_code_and_data/build_planck2018_compressed_prior.py /path/t
    - `SDSS DR7 VoidFinder` ($z \le 0.105$, $N_{\mathrm{uniq}} = 280$): $-0.0552 \pm 0.0362\;\mathrm{mag}$ ($-1.52\sigma$, $95\%$ CI $[-0.126, +0.016]\;\mathrm{mag}$)
    - `DESI DR1 DESIVAST` ($0.08 \le z \le 0.23$, $N_{\mathrm{uniq}} = 68$): $-0.0471 \pm 0.0497\;\mathrm{mag}$ ($-0.95\sigma$, $95\%$ CI $[-0.145, +0.050]\;\mathrm{mag}$)
    - `ASTRA-DESI DR1 BGS+LRG` ($0.10 \le z \le 0.95$, $N_{\mathrm{uniq}} = 734$): $-0.0352 \pm 0.0340\;\mathrm{mag}$ ($-1.03\sigma$, $95\%$ CI $[-0.102, +0.032]\;\mathrm{mag}$); $0.20 \le z \le 0.95$ ($N_{\mathrm{uniq}} = 547$): $-0.0439 \pm 0.0439\;\mathrm{mag}$ ($-1.00\sigma$)
-   - Strict `ASTRA-DESI DR1 LRG-only` ($0.42 \le z \le 0.95$, $N_{\mathrm{uniq}} = 128$): $+0.0159 \pm 0.0460\;\mathrm{mag}$ ($+0.35\sigma$, $95\%$ CI $[-0.074, +0.106]\;\mathrm{mag}$)
+   - Strict `ASTRA-DESI DR1 LRG-only` ($0.42 \le z \le 0.95$, matched $r_{\min} = 1129.3\,h^{-1}\mathrm{Mpc}$ & $\ge 10\,h^{-1}\mathrm{Mpc}$ path, $N_{\mathrm{uniq}} = 123$): $+0.0170 \pm 0.0489\;\mathrm{mag}$ ($+0.35\sigma$, $95\%$ CI $[-0.079, +0.113]\;\mathrm{mag}$)
 2. **Documented Footprint, $R_{\mathrm{eff}}$ Sphere Union, Overlap & Conditional Scaling:** Explicitly documented angular-proximity footprint approximation, `ASTRA` $R_{\mathrm{eff}}$ sphere-union estimator, exact overlap (`67/68` `DESIVAST` SNe in `ASTRA-DESI`, making them correlated cross-checks), and qualified $N_{\mathrm{SN}} \sim 2.8 \times 10^3$ as a conditional $N^{-1/2}$ order-of-magnitude scaling assuming identical per-SN sensitivity and fixed $-0.052\;\mathrm{mag}$.
 3. **Standalone Data & Code Availability Section & 6× Speedup:** Added a dedicated JCAP `\section*{Data and Code Availability}` and replaced unoptimized `np.einsum` covariance/ray-tracing loops with BLAS matrix products, cutting full runtime to ~1–3 min.

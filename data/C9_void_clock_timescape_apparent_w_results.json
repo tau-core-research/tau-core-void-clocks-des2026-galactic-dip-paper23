@@ -1,6 +1,6 @@
 {
-  "audit_version": "v11.0 (Exact 100*theta_* Planck PR3 Cov, Linder 2015 Non-Phantom Thawing, Uniform BAO+CMB Out-of-Sample SN Split, & Exact-z / LRG-Only Deep 3D DESI DR1 Void Sightlines)",
-  "runtime_seconds": 61.88,
+  "audit_version": "v12.0 (Final JCAP Submission: Exact 100*theta_* Planck PR3 Cov, Linder 2015 Non-Phantom Thawing, Uniform BAO+CMB Out-of-Sample SN Split, & Matched-Boundary Exact-z Deep 3D DESI DR1 Void Sightlines)",
+  "runtime_seconds": 60.78,
   "section_1_wiltshire_benchmarks_and_recombination_scaling": {
     "factored_cubic_coefficients": [
       8.0,
@@ -2244,17 +2244,17 @@
         "slope_t_stat_sigma": -1.0
       },
       "ASTRA_DESI_DR1_LRG_only_0p42_le_z_le_0p95": {
-        "N_lightcurve_rows": 128,
-        "N_unique_SNe": 128,
-        "z_min": 0.42036,
+        "N_lightcurve_rows": 123,
+        "N_unique_SNe": 123,
+        "z_min": 0.42459,
         "z_max": 0.79863,
-        "mean_f_v_LOS": 0.397,
-        "std_f_v_LOS": 0.3135,
-        "z_controlled_GLS_slope_dmu_dfv_mag": 0.0159,
-        "sigma_slope_mag": 0.046,
+        "mean_f_v_LOS": 0.401,
+        "std_f_v_LOS": 0.3012,
+        "z_controlled_GLS_slope_dmu_dfv_mag": 0.017,
+        "sigma_slope_mag": 0.0489,
         "ci95_GLS_slope_mag": [
-          -0.0742,
-          0.106
+          -0.0788,
+          0.1128
         ],
         "slope_t_stat_sigma": 0.35
       },

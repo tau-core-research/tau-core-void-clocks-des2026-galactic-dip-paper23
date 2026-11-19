@@ -2,7 +2,7 @@
 """
 generate_sub4_figures_and_tables.py
 ===================================
-Bundled figure & LaTeX table generator for Sub4 v11.0.
+Bundled figure & LaTeX table generator for Sub4 v12.0.
 Automatically invoked by `verify_C9_void_clock_timescape_apparent_w0_wa_audit.py`
 (or callable standalone via `python3 generate_sub4_figures_and_tables.py`).
 """
