@@ -1,6 +1,6 @@
 {
-  "audit_version": "v10.0 (Exact 100*theta_* Planck PR3 Cov, Linder 2015 Non-Phantom Thawing, Uniform BAO+CMB Out-of-Sample SN Split, & Deep 3D DESI DR1 Void Sightlines z <= 0.95)",
-  "runtime_seconds": 583.29,
+  "audit_version": "v11.0 (Exact 100*theta_* Planck PR3 Cov, Linder 2015 Non-Phantom Thawing, Uniform BAO+CMB Out-of-Sample SN Split, & Exact-z / LRG-Only Deep 3D DESI DR1 Void Sightlines)",
+  "runtime_seconds": 61.88,
   "section_1_wiltshire_benchmarks_and_recombination_scaling": {
     "factored_cubic_coefficients": [
       8.0,
@@ -2152,23 +2152,35 @@
     }
   },
   "section_4_3d_cosmic_void_sightline_exploratory_null_check": {
-    "catalog_citation": "Douglass, Veyrat & BenZvi (2023), ApJS 265, 7 (SDSS DR7 VoidFinder) + DESI DR1 DESIVAST VoidFinder (v1.0) + ASTRA-DESI DR1 BGS/LRG (Zenodo 22003899)",
+    "catalog_citation": "Douglass, Veyrat & BenZvi (2023), ApJS 265, 7 (SDSS DR7 VoidFinder) + DESI DR1 DESIVAST VoidFinder (v1.0) + ASTRA-DESI DR1 BGS/LRG effective-radius spheres (Zenodo 22003899)",
     "deduplicated_in_volume_SNe_0p02_le_z_le_0p105": {
       "N_lightcurve_rows": 151,
       "N_unique_SNe": 120,
+      "z_min": 0.02035,
+      "z_max": 0.10246,
       "mean_f_v_LOS": 0.6262,
       "std_f_v_LOS": 0.1902,
       "z_controlled_GLS_slope_dmu_dfv_mag": -0.0872,
       "sigma_slope_mag": 0.0662,
+      "ci95_GLS_slope_mag": [
+        -0.2168,
+        0.0425
+      ],
       "slope_t_stat_sigma": -1.32
     },
     "deduplicated_background_SNe_z_gt_0p11_fixed_shell_30_to_300_Mpch": {
       "N_lightcurve_rows": 160,
       "N_unique_SNe": 160,
+      "z_min": 0.11001,
+      "z_max": 1.61505,
       "mean_f_v_LOS": 0.6095,
       "std_f_v_LOS": 0.2441,
       "z_controlled_GLS_slope_dmu_dfv_mag": -0.0401,
       "sigma_slope_mag": 0.0435,
+      "ci95_GLS_slope_mag": [
+        -0.1254,
+        0.0452
+      ],
       "slope_t_stat_sigma": -0.92
     },
     "combined_deduplicated_NGC_interior_SNe": {
@@ -2176,48 +2188,79 @@
       "N_unique_SNe": 280,
       "z_controlled_GLS_slope_dmu_dfv_mag": -0.0552,
       "sigma_slope_mag": 0.0362,
+      "ci95_GLS_slope_mag": [
+        -0.1263,
+        0.0158
+      ],
       "slope_t_stat_sigma": -1.52,
       "raw_undeduplicated_N311_slope_mag": -0.0575,
       "raw_undeduplicated_N311_sigma_mag": 0.0362
     },
     "deep_DESI_DR1_3d_void_sightline_tests": {
+      "footprint_selection_note": "Sky footprint approximated via angular proximity to nearest void center (3.5 deg for DESIVAST, 2.5 deg for ASTRA-DESI); actual DESI DR1 coverage is program-dependent (bright/BGS vs dark/LRG). ASTRA-DESI chord fractions evaluate the 1D union of catalog effective-radius (R_eff) spheres.",
       "DESIVAST_VoidFinder_NGC_SGC_0p08_le_z_le_0p23": {
         "N_lightcurve_rows": 68,
         "N_unique_SNe": 68,
+        "z_min": 0.08245,
+        "z_max": 0.22543,
         "mean_f_v_LOS": 0.3724,
         "std_f_v_LOS": 0.3279,
         "z_controlled_GLS_slope_dmu_dfv_mag": -0.0471,
         "sigma_slope_mag": 0.0497,
+        "ci95_GLS_slope_mag": [
+          -0.1445,
+          0.0502
+        ],
         "slope_t_stat_sigma": -0.95
       },
       "ASTRA_DESI_DR1_BGS_LRG_0p10_le_z_le_0p95": {
-        "N_lightcurve_rows": 735,
-        "N_unique_SNe": 735,
-        "mean_f_v_LOS": 0.2183,
-        "std_f_v_LOS": 0.1487,
-        "z_controlled_GLS_slope_dmu_dfv_mag": -0.0344,
-        "sigma_slope_mag": 0.0341,
-        "slope_t_stat_sigma": -1.01
+        "N_lightcurve_rows": 734,
+        "N_unique_SNe": 734,
+        "z_min": 0.10165,
+        "z_max": 0.93585,
+        "mean_f_v_LOS": 0.2171,
+        "std_f_v_LOS": 0.1494,
+        "z_controlled_GLS_slope_dmu_dfv_mag": -0.0352,
+        "sigma_slope_mag": 0.034,
+        "ci95_GLS_slope_mag": [
+          -0.1018,
+          0.0315
+        ],
+        "slope_t_stat_sigma": -1.03
       },
       "ASTRA_DESI_DR1_BGS_LRG_0p20_le_z_le_0p95": {
-        "N_lightcurve_rows": 540,
-        "N_unique_SNe": 540,
-        "mean_f_v_LOS": 0.219,
-        "std_f_v_LOS": 0.1411,
-        "z_controlled_GLS_slope_dmu_dfv_mag": -0.0478,
-        "sigma_slope_mag": 0.0443,
-        "slope_t_stat_sigma": -1.08
+        "N_lightcurve_rows": 547,
+        "N_unique_SNe": 547,
+        "z_min": 0.20077,
+        "z_max": 0.93585,
+        "mean_f_v_LOS": 0.2167,
+        "std_f_v_LOS": 0.1412,
+        "z_controlled_GLS_slope_dmu_dfv_mag": -0.0439,
+        "sigma_slope_mag": 0.0439,
+        "ci95_GLS_slope_mag": [
+          -0.1299,
+          0.0422
+        ],
+        "slope_t_stat_sigma": -1.0
       },
       "ASTRA_DESI_DR1_LRG_only_0p42_le_z_le_0p95": {
-        "N_lightcurve_rows": 167,
-        "N_unique_SNe": 167,
-        "mean_f_v_LOS": 0.3336,
-        "std_f_v_LOS": 0.3204,
-        "z_controlled_GLS_slope_dmu_dfv_mag": 0.0341,
-        "sigma_slope_mag": 0.0365,
-        "slope_t_stat_sigma": 0.94
+        "N_lightcurve_rows": 128,
+        "N_unique_SNe": 128,
+        "z_min": 0.42036,
+        "z_max": 0.79863,
+        "mean_f_v_LOS": 0.397,
+        "std_f_v_LOS": 0.3135,
+        "z_controlled_GLS_slope_dmu_dfv_mag": 0.0159,
+        "sigma_slope_mag": 0.046,
+        "ci95_GLS_slope_mag": [
+          -0.0742,
+          0.106
+        ],
+        "slope_t_stat_sigma": 0.35
       },
-      "empirical_3sigma_sample_size_forecast_in_DESI_footprint": 2856
+      "overlap_DESIVAST_in_ASTRA_unique_SNe": 67,
+      "conditional_N_inv_sqrt_scaling_at_minus_0p052mag": 2836,
+      "conditional_scaling_note": "Order-of-magnitude N^{-1/2} scaling assuming identical per-SN sensitivity to the ASTRA-DESI DR1 sample and a fixed hypothetical -0.052 mag directional slope (not fixed by the sky-averaged distance law; excludes future survey selection functions and spatial covariance)."
     },
     "theoretical_H2_vol_scale_and_exploratory_null_status": {
       "expected_SNR_in_SDSS_DR7_shell_sigma": 0.37,

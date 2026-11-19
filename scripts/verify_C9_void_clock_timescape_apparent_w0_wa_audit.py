@@ -2,7 +2,7 @@
 """
 verify_C9_void_clock_timescape_apparent_w0_wa_audit.py
 ======================================================
-Self-Contained, Reproducible Multi-Probe Verification Suite (v10.0) for:
+Self-Contained, Reproducible Multi-Probe Verification Suite (v11.0) for:
   "Void-Volume-Weighted Optical Distances Confronting DESI BAO, Compressed Planck CMB,
    and Four Type Ia Supernova Compilations"
 
@@ -1313,8 +1313,9 @@ def run_3d_void_sightline_audit(data: Dict[str, Any]) -> Dict[str, Any]:
             dec_u[u_i] = float(dec_hf[idx[g[0]]])
             d_mean = np.sum(w[:, None] * n_hat[idx[g]], axis=0)
             u_dirs[u_i] = d_mean / np.linalg.norm(d_mean)
-        y_u = np.einsum("ui,i->u", W_agg, res_sn_all[idx])
-        cov_u = np.einsum("ui,ij,vj->uv", W_agg, cov_sub, W_agg)
+        with np.errstate(divide="ignore", over="ignore", invalid="ignore"):
+            y_u = W_agg @ res_sn_all[idx]
+            cov_u = (W_agg @ cov_sub) @ W_agg.T
         return z_u, r_u, y_u, cov_u, u_dirs, ra_u, dec_u
 
     idx_in_raw = np.where(in_ngc_interior & (r_sn_mpch >= 60.0) & (r_sn_mpch <= 305.0))[0]
@@ -1340,10 +1341,13 @@ def run_3d_void_sightline_audit(data: Dict[str, Any]) -> Dict[str, Any]:
         return {
             "N_lightcurve_rows": int(n_raw_rows),
             "N_unique_SNe": int(len(z_arr)),
+            "z_min": round(float(np.min(z_arr)), 5),
+            "z_max": round(float(np.max(z_arr)), 5),
             "mean_f_v_LOS": round(float(np.mean(fv_arr)), 4),
             "std_f_v_LOS": round(float(np.std(fv_arr)), 4),
             "z_controlled_GLS_slope_dmu_dfv_mag": round(slope, 4),
             "sigma_slope_mag": round(err_slope, 4),
+            "ci95_GLS_slope_mag": [round(slope - 1.959964 * err_slope, 4), round(slope + 1.959964 * err_slope, 4)],
             "slope_t_stat_sigma": round(z_score, 2),
         }
 
@@ -1369,7 +1373,8 @@ def run_3d_void_sightline_audit(data: Dict[str, Any]) -> Dict[str, Any]:
     W1, W2 = build_W(idx_in_raw), build_W(idx_bg_raw)
     n1, n2 = W1.shape[0], W2.shape[0]
     W_tot = linalg.block_diag(W1, W2)
-    cov_comb_u = np.einsum("ui,ij,vj->uv", W_tot, cov_hf[np.ix_(idx_comb_raw, idx_comb_raw)], W_tot)
+    with np.errstate(divide="ignore", over="ignore", invalid="ignore"):
+        cov_comb_u = (W_tot @ cov_hf[np.ix_(idx_comb_raw, idx_comb_raw)]) @ W_tot.T
     y_comb_u = np.concatenate([y_in, y_bg])
     cho_c = linalg.cho_factor(cov_comb_u, lower=True)
     X_c = np.zeros((n1 + n2, 5), dtype=np.float64)
@@ -1411,7 +1416,7 @@ def run_3d_void_sightline_audit(data: Dict[str, Any]) -> Dict[str, Any]:
     delta_D_deep = float(integrate.trapezoid((sfv_ts(np.log1p(zt_deep)) / 0.724) * (sdD_ts(np.log1p(zt_deep)) - 1.0 / np.sqrt(0.314 * (1.0 + zt_deep) ** 3 + 0.686)), zt_deep))
     dmu_th_deep_z07 = (5.0 / math.log(10.0)) * (0.40 / 0.61) * delta_D_deep / float(H0_D_CPL_vec(np.array([0.70]), -1.0, 0.0, 0.314)[0])
 
-    # Deep 3D DESI DR1 Ray-Tracing Tests (DESIVAST VoidFinder z<=0.24 & ASTRA-DESI DR1 BGS+LRG 0.10<=z<=0.95):
+    # Deep 3D DESI DR1 Ray-Tracing Tests (DESIVAST VoidFinder 0.08<=z<=0.23 & ASTRA-DESI DR1 BGS+LRG 0.10<=z<=0.95):
     def trace_custom_spheres(centers_arr, radii_arr, unit_dirs, s_min, s_max):
         r2 = radii_arr ** 2
         cn2 = np.sum(centers_arr ** 2, axis=1)
@@ -1420,7 +1425,8 @@ def run_3d_void_sightline_audit(data: Dict[str, Any]) -> Dict[str, Any]:
             s0, s1 = float(s_min[i]), float(s_max[i])
             if s1 - s0 <= 10.0:
                 continue
-            sp = np.einsum("md,d->m", centers_arr, unit_dirs[i])
+            with np.errstate(divide="ignore", over="ignore", invalid="ignore"):
+                sp = centers_arr @ unit_dirs[i]
             d2 = cn2 - sp * sp
             hit = np.where(d2 < r2)[0]
             if len(hit) == 0:
@@ -1445,40 +1451,48 @@ def run_3d_void_sightline_audit(data: Dict[str, Any]) -> Dict[str, Any]:
             out[i] = tot / (s1 - s0)
         return out
 
-    # (a) Official DESI DR1 DESIVAST VoidFinder (NGC+SGC, 101,863 spheres, r in [180, 665] Mpc/h, z <= 0.24):
+    # (a) Official DESI DR1 DESIVAST VoidFinder (NGC+SGC, 101,863 spheres, explicit 0.08 <= z <= 0.23):
     dv_h = data["desivast_dr1_voidfinder"]["holes"]
     dv_m = data["desivast_dr1_voidfinder"]["maximal"]
     dv_dirs = dv_m[:, :3] / np.linalg.norm(dv_m[:, :3], axis=1, keepdims=True)
     with np.errstate(divide="ignore", over="ignore", invalid="ignore"):
         in_dv = np.max(n_hat @ dv_dirs.T, axis=1) >= math.cos(math.radians(3.5))
-    idx_dv_in = np.where(in_dv & (r_sn_mpch >= 240.0) & (r_sn_mpch <= 665.0))[0]
+    idx_dv_in = np.where(in_dv & (zhd >= 0.08) & (zhd <= 0.23))[0]
     z_dvi, r_dvi, y_dvi, cov_dvi, u_dvi, _, _ = deduplicate_by_cid(idx_dv_in)
     fv_dvi = trace_custom_spheres(dv_h[:, :3], dv_h[:, 3], u_dvi, np.full(len(u_dvi), 180.0), r_dvi)
     stats_desivast_in = gls_dedup_stats(z_dvi, y_dvi, cov_dvi, fv_dvi, len(idx_dv_in))
 
-    # (b) Deep ASTRA-DESI DR1 BGS_BRIGHT + LRG (NGC+SGC, 35,122 voids, r in [150, 2350] Mpc/h, 0.10 <= z <= 0.95):
-    as_all = np.vstack([data["astra_desi_dr1"]["bgs"], data["astra_desi_dr1"]["lrg"]])
+    # (b) Deep ASTRA-DESI DR1 BGS_BRIGHT + LRG (NGC+SGC, 35,122 effective-radius spheres, explicit 0.10 <= z <= 0.95):
+    as_bgs = data["astra_desi_dr1"]["bgs"]
+    as_lrg = data["astra_desi_dr1"]["lrg"]
+    as_all = np.vstack([as_bgs, as_lrg])
     as_dirs = as_all[:, :3] / np.linalg.norm(as_all[:, :3], axis=1, keepdims=True)
+    as_lrg_dirs = as_lrg[:, :3] / np.linalg.norm(as_lrg[:, :3], axis=1, keepdims=True)
     with np.errstate(divide="ignore", over="ignore", invalid="ignore"):
         in_as = np.max(n_hat @ as_dirs.T, axis=1) >= math.cos(math.radians(2.5))
+        in_as_lrg = np.max(n_hat @ as_lrg_dirs.T, axis=1) >= math.cos(math.radians(2.5))
 
-    idx_as_full = np.where(in_as & (r_sn_mpch >= 300.0) & (r_sn_mpch <= 2350.0))[0]
+    idx_as_full = np.where(in_as & (zhd >= 0.10) & (zhd <= 0.95))[0]
     z_asf, r_asf, y_asf, cov_asf, u_asf, _, _ = deduplicate_by_cid(idx_as_full)
     fv_asf = trace_custom_spheres(as_all[:, :3], as_all[:, 3], u_asf, np.full(len(u_asf), 150.0), r_asf)
     stats_astra_0p10_0p95 = gls_dedup_stats(z_asf, y_asf, cov_asf, fv_asf, len(idx_as_full))
 
-    idx_as_deep = np.where(in_as & (r_sn_mpch >= 580.0) & (r_sn_mpch <= 2350.0))[0]
+    idx_as_deep = np.where(in_as & (zhd >= 0.20) & (zhd <= 0.95))[0]
     z_asd, r_asd, y_asd, cov_asd, u_asd, _, _ = deduplicate_by_cid(idx_as_deep)
     fv_asd = trace_custom_spheres(as_all[:, :3], as_all[:, 3], u_asd, np.full(len(u_asd), 150.0), r_asd)
     stats_astra_0p20_0p95 = gls_dedup_stats(z_asd, y_asd, cov_asd, fv_asd, len(idx_as_deep))
 
-    idx_as_lrg = np.where(in_as & (r_sn_mpch >= 1150.0) & (r_sn_mpch <= 2350.0))[0]
+    # Strict LRG-only check: LRG void centers (footprint) AND LRG effective-radius spheres ONLY, explicit 0.42 <= z <= 0.95:
+    idx_as_lrg = np.where(in_as_lrg & (zhd >= 0.42) & (zhd <= 0.95))[0]
     z_asl, r_asl, y_asl, cov_asl, u_asl, _, _ = deduplicate_by_cid(idx_as_lrg)
-    fv_asl = trace_custom_spheres(as_all[:, :3], as_all[:, 3], u_asl, np.full(len(u_asl), 1150.0), r_asl)
+    fv_asl = trace_custom_spheres(as_lrg[:, :3], as_lrg[:, 3], u_asl, np.full(len(u_asl), 1150.0), r_asl)
     stats_astra_lrg_0p42_0p95 = gls_dedup_stats(z_asl, y_asl, cov_asl, fv_asl, len(idx_as_lrg))
 
+    # Exact unique-SN overlap between DESIVAST and ASTRA-DESI DR1 (correlated cross-checks, not independent):
+    n_overlap_dv_as = len({cid_hf[int(i)] for i in idx_dv_in} & {cid_hf[int(i)] for i in idx_as_full})
+
     return {
-        "catalog_citation": "Douglass, Veyrat & BenZvi (2023), ApJS 265, 7 (SDSS DR7 VoidFinder) + DESI DR1 DESIVAST VoidFinder (v1.0) + ASTRA-DESI DR1 BGS/LRG (Zenodo 22003899)",
+        "catalog_citation": "Douglass, Veyrat & BenZvi (2023), ApJS 265, 7 (SDSS DR7 VoidFinder) + DESI DR1 DESIVAST VoidFinder (v1.0) + ASTRA-DESI DR1 BGS/LRG effective-radius spheres (Zenodo 22003899)",
         "deduplicated_in_volume_SNe_0p02_le_z_le_0p105": stats_in,
         "deduplicated_background_SNe_z_gt_0p11_fixed_shell_30_to_300_Mpch": stats_bg,
         "combined_deduplicated_NGC_interior_SNe": {
@@ -1486,17 +1500,29 @@ def run_3d_void_sightline_audit(data: Dict[str, Any]) -> Dict[str, Any]:
             "N_unique_SNe": int(n1 + n2),
             "z_controlled_GLS_slope_dmu_dfv_mag": round(sl_comb, 4),
             "sigma_slope_mag": round(esl_comb, 4),
+            "ci95_GLS_slope_mag": [round(sl_comb - 1.959964 * esl_comb, 4), round(sl_comb + 1.959964 * esl_comb, 4)],
             "slope_t_stat_sigma": round(sl_comb / esl_comb, 2),
             "raw_undeduplicated_N311_slope_mag": round(float(bhr[4]), 4),
             "raw_undeduplicated_N311_sigma_mag": round(math.sqrt(float(cbr[4, 4])), 4),
         },
         "deep_DESI_DR1_3d_void_sightline_tests": {
+            "footprint_selection_note": (
+                "Sky footprint approximated via angular proximity to nearest void center (3.5 deg for DESIVAST, 2.5 deg for ASTRA-DESI); "
+                "actual DESI DR1 coverage is program-dependent (bright/BGS vs dark/LRG). "
+                "ASTRA-DESI chord fractions evaluate the 1D union of catalog effective-radius (R_eff) spheres."
+            ),
             "DESIVAST_VoidFinder_NGC_SGC_0p08_le_z_le_0p23": stats_desivast_in,
             "ASTRA_DESI_DR1_BGS_LRG_0p10_le_z_le_0p95": stats_astra_0p10_0p95,
             "ASTRA_DESI_DR1_BGS_LRG_0p20_le_z_le_0p95": stats_astra_0p20_0p95,
             "ASTRA_DESI_DR1_LRG_only_0p42_le_z_le_0p95": stats_astra_lrg_0p42_0p95,
-            "empirical_3sigma_sample_size_forecast_in_DESI_footprint": int(
+            "overlap_DESIVAST_in_ASTRA_unique_SNe": int(n_overlap_dv_as),
+            "conditional_N_inv_sqrt_scaling_at_minus_0p052mag": int(
                 round(stats_astra_0p10_0p95["N_unique_SNe"] * ((stats_astra_0p10_0p95["sigma_slope_mag"] / (abs(dmu_th_deep_z07) / 3.0)) ** 2))
+            ),
+            "conditional_scaling_note": (
+                "Order-of-magnitude N^{-1/2} scaling assuming identical per-SN sensitivity to the ASTRA-DESI DR1 sample "
+                "and a fixed hypothetical -0.052 mag directional slope (not fixed by the sky-averaged distance law; "
+                "excludes future survey selection functions and spatial covariance)."
             ),
         },
         "theoretical_H2_vol_scale_and_exploratory_null_status": {
@@ -1633,8 +1659,8 @@ def run_audit(run_asserts: bool = True, generate_figures: bool = True) -> Dict[s
     elapsed = round(time.perf_counter() - t_start, 2)
     results = {
         "audit_version": (
-            "v10.0 (Exact 100*theta_* Planck PR3 Cov, Linder 2015 Non-Phantom Thawing, "
-            "Uniform BAO+CMB Out-of-Sample SN Split, & Deep 3D DESI DR1 Void Sightlines z <= 0.95)"
+            "v11.0 (Exact 100*theta_* Planck PR3 Cov, Linder 2015 Non-Phantom Thawing, "
+            "Uniform BAO+CMB Out-of-Sample SN Split, & Exact-z / LRG-Only Deep 3D DESI DR1 Void Sightlines)"
         ),
         "runtime_seconds": elapsed,
         "section_1_wiltshire_benchmarks_and_recombination_scaling": {
@@ -1665,7 +1691,7 @@ def run_audit(run_asserts: bool = True, generate_figures: bool = True) -> Dict[s
 
     JSON_OUT.write_text(json.dumps(results, indent=2), encoding="utf-8")
     print(json.dumps(results, indent=2))
-    print(f"\n[PASS] v10.0 Verification Suite completed in {elapsed:.2f}s -> {JSON_OUT}")
+    print(f"\n[PASS] v11.0 Verification Suite completed in {elapsed:.2f}s -> {JSON_OUT}")
 
     if generate_figures:
         try:
@@ -1678,7 +1704,7 @@ def run_audit(run_asserts: bool = True, generate_figures: bool = True) -> Dict[s
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Standalone v10.0 Void-Weighted Cosmology Verification Suite")
+    parser = argparse.ArgumentParser(description="Standalone v11.0 Void-Weighted Cosmology Verification Suite")
     parser.add_argument("--no-asserts", action="store_true", help="Disable unit-test assertions for custom prior exploration")
     parser.add_argument("--no-figures", action="store_true", help="Skip regenerating Figure 1 PNGs and LaTeX table snippets")
     args = parser.parse_args()
