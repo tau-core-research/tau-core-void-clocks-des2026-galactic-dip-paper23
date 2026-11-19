@@ -1,10 +1,10 @@
 {
+  "audit_version": "v6.0 (Direct BAO+CMB+SN Joint Likelihood, Full Alpha Profile, & Asymptotic-Flat MOND/RAR Kernels)",
   "theorem_1_kh_background_dependence_and_live_43disks": {
-    "status": "PROVEN (analytical theorem) & REPRODUCED LIVE FROM RAW CSV (43 JWST/HST disks)",
+    "status": "PROVEN (analytical theorem) & TESTED LIVE WITH ASYMPTOTIC-FLAT MOND / RAR KERNELS ON 43 DISKS",
     "live_43_jwst_hst_disks_audit": {
       "source_csv": "df1_z09_jwst_hst_mancerapina2025_43disks.csv",
       "n_galaxies": 43,
-      "observable_type": "Catalog summary-statistic evaluation at r_eval = 2 R_eff with Tacconi+20 gas scaling and error propagation using the unified canonical exponential COCA kernel w_COCA(u) = 1 - exp(-mu*u)",
       "z_range": [
         0.787,
         1.03
@@ -17,91 +17,166 @@
         "one_minus_q_0_DES_CPL": 1.342181,
         "normalized_KH_ratio_DES_CPL": 1.14272
       },
-      "a0_KH_0_w_minus1_OCSR_kernel_m_s2": 9.015e-11,
-      "a0_KH_0_DES_CPL_OCSR_kernel_m_s2": 7.924e-11,
-      "mu_coca_screening_parameter": 4.4967230276,
-      "ocsr_kernel_scale_note": "Canonical unified kernel F_OD(u) = 1 + alpha_OCSR * (1 - exp(-mu*u)) * ln(1 + u) with mu = m_eff_hat^2 = 4.496723 and a0_KH(0) = 0.9015e-10 m/s^2 (matching Sub1 Eq. 3 & F54, corresponding to McGaugh's a0_MOND ~ 1.20e-10 m/s^2 under standard RAR interpolation).",
       "DES_CPL_z0_a0_drop_percent": -12.1063,
-      "chi2_w_minus1_horizon_with_dip": 138.97,
-      "reduced_chi2_per_dof_w_minus1": 3.232,
-      "chi2_DES_CPL_z0_anchored_ratio": 160.78,
-      "delta_chi2_DES_CPL_z0_anchored_vs_w_minus1": 21.8,
-      "delta_chi2_DES_CPL_z0_anchored_error_rescaled": 6.75,
-      "chi2_DES_CPL_direct_unanchored_abs": 145.42,
-      "delta_chi2_DES_CPL_direct_abs_vs_w_minus1": 6.44,
-      "delta_chi2_DES_CPL_direct_abs_error_rescaled": 1.99,
-      "chi2_naive_monotonic_cH_without_1_minus_q": 221.66,
-      "delta_chi2_naive_cH_vs_w_minus1": 82.68,
-      "legacy_algebraic_screening_sensitivity": {
-        "screening_form": "u / sqrt(1 + u^2)",
-        "chi2_w_minus1": 106.42,
-        "chi2_DES_CPL_z0_anchored": 121.64,
-        "delta_chi2_DES_CPL_z0_anchored": 15.22,
-        "delta_chi2_DES_CPL_z0_anchored_error_rescaled": 6.15,
-        "chi2_DES_CPL_direct_unanchored": 110.66,
-        "chi2_naive_cH": 172.32
+      "primary_asymptotic_flat_MOND_and_RAR_kernels": {
+        "Standard_Milgrom_MOND_at_canonical_1p20e_minus10": {
+          "w_minus1_KH": 107.53,
+          "DES_CPL_z0_anchored": 121.65,
+          "DES_CPL_unanchored": 111.45,
+          "monotonic_cH": 169.44,
+          "static_a0": 110.65,
+          "reduced_chi2_per_dof_w_minus1": 2.5007,
+          "delta_chi2_DES_anchored_raw": 14.12,
+          "delta_chi2_DES_anchored_rescaled": 5.65,
+          "delta_chi2_DES_unanchored_raw": 3.92,
+          "delta_chi2_DES_unanchored_rescaled": 1.57,
+          "delta_chi2_monotonic_cH_raw": 61.91
+        },
+        "Standard_Milgrom_MOND_at_a0_KH_0p9015e_minus10": {
+          "w_minus1_KH": 95.93,
+          "DES_CPL_z0_anchored": 102.49,
+          "DES_CPL_unanchored": 97.55,
+          "monotonic_cH": 131.05,
+          "static_a0": 97.18,
+          "reduced_chi2_per_dof_w_minus1": 2.2309,
+          "delta_chi2_DES_anchored_raw": 6.56,
+          "delta_chi2_DES_anchored_rescaled": 2.94,
+          "delta_chi2_DES_unanchored_raw": 1.62,
+          "delta_chi2_DES_unanchored_rescaled": 0.73,
+          "delta_chi2_monotonic_cH_raw": 35.12
+        },
+        "McGaugh_2016_RAR_at_canonical_1p20e_minus10": {
+          "w_minus1_KH": 186.55,
+          "DES_CPL_z0_anchored": 217.44,
+          "DES_CPL_unanchored": 195.89,
+          "monotonic_cH": 297.76,
+          "static_a0": 194.08,
+          "reduced_chi2_per_dof_w_minus1": 4.3384,
+          "delta_chi2_DES_anchored_raw": 30.89,
+          "delta_chi2_DES_anchored_rescaled": 7.12,
+          "delta_chi2_DES_unanchored_raw": 9.34,
+          "delta_chi2_DES_unanchored_rescaled": 2.15,
+          "delta_chi2_monotonic_cH_raw": 111.21
+        },
+        "McGaugh_2016_RAR_at_a0_KH_0p9015e_minus10": {
+          "w_minus1_KH": 150.75,
+          "DES_CPL_z0_anchored": 173.29,
+          "DES_CPL_unanchored": 157.47,
+          "monotonic_cH": 234.81,
+          "static_a0": 156.14,
+          "reduced_chi2_per_dof_w_minus1": 3.5058,
+          "delta_chi2_DES_anchored_raw": 22.54,
+          "delta_chi2_DES_anchored_rescaled": 6.43,
+          "delta_chi2_DES_unanchored_raw": 6.72,
+          "delta_chi2_DES_unanchored_rescaled": 1.92,
+          "delta_chi2_monotonic_cH_raw": 84.06
+        },
+        "Simple_QUMOND_at_canonical_1p20e_minus10": {
+          "w_minus1_KH": 201.62,
+          "DES_CPL_z0_anchored": 232.52,
+          "DES_CPL_unanchored": 210.99,
+          "monotonic_cH": 312.22,
+          "static_a0": 209.19,
+          "reduced_chi2_per_dof_w_minus1": 4.6888,
+          "delta_chi2_DES_anchored_raw": 30.9,
+          "delta_chi2_DES_anchored_rescaled": 6.59,
+          "delta_chi2_DES_unanchored_raw": 9.37,
+          "delta_chi2_DES_unanchored_rescaled": 2.0,
+          "delta_chi2_monotonic_cH_raw": 110.6
+        }
+      },
+      "companion_finite_disk_logarithmic_kernel_and_retraction_note": {
+        "retraction_of_deep_MOND_RAR_claim": "For a point mass as r -> inf (u = a_0/a_N ~ r^2 -> inf), v_log(r) = v_bar(r)*[1 + alpha_0*w(u)*ln(1+u)] scales as r^(-1/2) ln r -> 0 rather than approaching a flat asymptote (G M_b a_0)^(1/4). Consequently, it approximates quasi-flat rotation curves only across finite optical/HI disk radii (1 <= r/R_d <= 8) and falls below McGaugh's RAR in the deep-MOND regime (11.50 vs 32.12 at g_bar/a_0 = 10^-3). Any claim of deep-MOND RAR equivalence is formally retracted; Theorem 1 is tested primarily with true asymptotic-flat MOND and RAR interpolation functions above.",
+        "deep_MOND_g_obs_over_g_bar_comparison_table": [
+          {
+            "g_bar_over_1p2e_minus10": 1.0,
+            "McGaugh_RAR_g_obs_over_g_bar": 1.582,
+            "Standard_Milgrom_MOND_g_obs_over_g_bar": 1.272,
+            "finite_disk_log_kernel_g_obs_over_g_bar": 1.429
+          },
+          {
+            "g_bar_over_1p2e_minus10": 0.1,
+            "McGaugh_RAR_g_obs_over_g_bar": 3.689,
+            "Standard_Milgrom_MOND_g_obs_over_g_bar": 3.242,
+            "finite_disk_log_kernel_g_obs_over_g_bar": 3.143
+          },
+          {
+            "g_bar_over_1p2e_minus10": 0.01,
+            "McGaugh_RAR_g_obs_over_g_bar": 10.508,
+            "Standard_Milgrom_MOND_g_obs_over_g_bar": 10.025,
+            "finite_disk_log_kernel_g_obs_over_g_bar": 6.571
+          },
+          {
+            "g_bar_over_1p2e_minus10": 0.001,
+            "McGaugh_RAR_g_obs_over_g_bar": 32.125,
+            "Standard_Milgrom_MOND_g_obs_over_g_bar": 31.631,
+            "finite_disk_log_kernel_g_obs_over_g_bar": 11.491
+          }
+        ],
+        "Companion_Log_Exp_at_a0_KH_0p9015e_minus10": {
+          "w_minus1_KH": 138.97,
+          "DES_CPL_z0_anchored": 160.78,
+          "DES_CPL_unanchored": 145.42,
+          "monotonic_cH": 221.66,
+          "static_a0": 144.14,
+          "reduced_chi2_per_dof_w_minus1": 3.2319,
+          "delta_chi2_DES_anchored_raw": 21.81,
+          "delta_chi2_DES_anchored_rescaled": 6.75,
+          "delta_chi2_DES_unanchored_raw": 6.45,
+          "delta_chi2_DES_unanchored_rescaled": 2.0,
+          "delta_chi2_monotonic_cH_raw": 82.69
+        },
+        "Companion_Log_Alg_at_a0_KH_0p9015e_minus10": {
+          "w_minus1_KH": 106.42,
+          "DES_CPL_z0_anchored": 121.64,
+          "DES_CPL_unanchored": 110.66,
+          "monotonic_cH": 172.32,
+          "static_a0": 109.8,
+          "reduced_chi2_per_dof_w_minus1": 2.4749,
+          "delta_chi2_DES_anchored_raw": 15.22,
+          "delta_chi2_DES_anchored_rescaled": 6.15,
+          "delta_chi2_DES_unanchored_raw": 4.24,
+          "delta_chi2_DES_unanchored_rescaled": 1.71,
+          "delta_chi2_monotonic_cH_raw": 65.9
+        }
       }
     }
   },
   "theorem_2_forward_dyer_roeder_and_weak_field_nogo": {
-    "status": "PROVEN (Analytical Taylor proof + DOP853 forward integration with ZERO D_TS/H2b input)",
+    "status": "PROVEN (Classical Kantowski 1969 / Dyer-Roeder 1972-73 / Weinberg 1976 O(z^2) invariance -> w_0^app(0) == -1 + weak-field QUMOND bound)",
     "d2_DA_dz2_at_z0_formula": "-(2 + 3*Omega_m0/2)",
-    "independent_of_alpha_beam_at_z0": true,
     "exact_w0_app_at_z0_without_clock_shift": -1.0,
-    "void_wall_dimensionless_acceleration_s_void": 0.007126,
-    "qumond_susceptibility_boost_F_OD_squared_at_s_void": 7.7648,
+    "void_wall_gN_over_a0_MOND": 0.005353,
+    "simple_qumond_boost_nu_at_void": 14.1765,
     "weak_field_potential_bound_Phi_over_c2": "O(5e-4) -> |Delta w_0^app| < 1e-3 (insufficient without O(1) void-clock dz/dlambda)",
-    "forward_Dyer_Roeder_alpha_beam_1_minus_alpha_OCSR_fit": {
+    "forward_Dyer_Roeder_alpha_beam_1_minus_alpha0_fit": {
       "w0_apparent": -0.8173,
       "wa_apparent": -1.5886,
       "pantheon_cov_weighted_GLS_w0_wa": [
         -0.9121,
         -1.0999
       ],
-      "effective_hypothesis_selection_dof_Delta_k_hyp": 0,
       "synthetic_curve_cpl_approx_rms_mmag": 4.403,
-      "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
-        "delta_chi2_2D_at_rho_minus0p85": 85.456,
-        "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 8.977,
-        "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-          37.262,
-          124.67
-        ],
-        "1D_w0_tension_sigma": 0.054,
-        "1D_wa_tension_sigma_sym": 4.916,
-        "asymmetric_upper_error_check_sig_wa_0p21": {
-          "delta_chi2_2D": 73.577,
-          "equiv_2dof_two_sided_sigma": 8.299,
-          "1D_wa_tension_sigma_upper": 4.565
-        }
+      "illustrative_2D_vs_exact_M1b_Hessian_posterior": {
+        "delta_chi2_2D": 76.062,
+        "equiv_2dof_two_sided_sigma": 8.445
       },
-      "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
-        "delta_chi2_2D_at_rho_minus0p85": 71.924,
-        "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 8.2,
-        "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-          36.356,
-          101.564
-        ],
-        "1D_w0_tension_sigma": 1.214,
-        "1D_wa_tension_sigma_sym": 5.453
+      "illustrative_2D_vs_DES_Y6_plus_CMB_arXiv2605_27221": {
+        "delta_chi2_2D": 85.456,
+        "equiv_2dof_two_sided_sigma": 8.977
       }
-    }
+    },
+    "pantheon_plus_chi2_SN": 1394.31
   },
   "proposition_1_conditional_void_fraction_lock_H1": {
     "status": "PROVEN ALGEBRAICALLY UNDER CONDITIONAL TRANSITION-MATCHING HYPOTHESIS H1",
-    "q_wall_symbolic": "(8*f**4 + 31*f**3 - 51*f**2 + 4*f + 8)/(16*f**4 + 8*f**3 + 33*f**2 + 8*f + 16)",
     "f_acc_exact_algebraic_root": 0.58670773,
-    "tau_core_z_acc_target_at_Om03153": 0.6315565,
+    "z_acc_hor_at_Om03153": 0.6315565,
     "derived_present_void_fraction_f_v0": 0.723358,
     "derived_present_void_volume_percent": 72.34,
     "wall_to_void_clock_boost_gamma_0": 1.361679,
     "dln_fv_dz_at_z0_numeric": -0.331584,
-    "jacobian_sensitivity_note": {
-      "z_acc_for_fv0_69p5_percent": 0.4561,
-      "z_acc_for_fv0_76p0_percent": 0.9178,
-      "mean_slope_dfv0_dzacc": 0.1408,
-      "epistemic_note": "Because f_v0(z_acc) has a shallow slope (df_v0/dz_acc ~ 0.141), any z_acc in [0.456, 0.918] maps into the empirical [69.5%, 76.0%] interval; H1 should therefore be interpreted as a conditional zero-parameter calibration fixing f_v0 = 0.723358 rather than a high-leverage independent prediction."
-    },
+    "mean_jacobian_slope_dfv0_dzacc": 0.1408,
     "omega_m0_sensitivity_scan": [
       {
         "Omega_m0": 0.3,
@@ -116,22 +191,16 @@
         "derived_f_v0_percent": 72.68
       },
       {
-        "Omega_m0": 0.31,
-        "z_acc_hor": 0.645025,
-        "derived_f_v0": 0.725324,
-        "derived_f_v0_percent": 72.53
+        "Omega_m0": 0.3092,
+        "z_acc_hor": 0.647078,
+        "derived_f_v0": 0.725621,
+        "derived_f_v0_percent": 72.56
       },
       {
         "Omega_m0": 0.3153,
         "z_acc_hor": 0.631556,
         "derived_f_v0": 0.723358,
         "derived_f_v0_percent": 72.34
-      },
-      {
-        "Omega_m0": 0.315565,
-        "z_acc_hor": 0.630889,
-        "derived_f_v0": 0.72326,
-        "derived_f_v0_percent": 72.33
       },
       {
         "Omega_m0": 0.32,
@@ -147,12 +216,11 @@
       }
     ]
   },
-  "proposition_2_true_wiltshire_timescape_and_phenomenological_H2_models": {
-    "status": "PHENOMENOLOGICAL SPLIT-BEAM & FORWARD SACHS MODELS USING EXACT PUBLISHED WILTSHIRE (2009) DISTANCE",
+  "proposition_2_direct_multiprobe_BAO_CMB_SN_fits_and_alpha_profiles": {
+    "status": "PHENOMENOLOGICAL VOID-VOLUME-WEIGHTED SPLIT-BEAM & FORWARD SACHS MODELS TESTED DIRECTLY ON SN + DESI BAO + CMB theta_*",
     "primary_literature_unit_tests": {
       "wiltshire_2009_closed_form_vs_quadrature_max_diff": 6.661338147750939e-16,
       "wiltshire_2009_line900_benchmark_fv0_0p762_w0": -0.757856,
-      "wiltshire_2009_line900_published_target": -0.758,
       "pure_timescape_pantheon_plus_chi2_at_fv0_0p7234": 1403.83,
       "pure_timescape_pantheon_plus_best_fit_fv0": 0.8526,
       "pure_timescape_pantheon_plus_best_fit_chi2": 1391.55,
@@ -160,475 +228,488 @@
       "flat_lcdm_pantheon_plus_best_fit_Om0": 0.3326,
       "flat_lcdm_pantheon_plus_best_fit_chi2": 1386.41
     },
-    "alpha_ocsr_locked": 0.36084392,
+    "alpha_0_prior": 0.36084392,
     "true_wiltshire_dE_TS_dz_at_z0": 0.758852,
-    "exact_z0_w0_app_under_H2a": -0.899551,
-    "forward_sachs_dual_ivp_verification_lambda_vs_z": {
-      "p_0_lambda_IVP_vs_z_IVP_max_abs_diff": 4.207e-12,
-      "p_1_lambda_IVP_vs_z_IVP_max_abs_diff": 1.496e-11,
-      "p_2_lambda_IVP_vs_z_IVP_max_abs_diff": 1.202e-11
-    },
-    "cpl_fits_and_2D_mahalanobis_comparison": {
-      "unweighted_pure_Wiltshire_Timescape": {
-        "w0_apparent": -0.6767,
-        "wa_apparent": -0.6156,
-        "pantheon_cov_weighted_GLS_w0_wa": [
-          -0.6952,
-          -0.5274
-        ],
-        "effective_hypothesis_selection_dof_Delta_k_hyp": 0,
-        "synthetic_curve_cpl_approx_rms_mmag": 0.936,
-        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 30.914,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 5.205,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            13.239,
-            45.262
-          ],
-          "1D_w0_tension_sigma": 2.866,
-          "1D_wa_tension_sigma_sym": 0.074,
-          "asymmetric_upper_error_check_sig_wa_0p21": {
-            "delta_chi2_2D": 30.819,
-            "equiv_2dof_two_sided_sigma": 5.196,
-            "1D_wa_tension_sigma_upper": 0.068
-          }
+    "exact_z0_w0_app": -0.899551,
+    "pantheon_plus_only_N1580_alpha_profile_and_statistical_parity_note": {
+      "statistical_interpretation": "On Pantheon+ alone (fixed Omega_m0 = 0.3153), Delta_chi^2 = -0.74 (H2a, p=0), -1.02 (H2-vol, p=1), and -1.21 (Forward H2-Sachs, p=1) are statistically indistinguishable from LCDM (< 1.1 sigma), and alpha in [0, 0.43] forms a flat plateau (min Delta_chi^2 = -1.32 at alpha = 0.221) due to degeneracy with a small Omega_m0 shift (free-Omega_m0 LCDM gives Delta_chi^2 = -0.92 at Omega_m0 = 0.3326). Combining with DESI BAO + CMB theta_* breaks this Omega_m0 degeneracy.",
+      "alpha_profile_grid_SN_only": [
+        {
+          "alpha": 0.0,
+          "H2a_p0_chi2_SN": 1387.33,
+          "H2a_p0_Delta_chi2_vs_LCDM": 0.0,
+          "H2_vol_p1_chi2_SN": 1387.33,
+          "H2_vol_p1_Delta_chi2_vs_LCDM": 0.0
         },
-        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 20.351,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 4.119,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            13.162,
-            26.801
-          ],
-          "1D_w0_tension_sigma": 3.557,
-          "1D_wa_tension_sigma_sym": 1.561
+        {
+          "alpha": 0.1,
+          "H2a_p0_chi2_SN": 1386.39,
+          "H2a_p0_Delta_chi2_vs_LCDM": -0.93,
+          "H2_vol_p1_chi2_SN": 1386.46,
+          "H2_vol_p1_Delta_chi2_vs_LCDM": -0.87
+        },
+        {
+          "alpha": 0.2,
+          "H2a_p0_chi2_SN": 1386.01,
+          "H2a_p0_Delta_chi2_vs_LCDM": -1.31,
+          "H2_vol_p1_chi2_SN": 1386.04,
+          "H2_vol_p1_Delta_chi2_vs_LCDM": -1.29
+        },
+        {
+          "alpha": 0.2176,
+          "H2a_p0_chi2_SN": 1386.0,
+          "H2a_p0_Delta_chi2_vs_LCDM": -1.32,
+          "H2_vol_p1_chi2_SN": 1386.01,
+          "H2_vol_p1_Delta_chi2_vs_LCDM": -1.32
+        },
+        {
+          "alpha": 0.3,
+          "H2a_p0_chi2_SN": 1386.2,
+          "H2a_p0_Delta_chi2_vs_LCDM": -1.13,
+          "H2_vol_p1_chi2_SN": 1386.07,
+          "H2_vol_p1_Delta_chi2_vs_LCDM": -1.26
+        },
+        {
+          "alpha": 0.3608,
+          "H2a_p0_chi2_SN": 1386.59,
+          "H2a_p0_Delta_chi2_vs_LCDM": -0.74,
+          "H2_vol_p1_chi2_SN": 1386.31,
+          "H2_vol_p1_Delta_chi2_vs_LCDM": -1.02
+        },
+        {
+          "alpha": 0.45,
+          "H2a_p0_chi2_SN": 1387.54,
+          "H2a_p0_Delta_chi2_vs_LCDM": 0.21,
+          "H2_vol_p1_chi2_SN": 1386.98,
+          "H2_vol_p1_Delta_chi2_vs_LCDM": -0.35
+        },
+        {
+          "alpha": 0.6,
+          "H2a_p0_chi2_SN": 1390.19,
+          "H2a_p0_Delta_chi2_vs_LCDM": 2.86,
+          "H2_vol_p1_chi2_SN": 1388.93,
+          "H2_vol_p1_Delta_chi2_vs_LCDM": 1.6
+        },
+        {
+          "alpha": 1.0,
+          "H2a_p0_chi2_SN": 1403.83,
+          "H2a_p0_Delta_chi2_vs_LCDM": 16.5,
+          "H2_vol_p1_chi2_SN": 1399.39,
+          "H2_vol_p1_Delta_chi2_vs_LCDM": 12.06
+        }
+      ],
+      "H2a_p0_chi2_SN": 1386.59,
+      "H2_vol_p1_chi2_SN": 1386.31,
+      "H2_vol_p2_chi2_SN": 1386.16,
+      "Forward_H2_Sachs_p0_chi2_SN": 1386.21,
+      "Forward_H2_Sachs_p1_chi2_SN": 1386.11,
+      "Forward_H2_Sachs_p2_chi2_SN": 1386.07
+    },
+    "direct_joint_multiprobe_BAO_CMB_SN_BBN_CC_audit": {
+      "fixed_planck_diagnostic_zstar_void_vanishing_test": {
+        "H2a_const_p0_unphysical_voids_at_z1089": {
+          "h": 0.6736,
+          "H0_kms_Mpc": 67.36,
+          "omega_b": 0.02237,
+          "omega_cdm": 0.12,
+          "Omega_m0": 0.31521,
+          "f_v0_H1": 0.72339,
+          "theta_100": 1.023,
+          "chi2_PantheonPlus_1580": 1386.581,
+          "chi2_DESI_BAO_13": 10.027,
+          "chi2_Moresco_CC_15": 6.408,
+          "chi2_CMB_theta100": 3408.525,
+          "chi2_BBN_omegab": 0.002,
+          "chi2_SN_BAO_CMB_BBN_N1595": 4805.135,
+          "chi2_joint_ALL_N1610": 4811.543
+        },
+        "H2_vol_p1_physical_fv_vanishing_at_z1089": {
+          "h": 0.6736,
+          "H0_kms_Mpc": 67.36,
+          "omega_b": 0.02237,
+          "omega_cdm": 0.12,
+          "Omega_m0": 0.31521,
+          "f_v0_H1": 0.72339,
+          "theta_100": 1.0421,
+          "chi2_PantheonPlus_1580": 1386.308,
+          "chi2_DESI_BAO_13": 9.732,
+          "chi2_Moresco_CC_15": 6.387,
+          "chi2_CMB_theta100": 10.413,
+          "chi2_BBN_omegab": 0.002,
+          "chi2_SN_BAO_CMB_BBN_N1595": 1406.455,
+          "chi2_joint_ALL_N1610": 1412.842
         }
       },
-      "H2a_baseline_const_alpha_p0": {
+      "profiled_k4_direct_fits_N1610_SN_BAO_CC_CMB_BBN": {
+        "M0_Flat_LCDM_alpha_0": {
+          "h": 0.68561,
+          "H0_kms_Mpc": 68.561,
+          "omega_b": 0.022281,
+          "omega_cdm": 0.116361,
+          "Omega_m0": 0.29633,
+          "f_v0_H1": 0.73043,
+          "theta_100": 1.04112,
+          "chi2_PantheonPlus_1580": 1390.568,
+          "chi2_DESI_BAO_13": 10.734,
+          "chi2_Moresco_CC_15": 6.322,
+          "chi2_CMB_theta100": 0.005,
+          "chi2_BBN_omegab": 0.038,
+          "chi2_SN_BAO_CMB_BBN_N1595": 1401.345,
+          "chi2_joint_ALL_N1610": 1407.667
+        },
+        "H2a_const_p0_DISFAVORED_BY_BAO_CMB": {
+          "h": 0.69275,
+          "H0_kms_Mpc": 69.275,
+          "omega_b": 0.02251,
+          "omega_cdm": 0.141407,
+          "Omega_m0": 0.34292,
+          "f_v0_H1": 0.71321,
+          "theta_100": 1.04104,
+          "chi2_PantheonPlus_1580": 1389.52,
+          "chi2_DESI_BAO_13": 16.469,
+          "chi2_Moresco_CC_15": 7.015,
+          "chi2_CMB_theta100": 0.043,
+          "chi2_BBN_omegab": 0.181,
+          "chi2_SN_BAO_CMB_BBN_N1595": 1406.213,
+          "chi2_joint_ALL_N1610": 1413.228,
+          "Delta_chi2_vs_M0": 5.561
+        },
+        "H2_vol_p1_void_fraction_weighted": {
+          "h": 0.67522,
+          "H0_kms_Mpc": 67.522,
+          "omega_b": 0.022339,
+          "omega_cdm": 0.118011,
+          "Omega_m0": 0.30927,
+          "f_v0_H1": 0.72559,
+          "theta_100": 1.0411,
+          "chi2_PantheonPlus_1580": 1386.091,
+          "chi2_DESI_BAO_13": 8.683,
+          "chi2_Moresco_CC_15": 6.424,
+          "chi2_CMB_theta100": 0.0,
+          "chi2_BBN_omegab": 0.001,
+          "chi2_SN_BAO_CMB_BBN_N1595": 1394.776,
+          "chi2_joint_ALL_N1610": 1401.199,
+          "Delta_chi2_vs_M0": -6.468,
+          "Delta_AIC_vs_M0_same_k4": -6.468,
+          "Delta_BIC_vs_M0_same_k4": -6.468,
+          "Delta_BIC_vs_free_CPL_M1b": -14.705
+        },
+        "H2_vol_p2_sensitivity": {
+          "h": 0.67573,
+          "H0_kms_Mpc": 67.573,
+          "omega_b": 0.022328,
+          "omega_cdm": 0.116713,
+          "Omega_m0": 0.30594,
+          "f_v0_H1": 0.72684,
+          "theta_100": 1.04111,
+          "chi2_PantheonPlus_1580": 1386.028,
+          "chi2_DESI_BAO_13": 8.777,
+          "chi2_Moresco_CC_15": 6.435,
+          "chi2_CMB_theta100": 0.001,
+          "chi2_BBN_omegab": 0.005,
+          "chi2_SN_BAO_CMB_BBN_N1595": 1394.81,
+          "chi2_joint_ALL_N1610": 1401.246,
+          "Delta_chi2_vs_M0": -6.421
+        },
+        "Forward_H2_Sachs_p1_void_fraction_weighted": {
+          "h": 0.67723,
+          "H0_kms_Mpc": 67.723,
+          "omega_b": 0.022367,
+          "omega_cdm": 0.11739,
+          "Omega_m0": 0.30615,
+          "f_v0_H1": 0.72676,
+          "theta_100": 1.0411,
+          "chi2_PantheonPlus_1580": 1386.044,
+          "chi2_DESI_BAO_13": 8.82,
+          "chi2_Moresco_CC_15": 6.435,
+          "chi2_CMB_theta100": 0.0,
+          "chi2_BBN_omegab": 0.001,
+          "chi2_SN_BAO_CMB_BBN_N1595": 1394.866,
+          "chi2_joint_ALL_N1610": 1401.301,
+          "Delta_chi2_vs_M0": -6.366,
+          "Delta_BIC_vs_M0_same_k4": -6.366
+        }
+      },
+      "profiled_k4_direct_fits_N1595_SN_BAO_CMB_BBN_no_CC": {
+        "M0_Flat_LCDM_alpha_0": {
+          "h": 0.68568,
+          "H0_kms_Mpc": 68.568,
+          "omega_b": 0.022282,
+          "omega_cdm": 0.116345,
+          "Omega_m0": 0.29624,
+          "f_v0_H1": 0.73046,
+          "theta_100": 1.04112,
+          "chi2_PantheonPlus_1580": 1390.589,
+          "chi2_DESI_BAO_13": 10.714,
+          "chi2_Moresco_CC_15": 6.323,
+          "chi2_CMB_theta100": 0.005,
+          "chi2_BBN_omegab": 0.037,
+          "chi2_SN_BAO_CMB_BBN_N1595": 1401.345,
+          "chi2_joint_ALL_N1610": 1407.668
+        },
+        "H2a_const_p0_DISFAVORED": {
+          "h": 0.69282,
+          "H0_kms_Mpc": 69.282,
+          "omega_b": 0.022524,
+          "omega_cdm": 0.141434,
+          "Omega_m0": 0.34294,
+          "f_v0_H1": 0.7132,
+          "theta_100": 1.04104,
+          "chi2_PantheonPlus_1580": 1389.522,
+          "chi2_DESI_BAO_13": 16.437,
+          "chi2_Moresco_CC_15": 7.018,
+          "chi2_CMB_theta100": 0.039,
+          "chi2_BBN_omegab": 0.214,
+          "chi2_SN_BAO_CMB_BBN_N1595": 1406.212,
+          "chi2_joint_ALL_N1610": 1413.23,
+          "Delta_chi2_vs_M0": 4.867
+        },
+        "H2_vol_p1_void_fraction_weighted": {
+          "h": 0.67527,
+          "H0_kms_Mpc": 67.527,
+          "omega_b": 0.022342,
+          "omega_cdm": 0.117997,
+          "Omega_m0": 0.3092,
+          "f_v0_H1": 0.72562,
+          "theta_100": 1.0411,
+          "chi2_PantheonPlus_1580": 1386.089,
+          "chi2_DESI_BAO_13": 8.685,
+          "chi2_Moresco_CC_15": 6.424,
+          "chi2_CMB_theta100": 0.0,
+          "chi2_BBN_omegab": 0.001,
+          "chi2_SN_BAO_CMB_BBN_N1595": 1394.775,
+          "chi2_joint_ALL_N1610": 1401.2,
+          "Delta_chi2_vs_M0": -6.57
+        },
+        "Forward_H2_Sachs_p1_void_fraction_weighted": {
+          "h": 0.67729,
+          "H0_kms_Mpc": 67.729,
+          "omega_b": 0.022369,
+          "omega_cdm": 0.117374,
+          "Omega_m0": 0.30606,
+          "f_v0_H1": 0.72679,
+          "theta_100": 1.04109,
+          "chi2_PantheonPlus_1580": 1386.045,
+          "chi2_DESI_BAO_13": 8.818,
+          "chi2_Moresco_CC_15": 6.436,
+          "chi2_CMB_theta100": 0.0,
+          "chi2_BBN_omegab": 0.002,
+          "chi2_SN_BAO_CMB_BBN_N1595": 1394.866,
+          "chi2_joint_ALL_N1610": 1401.302,
+          "Delta_chi2_vs_M0": -6.479
+        }
+      },
+      "joint_N1610_alpha_profile_likelihood": {
+        "MLE_alpha_hat": 0.3299,
+        "MLE_sigma_alpha_1sigma": 0.1385,
+        "min_chi2_joint_N1610": 1401.15,
+        "Delta_chi2_MLE_vs_alpha_0": -6.517,
+        "equiv_1dof_sigma_over_LCDM": 2.55,
+        "prior_alpha_0_tension_with_MLE_sigma": 0.223,
+        "Delta_chi2_at_prior_alpha_0_vs_MLE": 0.049,
+        "profile_grid": [
+          {
+            "alpha": 0.0,
+            "chi2_joint_N1610": 1407.667,
+            "Delta_chi2_vs_LCDM_M0": 0.0,
+            "chi2_SN_1580": 1390.568,
+            "chi2_DESI_BAO_13": 10.734,
+            "chi2_CMB_theta100": 0.005,
+            "H0_kms_Mpc": 68.561,
+            "Omega_m0": 0.29633
+          },
+          {
+            "alpha": 0.1,
+            "chi2_joint_N1610": 1404.188,
+            "Delta_chi2_vs_LCDM_M0": -3.479,
+            "chi2_SN_1580": 1388.019,
+            "chi2_DESI_BAO_13": 9.808,
+            "chi2_CMB_theta100": 0.003,
+            "H0_kms_Mpc": 68.248,
+            "Omega_m0": 0.29976
+          },
+          {
+            "alpha": 0.2,
+            "chi2_joint_N1610": 1402.08,
+            "Delta_chi2_vs_LCDM_M0": -5.587,
+            "chi2_SN_1580": 1386.517,
+            "chi2_DESI_BAO_13": 9.189,
+            "chi2_CMB_theta100": 0.001,
+            "H0_kms_Mpc": 67.953,
+            "Omega_m0": 0.30332
+          },
+          {
+            "alpha": 0.3,
+            "chi2_joint_N1610": 1401.197,
+            "Delta_chi2_vs_LCDM_M0": -6.47,
+            "chi2_SN_1580": 1385.981,
+            "chi2_DESI_BAO_13": 8.814,
+            "chi2_CMB_theta100": 0.0,
+            "H0_kms_Mpc": 67.678,
+            "Omega_m0": 0.30699
+          },
+          {
+            "alpha": 0.360844,
+            "chi2_joint_N1610": 1401.199,
+            "Delta_chi2_vs_LCDM_M0": -6.468,
+            "chi2_SN_1580": 1386.091,
+            "chi2_DESI_BAO_13": 8.683,
+            "chi2_CMB_theta100": 0.0,
+            "H0_kms_Mpc": 67.522,
+            "Omega_m0": 0.30927
+          },
+          {
+            "alpha": 0.45,
+            "chi2_joint_N1610": 1401.864,
+            "Delta_chi2_vs_LCDM_M0": -5.803,
+            "chi2_SN_1580": 1386.796,
+            "chi2_DESI_BAO_13": 8.603,
+            "chi2_CMB_theta100": 0.0,
+            "H0_kms_Mpc": 67.307,
+            "Omega_m0": 0.31267
+          },
+          {
+            "alpha": 0.6,
+            "chi2_joint_N1610": 1404.531,
+            "Delta_chi2_vs_LCDM_M0": -3.136,
+            "chi2_SN_1580": 1389.263,
+            "chi2_DESI_BAO_13": 8.724,
+            "chi2_CMB_theta100": 0.0,
+            "H0_kms_Mpc": 66.989,
+            "Omega_m0": 0.3185
+          },
+          {
+            "alpha": 0.8,
+            "chi2_joint_N1610": 1410.539,
+            "Delta_chi2_vs_LCDM_M0": 2.872,
+            "chi2_SN_1580": 1394.543,
+            "chi2_DESI_BAO_13": 9.323,
+            "chi2_CMB_theta100": 0.0,
+            "H0_kms_Mpc": 66.653,
+            "Omega_m0": 0.3264
+          },
+          {
+            "alpha": 1.0,
+            "chi2_joint_N1610": 1418.671,
+            "Delta_chi2_vs_LCDM_M0": 11.004,
+            "chi2_SN_1580": 1401.394,
+            "chi2_DESI_BAO_13": 10.445,
+            "chi2_CMB_theta100": 0.001,
+            "H0_kms_Mpc": 66.421,
+            "Omega_m0": 0.33434
+          }
+        ]
+      },
+      "exact_M1b_free_CPL_5x5_Hessian_marginalized_w0_wa": {
+        "w0_opt": -0.8895,
+        "wa_opt": -0.225,
+        "chi2_joint_N1610": 1401.136,
+        "sigma_w0_hessian": 0.0597,
+        "sigma_wa_hessian": 0.2686,
+        "rho_w0_wa_hessian": -0.886
+      }
+    },
+    "illustrative_cpl_projections_with_exact_Hessian_covariance": {
+      "unweighted_pure_Wiltshire_Timescape": {
+        "w0_apparent": -0.6768,
+        "wa_apparent": -0.6154,
+        "pantheon_cov_weighted_GLS_w0_wa": [
+          -0.6954,
+          -0.5267
+        ],
+        "synthetic_curve_cpl_approx_rms_mmag": 0.938,
+        "illustrative_2D_vs_exact_M1b_Hessian_posterior": {
+          "delta_chi2_2D": 26.199,
+          "equiv_2dof_two_sided_sigma": 4.749
+        },
+        "illustrative_2D_vs_DES_Y6_plus_CMB_arXiv2605_27221": {
+          "delta_chi2_2D": 30.908,
+          "equiv_2dof_two_sided_sigma": 5.205
+        }
+      },
+      "H2a_const_p0_SN_projection": {
         "w0_apparent": -0.8843,
         "wa_apparent": -0.2042,
         "pantheon_cov_weighted_GLS_w0_wa": [
-          -0.8912,
-          -0.1709
+          -0.8913,
+          -0.1706
         ],
-        "effective_hypothesis_selection_dof_Delta_k_hyp": 0,
-        "synthetic_curve_cpl_approx_rms_mmag": 0.342,
-        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 5.94,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 1.949,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            4.768,
-            7.198
-          ],
-          "1D_w0_tension_sigma": 1.285,
-          "1D_wa_tension_sigma_sym": 2.183,
-          "asymmetric_upper_error_check_sig_wa_0p21": {
-            "delta_chi2_2D": 4.801,
-            "equiv_2dof_two_sided_sigma": 1.692,
-            "1D_wa_tension_sigma_upper": 2.027
-          }
+        "synthetic_curve_cpl_approx_rms_mmag": 0.343,
+        "illustrative_2D_vs_exact_M1b_Hessian_posterior": {
+          "delta_chi2_2D": 0.119,
+          "equiv_2dof_two_sided_sigma": 0.072
         },
-        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 0.11,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 0.067,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            0.041,
-            0.164
-          ],
-          "1D_w0_tension_sigma": 0.097,
-          "1D_wa_tension_sigma_sym": 0.084
+        "illustrative_2D_vs_DES_Y6_plus_CMB_arXiv2605_27221": {
+          "delta_chi2_2D": 5.941,
+          "equiv_2dof_two_sided_sigma": 1.949
         }
       },
-      "forward_H2_Sachs_p0_const_alpha": {
-        "w0_apparent": -0.8885,
-        "wa_apparent": -0.2782,
-        "pantheon_cov_weighted_GLS_w0_wa": [
-          -0.8941,
-          -0.2479
-        ],
-        "effective_hypothesis_selection_dof_Delta_k_hyp": 0,
-        "synthetic_curve_cpl_approx_rms_mmag": 0.195,
-        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 3.35,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 1.319,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            3.384,
-            3.591
-          ],
-          "1D_w0_tension_sigma": 1.371,
-          "1D_wa_tension_sigma_sym": 1.804,
-          "asymmetric_upper_error_check_sig_wa_0p21": {
-            "delta_chi2_2D": 2.816,
-            "equiv_2dof_two_sided_sigma": 1.164,
-            "1D_wa_tension_sigma_upper": 1.675
-          }
-        },
-        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 0.13,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 0.079,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            0.061,
-            0.187
-          ],
-          "1D_w0_tension_sigma": 0.026,
-          "1D_wa_tension_sigma_sym": 0.212
-        }
-      },
-      "forward_H2_Sachs_p1_linear_fv": {
-        "w0_apparent": -0.8954,
-        "wa_apparent": -0.2865,
-        "pantheon_cov_weighted_GLS_w0_wa": [
-          -0.8976,
-          -0.2737
-        ],
-        "effective_hypothesis_selection_dof_Delta_k_hyp": 1,
-        "synthetic_curve_cpl_approx_rms_mmag": 0.063,
-        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 3.103,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 1.248,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            3.42,
-            3.134
-          ],
-          "1D_w0_tension_sigma": 1.508,
-          "1D_wa_tension_sigma_sym": 1.761,
-          "asymmetric_upper_error_check_sig_wa_0p21": {
-            "delta_chi2_2D": 2.725,
-            "equiv_2dof_two_sided_sigma": 1.136,
-            "1D_wa_tension_sigma_upper": 1.636
-          }
-        },
-        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 0.376,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 0.217,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            0.146,
-            0.561
-          ],
-          "1D_w0_tension_sigma": 0.088,
-          "1D_wa_tension_sigma_sym": 0.245
-        }
-      },
-      "forward_H2_Sachs_p2_quadratic_fv": {
-        "w0_apparent": -0.9023,
-        "wa_apparent": -0.2885,
-        "pantheon_cov_weighted_GLS_w0_wa": [
-          -0.9013,
-          -0.2924
-        ],
-        "effective_hypothesis_selection_dof_Delta_k_hyp": 1,
-        "synthetic_curve_cpl_approx_rms_mmag": 0.06,
-        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 3.156,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 1.263,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            3.619,
-            3.092
-          ],
-          "1D_w0_tension_sigma": 1.645,
-          "1D_wa_tension_sigma_sym": 1.751,
-          "asymmetric_upper_error_check_sig_wa_0p21": {
-            "delta_chi2_2D": 2.894,
-            "equiv_2dof_two_sided_sigma": 1.187,
-            "1D_wa_tension_sigma_upper": 1.626
-          }
-        },
-        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 0.691,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 0.375,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            0.26,
-            1.037
-          ],
-          "1D_w0_tension_sigma": 0.203,
-          "1D_wa_tension_sigma_sym": 0.253
-        }
-      },
-      "H2b_diff_ray_p1": {
+      "H2_vol_p1_void_fraction_weighted": {
         "w0_apparent": -0.8878,
         "wa_apparent": -0.2507,
         "pantheon_cov_weighted_GLS_w0_wa": [
           -0.8931,
           -0.224
         ],
-        "effective_hypothesis_selection_dof_Delta_k_hyp": 1,
         "synthetic_curve_cpl_approx_rms_mmag": 0.235,
-        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 4.104,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 1.52,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            3.84,
-            4.606
-          ],
-          "1D_w0_tension_sigma": 1.356,
-          "1D_wa_tension_sigma_sym": 1.945,
-          "asymmetric_upper_error_check_sig_wa_0p21": {
-            "delta_chi2_2D": 3.379,
-            "equiv_2dof_two_sided_sigma": 1.327,
-            "1D_wa_tension_sigma_upper": 1.806
-          }
+        "illustrative_2D_vs_exact_M1b_Hessian_posterior": {
+          "delta_chi2_2D": 0.024,
+          "equiv_2dof_two_sided_sigma": 0.015
         },
-        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 0.018,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 0.012,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            0.011,
-            0.025
-          ],
-          "1D_w0_tension_sigma": 0.039,
-          "1D_wa_tension_sigma_sym": 0.101
+        "illustrative_2D_vs_DES_Y6_plus_CMB_arXiv2605_27221": {
+          "delta_chi2_2D": 4.104,
+          "equiv_2dof_two_sided_sigma": 1.52
         }
       },
-      "H2b_diff_ray_p2": {
+      "H2_vol_p2_sensitivity": {
         "w0_apparent": -0.8926,
         "wa_apparent": -0.2802,
         "pantheon_cov_weighted_GLS_w0_wa": [
           -0.8957,
           -0.2642
         ],
-        "effective_hypothesis_selection_dof_Delta_k_hyp": 2,
         "synthetic_curve_cpl_approx_rms_mmag": 0.125,
-        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 3.237,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 1.287,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            3.439,
-            3.357
-          ],
-          "1D_w0_tension_sigma": 1.452,
-          "1D_wa_tension_sigma_sym": 1.794,
-          "asymmetric_upper_error_check_sig_wa_0p21": {
-            "delta_chi2_2D": 2.78,
-            "equiv_2dof_two_sided_sigma": 1.152,
-            "1D_wa_tension_sigma_upper": 1.666
-          }
+        "illustrative_2D_vs_exact_M1b_Hessian_posterior": {
+          "delta_chi2_2D": 0.297,
+          "equiv_2dof_two_sided_sigma": 0.174
         },
-        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 0.236,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 0.14,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            0.095,
-            0.35
-          ],
-          "1D_w0_tension_sigma": 0.042,
-          "1D_wa_tension_sigma_sym": 0.22
+        "illustrative_2D_vs_DES_Y6_plus_CMB_arXiv2605_27221": {
+          "delta_chi2_2D": 3.237,
+          "equiv_2dof_two_sided_sigma": 1.287
         }
       },
-      "H2b_int_mod_p1": {
-        "w0_apparent": -0.8825,
-        "wa_apparent": -0.3311,
+      "Forward_H2_Sachs_p0": {
+        "w0_apparent": -0.8885,
+        "wa_apparent": -0.2782,
         "pantheon_cov_weighted_GLS_w0_wa": [
-          -0.8902,
-          -0.2918
+          -0.8941,
+          -0.2479
         ],
-        "effective_hypothesis_selection_dof_Delta_k_hyp": 1,
-        "synthetic_curve_cpl_approx_rms_mmag": 0.335,
-        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 2.36,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 1.021,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            2.521,
-            2.438
-          ],
-          "1D_w0_tension_sigma": 1.25,
-          "1D_wa_tension_sigma_sym": 1.533,
-          "asymmetric_upper_error_check_sig_wa_0p21": {
-            "delta_chi2_2D": 2.032,
-            "equiv_2dof_two_sided_sigma": 0.912,
-            "1D_wa_tension_sigma_upper": 1.424
-          }
+        "synthetic_curve_cpl_approx_rms_mmag": 0.195,
+        "illustrative_2D_vs_exact_M1b_Hessian_posterior": {
+          "delta_chi2_2D": 0.157,
+          "equiv_2dof_two_sided_sigma": 0.095
         },
-        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 0.375,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 0.216,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            0.204,
-            0.519
-          ],
-          "1D_w0_tension_sigma": 0.126,
-          "1D_wa_tension_sigma_sym": 0.423
+        "illustrative_2D_vs_DES_Y6_plus_CMB_arXiv2605_27221": {
+          "delta_chi2_2D": 3.35,
+          "equiv_2dof_two_sided_sigma": 1.319
         }
       },
-      "H2b_int_mod_p2": {
-        "w0_apparent": -0.8874,
-        "wa_apparent": -0.3956,
+      "Forward_H2_Sachs_p1_void_fraction_weighted": {
+        "w0_apparent": -0.8954,
+        "wa_apparent": -0.2865,
         "pantheon_cov_weighted_GLS_w0_wa": [
-          -0.8928,
-          -0.3669
+          -0.8976,
+          -0.2737
         ],
-        "effective_hypothesis_selection_dof_Delta_k_hyp": 2,
-        "synthetic_curve_cpl_approx_rms_mmag": 0.217,
-        "vs_DES2026_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 1.828,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 0.84,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            2.058,
-            1.817
-          ],
-          "1D_w0_tension_sigma": 1.348,
-          "1D_wa_tension_sigma_sym": 1.202,
-          "asymmetric_upper_error_check_sig_wa_0p21": {
-            "delta_chi2_2D": 1.819,
-            "equiv_2dof_two_sided_sigma": 0.837,
-            "1D_wa_tension_sigma_upper": 1.116
-          }
+        "synthetic_curve_cpl_approx_rms_mmag": 0.063,
+        "illustrative_2D_vs_exact_M1b_Hessian_posterior": {
+          "delta_chi2_2D": 0.475,
+          "equiv_2dof_two_sided_sigma": 0.268
         },
-        "vs_PantheonPlus_DESI_CMB_2D_gaussian_approx": {
-          "delta_chi2_2D_at_rho_minus0p85": 1.491,
-          "equiv_2dof_two_sided_sigma_at_rho_minus0p85": 0.715,
-          "delta_chi2_2D_range_rho_minus0p60_to_minus0p90": [
-            0.671,
-            2.162
-          ],
-          "1D_w0_tension_sigma": 0.045,
-          "1D_wa_tension_sigma_sym": 0.681
-        }
-      }
-    },
-    "real_pantheon_plus_1580_sne_chi2_and_aic_bic_audit": {
-      "n_supernovae": 1580,
-      "w_minus1_horizon_D_hor_fixed_Om03153_no_rad": {
-        "chi2_SN": 1387.33,
-        "Delta_k_continuous_fitted": 0,
-        "Delta_chi2_vs_w_minus1_horizon": 0.0,
-        "Delta_AIC_continuous_k0": 0.0,
-        "Delta_BIC_continuous_k0": 0.0,
-        "heuristic_discrete_selection_sensitivity": {
-          "Delta_k_hyp_assumed": 0,
-          "Delta_AIC_heuristic": 0.0,
-          "Delta_BIC_heuristic": 0.0
-        }
-      },
-      "DES_2026_CPL_w0_minus0p82_wa_minus0p63": {
-        "chi2_SN": 1387.3,
-        "Delta_k_continuous_fitted": 0,
-        "Delta_chi2_vs_w_minus1_horizon": -0.02,
-        "Delta_AIC_continuous_k0": -0.02,
-        "Delta_BIC_continuous_k0": -0.02,
-        "heuristic_discrete_selection_sensitivity": {
-          "Delta_k_hyp_assumed": 2,
-          "Delta_AIC_heuristic": 3.98,
-          "Delta_BIC_heuristic": 14.71
-        }
-      },
-      "unweighted_pure_Wiltshire_Timescape_fv0_0p7234": {
-        "chi2_SN": 1403.83,
-        "Delta_k_continuous_fitted": 0,
-        "Delta_chi2_vs_w_minus1_horizon": 16.51,
-        "Delta_AIC_continuous_k0": 16.51,
-        "Delta_BIC_continuous_k0": 16.51,
-        "heuristic_discrete_selection_sensitivity": {
-          "Delta_k_hyp_assumed": 0,
-          "Delta_AIC_heuristic": 16.51,
-          "Delta_BIC_heuristic": 16.51
-        }
-      },
-      "forward_Dyer_Roeder_no_clock_shift": {
-        "chi2_SN": 1394.31,
-        "Delta_k_continuous_fitted": 0,
-        "Delta_chi2_vs_w_minus1_horizon": 6.99,
-        "Delta_AIC_continuous_k0": 6.99,
-        "Delta_BIC_continuous_k0": 6.99,
-        "heuristic_discrete_selection_sensitivity": {
-          "Delta_k_hyp_assumed": 0,
-          "Delta_AIC_heuristic": 6.99,
-          "Delta_BIC_heuristic": 6.99
-        }
-      },
-      "H2a_baseline_const_alpha_p0": {
-        "chi2_SN": 1386.59,
-        "Delta_k_continuous_fitted": 0,
-        "Delta_chi2_vs_w_minus1_horizon": -0.74,
-        "Delta_AIC_continuous_k0": -0.74,
-        "Delta_BIC_continuous_k0": -0.74,
-        "heuristic_discrete_selection_sensitivity": {
-          "Delta_k_hyp_assumed": 0,
-          "Delta_AIC_heuristic": -0.74,
-          "Delta_BIC_heuristic": -0.74
-        }
-      },
-      "forward_H2_Sachs_p0_const_alpha": {
-        "chi2_SN": 1386.21,
-        "Delta_k_continuous_fitted": 0,
-        "Delta_chi2_vs_w_minus1_horizon": -1.12,
-        "Delta_AIC_continuous_k0": -1.12,
-        "Delta_BIC_continuous_k0": -1.12,
-        "heuristic_discrete_selection_sensitivity": {
-          "Delta_k_hyp_assumed": 0,
-          "Delta_AIC_heuristic": -1.12,
-          "Delta_BIC_heuristic": -1.12
-        }
-      },
-      "forward_H2_Sachs_p1_linear_fv": {
-        "chi2_SN": 1386.11,
-        "Delta_k_continuous_fitted": 0,
-        "Delta_chi2_vs_w_minus1_horizon": -1.21,
-        "Delta_AIC_continuous_k0": -1.21,
-        "Delta_BIC_continuous_k0": -1.21,
-        "heuristic_discrete_selection_sensitivity": {
-          "Delta_k_hyp_assumed": 1,
-          "Delta_AIC_heuristic": 0.79,
-          "Delta_BIC_heuristic": 6.15
-        }
-      },
-      "forward_H2_Sachs_p2_quadratic_fv": {
-        "chi2_SN": 1386.07,
-        "Delta_k_continuous_fitted": 0,
-        "Delta_chi2_vs_w_minus1_horizon": -1.26,
-        "Delta_AIC_continuous_k0": -1.26,
-        "Delta_BIC_continuous_k0": -1.26,
-        "heuristic_discrete_selection_sensitivity": {
-          "Delta_k_hyp_assumed": 1,
-          "Delta_AIC_heuristic": 0.74,
-          "Delta_BIC_heuristic": 6.11
-        }
-      },
-      "H2b_diff_ray_p1": {
-        "chi2_SN": 1386.31,
-        "Delta_k_continuous_fitted": 0,
-        "Delta_chi2_vs_w_minus1_horizon": -1.01,
-        "Delta_AIC_continuous_k0": -1.01,
-        "Delta_BIC_continuous_k0": -1.01,
-        "heuristic_discrete_selection_sensitivity": {
-          "Delta_k_hyp_assumed": 1,
-          "Delta_AIC_heuristic": 0.99,
-          "Delta_BIC_heuristic": 6.35
-        }
-      },
-      "H2b_diff_ray_p2": {
-        "chi2_SN": 1386.16,
-        "Delta_k_continuous_fitted": 0,
-        "Delta_chi2_vs_w_minus1_horizon": -1.17,
-        "Delta_AIC_continuous_k0": -1.17,
-        "Delta_BIC_continuous_k0": -1.17,
-        "heuristic_discrete_selection_sensitivity": {
-          "Delta_k_hyp_assumed": 2,
-          "Delta_AIC_heuristic": 2.83,
-          "Delta_BIC_heuristic": 13.56
-        }
-      },
-      "H2b_int_mod_p1": {
-        "chi2_SN": 1386.17,
-        "Delta_k_continuous_fitted": 0,
-        "Delta_chi2_vs_w_minus1_horizon": -1.16,
-        "Delta_AIC_continuous_k0": -1.16,
-        "Delta_BIC_continuous_k0": -1.16,
-        "heuristic_discrete_selection_sensitivity": {
-          "Delta_k_hyp_assumed": 1,
-          "Delta_AIC_heuristic": 0.84,
-          "Delta_BIC_heuristic": 6.21
-        }
-      },
-      "H2b_int_mod_p2": {
-        "chi2_SN": 1386.06,
-        "Delta_k_continuous_fitted": 0,
-        "Delta_chi2_vs_w_minus1_horizon": -1.26,
-        "Delta_AIC_continuous_k0": -1.26,
-        "Delta_BIC_continuous_k0": -1.26,
-        "heuristic_discrete_selection_sensitivity": {
-          "Delta_k_hyp_assumed": 2,
-          "Delta_AIC_heuristic": 2.74,
-          "Delta_BIC_heuristic": 13.47
+        "illustrative_2D_vs_DES_Y6_plus_CMB_arXiv2605_27221": {
+          "delta_chi2_2D": 3.103,
+          "equiv_2dof_two_sided_sigma": 1.248
         }
       }
     }
