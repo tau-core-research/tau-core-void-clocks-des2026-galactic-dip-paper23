@@ -1,216 +1,171 @@
 \documentclass[11pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
 \usepackage{lmodern}
-\usepackage[margin=1.85cm]{geometry}
-\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=2.0cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{hyperref}
-\emergencystretch=2.2em
-\sloppy
 
 \renewcommand{\abstractname}{\"Osszefoglal\'o}
 \renewcommand{\figurename}{\'Abra}
 \renewcommand{\tablename}{T\'abl\'azat}
 \renewcommand{\refname}{Irodalomjegyz\'ek}
-\renewcommand{\proofname}{Bizony\'it\'as}
 
-\definecolor{linkblue}{HTML}{1D4ED8}
 \hypersetup{
     colorlinks=true,
-    linkcolor=linkblue,
-    citecolor=linkblue,
-    urlcolor=linkblue,
-    pdftitle={Kodama-Hayward galaktikus gyorsulasi volgy vs. DES 6 eves dinamikus sotet energia: Hatterfuggesi tetel, kozvetlen BAO/CMB/szupernova tesztek es ureg-terfogatarannyal sulyozott optikai modellek},
-    pdfauthor={Jozsef Olcsak (ORCID: 0009-0003-7311-6522)}
+    linkcolor=blue!70!black,
+    citecolor=blue!70!black,
+    urlcolor=blue!70!black
 }
 
-\newtheorem{theorem}{T\'etel}
-\newtheorem{proposition}{\'All\'it\'as}
-\newtheorem{corollary}{K\"ovetkezm\'eny}
-\theoremstyle{definition}
-\newtheorem{hypothesis}{Hipot\'ezis}
+\title{\"Ureg-t\'erfogatar\'annyal s\'ulyozott optikai t\'avols\'agok tesztel\'ese a \texttt{DESI} BAO, a t\"om\"or\'itett \texttt{Planck} CMB \'es n\'egy Ia t\'ipus\'u szupern\'ova-katal\'ogus alapj\'an}
 
-\title{\textbf{\Large Kodama--Hayward galaktikus gyorsul\'asi v\"olgy vs.\ \texttt{DES} 6 \'eves dinamikus s\"ot\'et energia}\\[0.35em]
-\large H\'att\'erf\"ugg\'esi t\'etel, k\"ozvetlen \texttt{Pantheon++DESI BAO+CMB} likelihood-tesztek \'es \"ureg-t\'erfogatar\'annyal s\'ulyozott optikai modellek}
-
-\author{\textbf{Jozsef Olcsak}\\[0.2em]
-{\small F\"uggetlen kutat\'o (Magyar kiad\'as -- Jav\'itott b\'ir\'al\'oi kiad\'as v6.0) $\cdot$ ORCID: \href{https://orcid.org/0009-0003-7311-6522}{0009-0003-7311-6522}}\\[0.2em]
-{\small \'Alland\'o K\'od- \'es Adatarch\'ivumok: \href{https://doi.org/10.5281/zenodo.24354218}{doi:10.5281/zenodo.24354218} $\cdot$ \href{https://doi.org/10.5281/zenodo.24305895}{doi:10.5281/zenodo.24305895}}}
-\date{2026.\ november 19.\ (Jav\'itott b\'ir\'al\'oi kiad\'as v6.0)}
+\author{Jozsef Olcsak\\[0.25em]
+\small F\"uggetlen kutat\'o $\cdot$ ORCID: \href{https://orcid.org/0009-0003-7311-6522}{0009-0003-7311-6522}\\
+\small K\'od- \'es adatarch\'ivum: \href{https://doi.org/10.5281/zenodo.24354218}{doi:10.5281/zenodo.24354218}}
+\date{2026.\ november 19.}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-\noindent A teljes 6 \'eves Dark Energy Survey adatsor (\texttt{DES-SN5YR}, BAO \'es $3\times 2\mathrm{pt}$ gyenge lencs\'ez\'es/klaszterez\H{o}d\'es) \'es az els\H{o}dleges CMB egyes\'it\'ese $\sim 3{,}0\sigma$-os preferenci\'at jelez az id\H{o}ben v\'altoz\'o s\"ot\'et energia ir\'any\'aba ($w_0 = -0{,}82 \pm 0{,}05$, $w_a = -0{,}63^{+0{,}21}_{-0{,}18}$; \texttt{DES} Collaboration 2026, \texttt{arXiv:2605.27221}; v\"o.\ \texttt{DESI} DR2, \texttt{arXiv:2503.14738}), m\'ig a \texttt{DES-SN5YR}-t az $1\,580$ szupern\'ov\'as \texttt{Pantheon+} katal\'ogusra cser\'elve az egyes\'itett \texttt{Pantheon++DESI BAO+CC+CMB+BBN} ($N=1610$) szabad CPL-optimum $(w_0, w_a) = (-0{,}8895 \pm 0{,}0597;\; -0{,}2250 \pm 0{,}2686)$-ra ($\rho = -0{,}8860$) tol\'odik, inform\'aci\'os parit\'asban a $\Lambda$CDM-mel ($\Delta\chi^2 = -6{,}53$, $\Delta\mathrm{AIC} = -2{,}53$, $\Delta\mathrm{BIC} = +8{,}24$; Efstathiou, \textit{MNRAS} \textbf{538}, 875, 2025). Ezzel p\'arhuzamosan Lane, Seifert, Ridden-Harper \'es Wiltshire (\textit{MNRAS} \textbf{536}, 1752, 2025; \textit{MNRAS Lett.} \textbf{537}, L55, 2025) kimutatt\'ak, hogy a t\'agul\'o kozmikus \"uress\'egekben gyorsabban j\'ar\'o saj\'at\'or\'ak ($\mathrm{d}\tau/\mathrm{d}t > 1$) miatt a homog\'en FLRW-sablon l\'atsz\'olagos $w_0^{\mathrm{app}} > -1$ \'ert\'eket ad, \'am a s\'ulyozatlan tiszta Timescape a standard SALT2 \texttt{Pantheon+} kovarianci\'an $\chi^2_{\mathrm{SN}} = 1403{,}83$-at ($\Delta\chi^2 = +16{,}50$) ad, \'es nem modellezi a galaktikus forg\'asi g\"orb\'eket. Ebben a tanulm\'anyban n\'egy eredm\'enyt igazolunk: (1) \textbf{\ref{thm:kh-background}.\ T\'etel (\texttt{PROVEN} \'es lapos aszimptotik\'aj\'u MOND/RAR kernelekkel tesztelve):} Az $a_0(z) \propto cH(z)|1-q(z)|$ Kodama--Hayward sk\'ala eset\'en $z_{\mathrm{dip}} = z_{\mathrm{acc}} \iff 3w(1+w) = \mathrm{d}w/\mathrm{d}\ln a$; homog\'en \texttt{DES} CPL h\'att\'eren a v\"olgy elt\H{u}nik ($0{,}938550 \to 1{,}142720$), ami a $43$ Mancera Pi\~na \'es mtsai.\ (2025) \texttt{JWST/HST} korongon ($0{,}787 \le z \le 1{,}03$) mind Milgrom standard MOND t\"orv\'eny\'evel ($\chi^2 = 107{,}53 \to 121{,}65$, $\Delta\chi^2 = +14{,}12$ nyers / $+5{,}65$ norm\'alt $a_0(0)=1{,}20\times 10^{-10}\;\mathrm{m\,s^{-2}}$-n\'el; $95{,}93 \to 102{,}49$ $a_0^{\mathrm{KH}}(0)$-n\'al), mind McGaugh RAR-magj\'aval ($186{,}55 \to 217{,}44$, $\Delta\chi^2 = +30{,}89$ / $+7{,}12$ norm\'alt) rontja az illeszked\'est, mik\"ozben form\'alisan visszavonjuk a t\'arscikk logaritmikus magj\'anak ($v \propto r^{-1/2}\ln r \to 0$) m\'ely-MOND RAR-ekvivalenci\'aj\'at; (2) \textbf{\ref{thm:forward-nogo}.\ T\'etel (\texttt{PROVEN}):} Kantowski (1969), Dyer \& Roeder (1972, 1973) \'es Weinberg (1976) nyom\'an egyetlen \'or\'aj\'u FLRW h\'att\'eren $D_A''(0)$ invari\'ans $D_A(0)=0$ miatt ($w_0^{\mathrm{app}}(0) \equiv -1$), a gyenge t\'erbeli QUMOND potenci\'alok pedig $|\Delta w_0^{\mathrm{app}}| < 10^{-3}$-ot adnak; (3) \textbf{\ref{prop:void-fraction}.\ \'All\'it\'as (\texttt{CONDITIONAL} \ref{hyp:H1}):} $q_{\mathrm{wall}}(f_{\mathrm{acc}}) = 0$ ($f_{\mathrm{acc}} = 0{,}586708$) \'es $z_{\mathrm{acc}}^{\mathrm{hor}} = 0{,}631556$ illeszt\'ese $f_{v,0} = 0{,}7234$-et ($\mathrm{d}f_{v,0}/\mathrm{d}z_{\mathrm{acc}} \approx 0{,}141$) kalibr\'al; (4) \textbf{\ref{prop:ocsr-void-clock}.\ \'All\'it\'as (\texttt{PHENOMENOLOGICAL} k\"ozvetlen \texttt{SN+DESI BAO+CMB} illeszt\'es \'es $\alpha$-profil):} Csak a \texttt{Pantheon+}-on az osztott-nyal\'ab modellek \emph{statisztikailag ekvivalensek} a $\Lambda$CDM-mel ($\Delta\chi^2_{\mathrm{SN}} = -0{,}74\dots -1{,}21$, $\alpha \in [0; 0{,}43]$ lapos az $\Omega_{m,0}$-degener\'aci\'o miatt), a konstans s\'uly\'u \textbf{H2a} ($p=0$) modellt pedig \emph{kiz\'arja} a CMB $\theta_*$ + BAO ($\Delta\chi^2 = +5{,}56$), mert a rekombin\'aci\'okor ($z_* \simeq 1090$) m\'eg nincsenek kozmikus \"uregek. A Wiltshire (2009) tranzitr\'at\'at a fizikai \"ureg-t\'erfogatar\'annyal s\'ulyozva ($\alpha_{\mathrm{eff}}(z) = \alpha f_v(z)/f_{v,0}$, $p=1$, amely $z \to z_*$-ban elt\H{u}nik) felold\'odik az $\Omega_{m,0}$-degener\'aci\'o az egyes\'itett $N=1610$ adatsoron: a szabad profil-optimum $\hat{\alpha}_{\mathrm{MLE}} = \mathbf{0{,}330 \pm 0{,}139}$ ($\Delta\chi^2 = -6{,}52$, $\sim 2{,}55\sigma$ preferencia $\alpha=0$ felett; $\alpha=1$ kiz\'arva $+11{,}02$-vel), az el\H{o}re r\"ogz\'itett $\alpha_0 = \frac{5\sqrt{3}}{24} = 0{,}3608$ prior ($0{,}22\sigma$-ra $\hat{\alpha}_{\mathrm{MLE}}$-t\H{o}l, $k=4$, z\'er\'o extra param\'eter) pedig $\Delta\chi^2 = \mathbf{-6{,}47}$-et ad ($\Delta\mathrm{BIC} = -6{,}47$ a $\Lambda$CDM-hez \'es $\mathbf{-14{,}71}$ a szabad CPL-hez k\'epest; CC n\'elk\"ul $\mathbf{-6{,}57}$; \textbf{El\H{o}re \texttt{H2-Sachs}}: $\mathbf{-6{,}37}$).
+\noindent Az Ia t\'ipus\'u szupern\'ov\'akat (SNe~Ia), a barionikus akusztikus oszcill\'aci\'okat (BAO) \'es a kozmikus mikrohull\'am\'u h\'att\'ersug\'arz\'as (CMB) t\'avols\'ag-priorjait egyes\'it\H{o} k\'es\H{o}i kozmol\'ogiai illeszt\'esek $2{,}5\text{--}4{,}2\sigma$-os preferenci\'at mutatnak az id\H{o}ben v\'altoz\'o s\"ot\'et energia ($w_0 > -1$, $w_a < 0$) ir\'any\'aba, amelynek er\H{o}ss\'ege a szupern\'ova-mint\'ak magasabb anyags\H{u}r\H{u}s\'ege ($\Omega_{m,0} \simeq 0{,}33\text{--}0{,}36$) \'es a BAO+CMB alacsonyabb \'ert\'eke ($\Omega_{m,0} \simeq 0{,}30$) k\"oz\"otti fesz\"ults\'egt\H{o}l f\"ugg. Az inhomog\'en \'ora-dresszing (\textit{Timescape}) modellek alapj\'an --- amelyekben a kozmikus \"uregekben gyorsabban j\'ar\'o saj\'at\'or\'ak ($\mathrm{d}\tau/\mathrm{d}t > 1$) l\'atsz\'olagos $w_0^{\mathrm{app}} > -1$ eltol\'od\'ast keltenek a homog\'en FLRW-sablonokban --- egy 1 szabad param\'eteres fenomenologikus tranzitt\"orv\'enyt ($k = 5$, egyetlen szabad $\alpha \in [0,1]$ s\'uly a s\'ik $\Lambda$CDM felett) vizsg\'alunk, amelyben a dressed Wiltshire-t\'avols\'agderiv\'altat a norm\'alt \"ureg-t\'erfogatar\'any $\alpha_{\mathrm{eff}}(z) = \alpha\,f_v(z)/f_{v,0}$ s\'ulyozza, \'igy a hat\'as a szerkezetk\'epz\H{o}d\'es el\H{o}tt ($z \to z_* \simeq 1090$) automatikusan elt\H{u}nik. M\'ig a konstans s\'ulyoz\'ast ($p = 0$) $\mathcal{O}(0{,}4)$ amplit\'ud\'on\'al kiz\'arja a BAO \'es a t\"om\"or\'itett \texttt{Planck} 2018 $(\omega_b, \omega_c, 100\theta_*)$ prior ($\Delta\chi^2 > +115$), az \"ureg-t\'erfogatar\'annyal s\'ulyozott t\"orv\'eny ($p = 1$) egym\'assal konzisztens $\hat{\alpha}$ becsl\'eseket \'es szignifik\'ans javul\'ast ad mind a n\'egy nyilv\'anos SN~Ia katal\'oguson (\texttt{DESI} BAO + \texttt{Planck} 2018 mellett): $\hat{\alpha} = 0{,}422 \pm 0{,}127$ ($\Delta\chi^2 = -10{,}96$, $\Delta\mathrm{AIC} = -8{,}96$, $\Delta\mathrm{BIC} = -3{,}59$) a \texttt{Pantheon+}, $\hat{\alpha} = 0{,}432 \pm 0{,}122$ ($\Delta\chi^2 = -12{,}66$, $\Delta\mathrm{BIC} = -5{,}14$) az \'ujrakalibr\'alt \texttt{DES-Dovekie}, $\hat{\alpha} = 0{,}545 \pm 0{,}121$ ($\Delta\chi^2 = -20{,}30$, $\Delta\mathrm{BIC} = -12{,}78$) a \texttt{DES-SN5YR}, \'es $\hat{\alpha} = 0{,}594 \pm 0{,}141$ ($\Delta\chi^2 = -15{,}15$, $\Delta\mathrm{BIC} = -11{,}51$) a \texttt{Union3} mint\'an (Chen--Huang--Wang $(R, \ell_A, \omega_b)$ priorral: $\Delta\chi^2 = -9{,}49 \dots -18{,}51$). Az 1-param\'eteres modell mind a n\'egy adatsoron $|\Delta\chi^2| \le 2{,}1$-en bel\"ul el\'eri a 2-param\'eteres CPL ($k = 6$) modell $\chi^2$-\'ert\'ek\'et eggyel kevesebb szabad param\'eterrel ($\Delta\mathrm{BIC} = -3{,}76 \dots -9{,}51$ a CPL-hez k\'epest). A \texttt{Pantheon+} $N = 311$ l\'at\'oir\'any\'at egzakt 1D h\'ur-uni\'o sug\'ark\"ovet\'essel keresztkorrel\'alva az \texttt{SDSS} DR7 3D \texttt{VoidFinder} katal\'ogussal ($z \le 0{,}105$), a v\"or\"oseltol\'od\'asra detrendelt meredeks\'eg $\mathrm{d}\Delta\mu/\mathrm{d}f_{v,\mathrm{LOS}} = -0{,}058 \pm 0{,}036\;\mathrm{mag}$ ($-1{,}59\sigma$): el\H{o}jele megegyezik a gyorsabb \"ureg-\'or\'ak j\'oslat\'aval, statisztikailag pedig egyar\'ant konzisztens a kis egyh\'ej\'u elm\'eleti amplit\'ud\'oval ($-0{,}007 \dots -0{,}014\;\mathrm{mag}$) \'es a zajjal, kijel\"olve a \texttt{DESI} \'es az \texttt{Euclid}/\texttt{LSST} $z \le 0{,}7$ tomogr\'afiai tesztj\'et.
 \end{abstract}
 
-\section{Bevezet\'es: T\"obbpr\'ob\'as szupern\'ova-, \"ureg-\'ora- \'es galaktikus forg\'asig\"orbe-fesz\"ults\'egek}
-A megfigyel\'eses kozmol\'ogia h\'arom \"osszef\"ugg\H{o} k\'erd\'essel szembes\"ul a $0{,}01 \le z \le 1{,}2$ tartom\'anyban:
-\begin{enumerate}
-    \item \textbf{\texttt{DES} Y6 vs.\ \texttt{Pantheon+} szupern\'ov\'ak t\"obbpr\'ob\'as CPL-illeszt\'esekben:} A teljes 6 \'eves Dark Energy Survey elemz\'esben \cite{DES2026DynDE} a \texttt{DES} Y6 pr\'ob\'ak \"onmagukban (\texttt{DES-SN5YR} \cite{DESSN5YR2024}, BAO, $3\times 2\mathrm{pt}$) $w_0 = -0{,}84 \pm 0{,}10$, $w_a = -0{,}44^{+0{,}60}_{-0{,}55}$ ($2{,}2\sigma$), a \texttt{DES} Y6 + \texttt{DESI} BAO $w_0 = -0{,}84^{+0{,}06}_{-0{,}07}$, $w_a = -0{,}53^{+0{,}33}_{-0{,}28}$ ($2{,}3\sigma$), a \texttt{DES} Y6 + els\H{o}dleges \texttt{Planck} CMB pedig $w_0 = -0{,}82 \pm 0{,}05$, $w_a = -0{,}63^{+0{,}21}_{-0{,}18}$ ($\sim 3{,}0\sigma$; v\"o.\ \texttt{DESI} DR2 \cite{DESIDR2_2025}) eredm\'enyt ad. Efstathiou \cite{Efstathiou2025SN} azonban kimutatott egy $\sim 0{,}04\;\mathrm{mag}$-os fotometriai nullpont-eltol\'od\'ast a \texttt{DES-SN5YR} \'es a \texttt{Pantheon+} \cite{Brout2022} k\"oz\"ott; az $N=1580$ \texttt{Pantheon+} mint\'aval egyes\'itett $N=1610$ adatsoron (\texttt{Pantheon+} + $13$ \texttt{DESI} BAO + $15$ Moresco CC + \texttt{Planck} CMB $100\theta_*$ + Cooke BBN $\omega_b$) a szabad CPL-optimum (\texttt{M1b}) $(w_0, w_a) = (\mathbf{-0{,}8895 \pm 0{,}0597};\; \mathbf{-0{,}2250 \pm 0{,}2686})$ (egzakt $5\times 5$ Hesse-kovariancia, $\rho = -0{,}8860$), statisztikai d\"ontetlenben a $\Lambda$CDM-mel ($\Delta\chi^2 = -6{,}53$, $\Delta\mathrm{AIC} = -2{,}53$, $\Delta\mathrm{BIC} = +8{,}24$, \ref{tab:multiprobe}.\ t\'abl\'azat).
-    \item \textbf{\textit{MNRAS} 2025-\"os inhomog\'en \"ureg-\'ora (\emph{Timescape}) kozmol\'ogia:} Lane, Seifert, Ridden-Harper \'es Wiltshire \cite{LaneWiltshire2025MNRAS}, valamint Seifert \'es mtsai.\ \cite{SeifertWiltshire2025MNRAS} megmutatt\'ak, hogy a k\"ot\"ott galaxissz\'alak ($t_w$) \'es t\'agul\'o \"uregek ($f_v(z)$, $\bar{\gamma} = 1 + \frac{1}{2}f_v > 1$) k\"oz\"otti \'orak\"ul\"onbs\'eg s\"ot\'etenergia-folyad\'ek n\'elk\"ul is l\'atsz\'olagos $w_0^{\mathrm{app}} > -1$, $w_a^{\mathrm{app}} < 0$ eltol\'od\'ast okoz, \'am az \"on\'all\'o Timescape \cite{Wiltshire2009PRD} a standard SALT2 \texttt{Pantheon+} kovarianci\'an $\chi^2_{\mathrm{SN}} = 1403{,}83$-at ($\Delta\chi^2_{\mathrm{SN}} = +16{,}50$) ad \'es nem \'irja le a galaktikus forg\'asi g\"orb\'eket.
-    \item \textbf{Kodama--Hayward horizont-sk\'al\'az\'as $a_0(z)$ \'es lapos aszimptotik\'aj\'u forg\'asi g\"orb\'ek:} Nemstacion\'arius s\'ik FLRW h\'att\'eren az $r_{\mathrm{AH}} = c/H(z)$ l\'atsz\'olagos horizont Kodama--Hayward fel\"uleti gravit\'aci\'oja $|\kappa_{\mathrm{KH}}(z)| = \frac{1}{2}cH(z)|1 - q(z)|$, amellyel az ar\'anyos galaktikus gyorsul\'asi sk\'ala:
-    \begin{equation}
-        a_0(z) = a_0(0)\,\frac{H(z)\,\bigl|1 - q(z)\bigr|}{H_0\,\bigl|1 - q_0\bigr|}, \qquad a_0^{\mathrm{KH}}(z) := \frac{1}{2}\alpha_0\,\bigl|\kappa_{\mathrm{KH}}(z)\bigr| = \frac{\alpha_0}{4}\,c H(z)\,\bigl|1 - q(z)\bigr|,
-        \label{eq:a0-kh-universal}
-    \end{equation}
-    amelyet mind a kanonikus $a_{0,\mathrm{MOND}}(0) = 1{,}20\times 10^{-10}\;\mathrm{m\,s^{-2}}$ norm\'al\'assal \cite{Milgrom1983,McGaugh2016}, mind a t\'arstanulm\'any $\alpha_0 = \frac{5\sqrt{3}}{24} \approx 0{,}360844$ ($a_0^{\mathrm{KH}}(0) = 0{,}9015\times 10^{-10}\;\mathrm{m\,s^{-2}}$) \cite{TauCoreZenodo2026} prior-hipot\'ezis\'evel (valamint szabad $\alpha \in [0,1]$ profillal) letesztel\"unk.
-\end{enumerate}
+\section{Bevezet\'es}
+A Dark Energy Spectroscopic Instrument (\texttt{DESI}) BAO-m\'er\'eseit \cite{DESI2024VI,DESIDR2_2025}, a \texttt{Planck} CMB-anizotr\'opi\'akat \cite{Planck2018VI} \'es az Ia t\'ipus\'u szupern\'ov\'akat egyes\'it\H{o} elemz\'esek $2{,}5\text{--}4{,}2\sigma$-os elt\'er\'est jeleznek a $w = -1$ kozmol\'ogiai \'alland\'ot\'ol a $w(a) = w_0 + w_a(1 - a)$ ($w_0 > -1$, $w_a < 0$) ir\'any\'aban. A 6 \'eves Dark Energy Survey elemz\'esben \cite{DES2026DynDE} a \texttt{DES} Y6 + \texttt{Planck} CMB kombin\'aci\'o $(w_0, w_a) = (-0{,}82 \pm 0{,}05;\; -0{,}63^{+0{,}21}_{-0{,}18})$ ($\sim 3{,}0\sigma$) eredm\'enyt ad, m\'ig Efstathiou \cite{Efstathiou2025SN} egy $\sim 0{,}04\;\mathrm{mag}$-os alacsony/magas $z$ k\"oz\"otti kalibr\'aci\'os eltol\'od\'ast mutatott ki a 2024-es \texttt{DES-SN5YR} \cite{DESSN5YR2024} \'es a \texttt{Pantheon+} \cite{Brout2022} k\"oz\"ott, ami a \texttt{DES-Dovekie} fotometriai \'ujrakalibr\'aci\'ohoz \cite{PopovicDovekie2025} vezetett a spline-binnelt \texttt{Union3} \cite{RubinUnion3_2025} mellett. Mind a n\'egy nyilv\'anos SN~Ia katal\'oguson a s\'ik $\Lambda$CDM szupern\'ova-illeszt\'es magasabb jelenlegi anyags\H{u}r\H{u}s\'eget prefer\'al --- $\Omega_{m,0} = 0{,}3326 \pm 0{,}0182$ (\texttt{Pantheon+}), $0{,}3303 \pm 0{,}0153$ (\texttt{DES-Dovekie}), $0{,}3520 \pm 0{,}0168$ (\texttt{DES-SN5YR}), illetve $0{,}3559 \pm 0{,}0270$ (\texttt{Union3}) --- mint a \texttt{DESI} BAO + \texttt{Planck} CMB ($\Omega_{m,0} \simeq 0{,}301$).
 
-\paragraph{A t\'arscikk logaritmikus magj\'ara vonatkoz\'o m\'ely-MOND RAR-ekvivalencia visszavon\'asa.} Kor\'abbi k\'eziratunkban a v\'eges-korongos $v_{\mathrm{log}}(r) = v_{\mathrm{bar}}(r)\bigl[1 + \alpha_0(1 - e^{-\mu u})\ln(1+u)\bigr]$ ($u = a_0/a_N$) magr\'ol azt \'irtuk, hogy k\"ozvetlen\"ul megfelel McGaugh RAR-j\'anak \cite{McGaugh2016}. \emph{Ezt a m\'ely-MOND ekvivalencia-\'all\'it\'ast form\'alisan visszavonjuk:} pontt\"omeg k\"or\"ul $r \to \infty$ ($u \propto r^2 \to \infty$) hat\'aresetben $v_{\mathrm{log}}(r) \propto r^{-1/2}\ln r \to 0$, \'igy nem ad sem aszimptotikusan lapos $v_\infty = (GM_b a_0)^{1/4}$ forg\'asi sebess\'eget, sem szigor\'u aszimptotikus BTFR-t ($g_{\mathrm{bar}}/a_{0,\mathrm{MOND}} = [1, 10^{-1}, 10^{-2}, 10^{-3}]$-n\'al $g_{\mathrm{obs}}/g_{\mathrm{bar}} = [1{,}43; 3{,}14; 6{,}57; 11{,}49]$ a RAR $[1{,}58; 3{,}69; 10{,}51; 32{,}13]$ \'ert\'ekeivel szemben). Ez\'ert az \ref{thm:kh-background}.\ T\'etelt itt els\H{o}dlegesen \textbf{val\'odi lapos aszimptotik\'aj\'u MOND \'es RAR interpol\'aci\'os t\"orv\'enyekkel} (seg\'ed-$\mu$ param\'eter n\'elk\"ul) tesztelj\"uk.
+Alternat\'iv fizikai mechanizmust k\'in\'alnak az inhomog\'en gravit\'aci\'os \'ora-dresszing (\textit{Timescape}) modellek \cite{Wiltshire2009PRD,LaneWiltshire2025MNRAS,SeifertWiltshire2025MNRAS}: mivel a fotonok k\"ot\"ott galaxissz\'alakon ($t_w$) \'es t\'agul\'o kozmikus \"uregeken ($f_v(z)$, gyorsabb $\bar{\gamma} = \mathrm{d}t/\mathrm{d}t_w = 1 + \frac{1}{2}f_v > 1$ \'oraj\'ar\'as) haladnak \'at, az egy\'or\'as s\'ik FLRW-sablon illeszt\'ese s\"ot\'etenergia-folyad\'ek n\'elk\"ul is l\'atsz\'olagos $w_0^{\mathrm{app}} > -1$ \'ert\'eket ad. A standard SALT2 \texttt{Pantheon+} kovarianci\'an azonban a tiszta s\'ulyozatlan Timescape $\chi^2_{\mathrm{SN}} = 1403{,}83$-at ad $f_{v,0} = 0{,}723$-n\'al ($\Delta\chi^2 = +16{,}50$ a $\Lambda$CDM-hez k\'epest; szabad $f_{v,0} = 0{,}853$-n\'al $1391{,}51$), j\'ollehet nyers f\'enyg\"orbe-\'ujrailleszt\'essel kedvez\H{o}bb illeszked\'es \'erhet\H{o} el \cite{LaneWiltshire2025MNRAS,SeifertWiltshire2025MNRAS}.
 
-\section{1.\ T\'etel: Az $a_0(z)$ h\'att\'erf\"ugg\'ese \'es lapos aszimptotik\'aj\'u MOND/RAR teszt 43 korongon}
+Ezzel szemben egyetlen \'or\'aj\'u s\'ik $\Lambda$CDM h\'att\'eren Kantowski \cite{Kantowski1969}, Dyer \'es Roeder \cite{DyerRoeder1973}, valamint Weinberg \cite{Weinberg1976} klasszikus eredm\'enye alapj\'an a Sachs-egyenlet Ricci-f\'okusz\'al\'asi t\'enyez\H{o}j\'enek ($\alpha_{\mathrm{beam}}(z)$) m\'odos\'it\'asa nem v\'altoztatja meg $D_A''(0) = -(2 + \frac{3}{2}\Omega_{m,0})\frac{c}{H_0}$ \'ert\'ek\'et ($D_A(0) = 0$ miatt), \'igy $w_0^{\mathrm{app}}(z \to 0) = -1$ azonoss\'agszer\H{u}en megmarad, a gyenge t\'erbeli \"uregpotenci\'alok ($|\Phi|/c^2 \lesssim 5\times 10^{-4}$) pedig $< 10^{-3}$-tal m\'odos\'itj\'ak $w_0^{\mathrm{app}}$-t.
 
-\begin{theorem}[Egybees\'es-s\'ert\'esi azonoss\'ag \'altal\'anos $w(z)$ alatt \'es 43-korongos MOND/RAR teszt]
-\label{thm:kh-background}
-S\'ik FLRW h\'att\'erben $\Omega_{m,0} \in (0,1)$ por \'es $\Omega_{\mathrm{DE},0} = 1 - \Omega_{m,0}$ s\"ot\'et energia ($w(a)$, $W(a) = \rho_{\mathrm{DE}}(a)/\rho_{\mathrm{DE},0}$) mellett: (1) $1 + w(a) = -\frac{1}{3}\frac{\mathrm{d}\ln W}{\mathrm{d}\ln a}$ miatt monoton $W(a)$ nem l\'epheti \'at a $w = -1$-et; (2) $q(z_{\mathrm{acc}}) = 0$-n\'al
+Tanulm\'anyunkban egy 1-param\'eteres fenomenologikus, \"ureg-t\'erfogatar\'annyal s\'ulyozott tranzitt\"orv\'enyt vizsg\'alunk szigor\'u $k = 5$ param\'etersz\'aml\'al\'assal mind a n\'egy nyilv\'anos SN~Ia katal\'oguson (\texttt{DESI} BAO + t\"om\"or\'itett \texttt{Planck} 2018 CMB mellett), megvizsg\'aljuk az $f_{v,0}$- \'es $H_0$-norm\'al\'asi \'erz\'ekenys\'eget, majd elv\'egezz\"uk a \texttt{Pantheon+} \'es az \texttt{SDSS} DR7 3D \texttt{VoidFinder} katal\'ogus \cite{Douglass2023ApJS} k\"ozvetlen sug\'ark\"ovet\'eses keresztkorrel\'aci\'oj\'at.
+
+\section{Fenomenologikus \"ureg-t\'erfogatar\'annyal s\'ulyozott t\'avols\'agmodell}
+A Buchert--Wiltshire trackerben \cite{Wiltshire2009PRD,LaneWiltshire2025MNRAS} a dressed t\'avols\'ag z\'art alakja $D_{\mathrm{TS}}(z) = (1+z)d_A^{\mathrm{TS}}(z)$, ahol
 \begin{equation}
-    \left.\frac{1}{a_0}\frac{\mathrm{d}a_0}{\mathrm{d}\ln a}\right|_{q=0} = -\frac{3}{2}\bigl(1 + w(a_{\mathrm{acc}})\bigr) + \frac{1}{2w(a_{\mathrm{acc}})}\left.\frac{\mathrm{d}w}{\mathrm{d}\ln a}\right|_{a_{\mathrm{acc}}},
-    \label{eq:coincidence-breaking}
+\begin{split}
+    \bar{H}_0 d_A^{\mathrm{TS}}(z) &= c\,x(z)^{2/3}\bigl[\mathcal{F}(x_0) - \mathcal{F}(x(z))\bigr], \\
+    \mathcal{F}(x) &= 2x^{1/3} + \frac{b^{1/3}}{6}\ln\frac{(x^{1/3}+b^{1/3})^2}{x^{2/3}-b^{1/3}x^{1/3}+b^{2/3}} + \frac{b^{1/3}}{\sqrt{3}}\arctan\frac{2x^{1/3}-b^{1/3}}{\sqrt{3}\,b^{1/3}},
+\end{split}
+\label{eq:wiltshire-exact}
 \end{equation}
-\'igy $z_{\mathrm{dip}} = z_{\mathrm{acc}} \iff 3w(1+w) = \frac{\mathrm{d}w}{\mathrm{d}\ln a}$ (konstans $w\neq 0$-ra egyed\"ul $w=-1$, $-6{,}15\%$-os minimummal $z_{\mathrm{dip}} = 0{,}631556$-n\'al); (3) homog\'en \texttt{DES} Y6 + \texttt{CMB} CPL h\'att\'eren ($-0{,}82; -0{,}63; 0{,}3153$) a $z = 0{,}6316$-os ar\'any $0{,}938550$-r\H{o}l $\mathbf{1{,}142720}$-ra ($+21{,}75\%$) n\H{o}. A $43$ Mancera Pi\~na \'es mtsai.\ \cite{ManceraPina2025} \texttt{JWST/HST} koronggalaxison ($0{,}787 \le z \le 1{,}03$, $2R_{\mathrm{eff}}$) val\'odi $v_\infty = (GM_b a_0(z))^{1/4}$ lapos aszimptotik\'aj\'u kernelekkel:
-\begin{itemize}
-    \item \textbf{Standard Milgrom (1983) MOND $\mu_{\mathrm{std}}(y) = y/\sqrt{1+y^2}$ \cite{Milgrom1983} ($a_0(0) = 1{,}20\times 10^{-10}\;\mathrm{m\,s^{-2}}$):} $w_{\mathrm{hor}} = -1$ mellett $\chi^2 = \mathbf{107{,}53}$ ($\chi^2/\mathrm{dof} = \mathbf{2{,}501}$), m\'ig $z=0$-hoz r\"ogz\'itett \texttt{DES}-CPL-re $\chi^2 = \mathbf{121{,}65}$ ($\Delta\chi^2 = \mathbf{+14{,}12}$ nyers / $\mathbf{+5{,}65}$ norm\'alt), r\"ogz\'itetlen\"ul $111{,}45$ ($a_0(0)$ $-12{,}11\%$-os es\'es\'evel), monoton $a_0 \propto H(z)$-re pedig $\mathbf{169{,}44}$ ($\Delta\chi^2 = \mathbf{+61{,}91}$; $a_0^{\mathrm{KH}}(0)$-n\'al: $\mathbf{95{,}93}$, $\chi^2/\mathrm{dof} = \mathbf{2{,}231}$ vs.\ $102{,}49$ \'es $131{,}05$).
-    \item \textbf{McGaugh \'es mtsai.\ (2016) RAR $\nu_{\mathrm{RAR}}(y) = (1 - e^{-\sqrt{y}})^{-1}$ \cite{McGaugh2016} ($a_0(0) = 1{,}20\times 10^{-10}\;\mathrm{m\,s^{-2}}$):} $w_{\mathrm{hor}} = -1$ mellett $\chi^2 = \mathbf{186{,}55}$ vs.\ $\mathbf{217{,}44}$ r\"ogz\'itett \texttt{DES}-CPL ($\Delta\chi^2 = \mathbf{+30{,}89}$ nyers / $\mathbf{+7{,}12}$ norm\'alt), $195{,}89$ r\"ogz\'itetlen\"ul, \'es $\mathbf{297{,}76}$ monoton $a_0 \propto H(z)$-re ($\Delta\chi^2 = \mathbf{+111{,}21}$).
-\end{itemize}
-\end{theorem}
+$x_0 = \frac{2+f_{v,0}}{3}$, $b = \frac{2(1-f_{v,0})(2+f_{v,0})}{9f_{v,0}}$, $\frac{H_0^{\mathrm{TS}}}{\bar{H}_0} = \frac{4f_{v,0}^2 + f_{v,0} + 4}{2(2+f_{v,0})}$, \'es $1 + z = \frac{2 + f_v}{2 + f_{v,0}}\bigl(\frac{f_{v,0}}{f_v}\bigr)^{2/3}\frac{1 - f_v}{1 - f_{v,0}}$, \'igy a korai univerzumban $f_v(z) \propto (1+z)^{-1} \to 0$ ($f_v(z_*) \approx 2{,}2\times 10^{-3}$). Alapkalibr\'aci\'onkban (\texttt{H1}) a fal-keretbeli gyorsul\'asi gy\"ok\"ot ($q_{\mathrm{wall}}(f_{\mathrm{acc}}) = 0 \implies f_{\mathrm{acc}} = 0{,}586708$) a $\Lambda$CDM $z_{\mathrm{acc}} = [2(1-\Omega_{m,0})/\Omega_{m,0}]^{1/3} - 1$ v\"or\"oseltol\'od\'ashoz illesztj\"uk ($\Omega_{m,0} = 0{,}3153 \mapsto f_{v,0} = 0{,}7234$), \'am a \ref{tab:chw-fv0}.\ t\'abl\'azatban \texttt{H1} n\'elk\"ul, r\"ogz\'itett $f_{v,0} \in [0{,}65; 0{,}80]$ \'ert\'ekeken is ellen\H{o}rizz\"uk az eredm\'eny robusztuss\'ag\'at.
 
-\begin{proof}
-A $H(1-q)$ kifejez\'est $q = 0 \iff \Omega_{\mathrm{DE}} = -\frac{1}{3w}$ mellett deriv\'alva ad\'odik a \eqref{eq:coincidence-breaking} azonoss\'ag; $(-0{,}82;-0{,}63;0{,}3153)$ \'es $z = 0{,}6315565$ mellett $E(z) = 1{,}450613$, $q(z) = -0{,}057302$, $1 - q(0) = 1{,}342181 \implies \text{ar\'any} = 1{,}142720$. \qed
-\end{proof}
-
-\section{2.\ T\'etel: Egy\'or\'as Dyer--Roeder \'es gyenge t\'erbeli QUMOND optikai No-Go}
-
-\begin{theorem}[Klasszikus egy\'or\'as $\mathcal{O}(z^2)$ f\'okusz\'al\'asi invariancia \'es gyenge t\'erbeli \"uregkorl\'at]
-\label{thm:forward-nogo}
-B\'armely metrika-nyommal b\H{o}v\'itett t\'eregyenletet nullvektorral ($g_{\mu\nu}k^\mu k^\nu = 0$) kontrah\'alva a $g_{\mu\nu}$-vel ar\'anyos tagok kiesnek. Egyetlen \'or\'aj\'u $w_{\mathrm{hor}} = -1$ FLRW h\'att\'eren ($E_{\mathrm{ray}} = E_{\mathrm{hor}}$): (1) Kantowski \cite{Kantowski1969}, Dyer \& Roeder \cite{DyerRoeder1973} \'es Weinberg \cite{Weinberg1976} eredm\'enye szerint a $\frac{\mathrm{d}}{\mathrm{d}z}\bigl[(1+z)^2 E_{\mathrm{hor}}\frac{\mathrm{d}D_A}{\mathrm{d}z}\bigr] + \frac{3}{2}\Omega_{m,0}\alpha_{\mathrm{beam}}(z)\frac{(1+z)^3}{E_{\mathrm{hor}}}D_A = 0$ egyenletben a Ricci-forr\'as $z=0$-ban elt\H{u}nik $D_A(0)=0$ miatt, \'igy $D_A(z)$ $\mathcal{O}(z^2)$-ig f\"uggetlen $\alpha_{\mathrm{beam}}(z)$-t\H{o}l ($\frac{H_0}{c}D_A''(0) = -(2 + \frac{3}{2}\Omega_{m,0}) \implies w_0^{\mathrm{app}}(z \to 0) \equiv -1$; $\alpha_{\mathrm{beam}} = 1-\alpha_0$ $(w_0^{\mathrm{app}}, w_a^{\mathrm{app}}) = (-0{,}8173; -1{,}5886)$-ot \'es $\chi^2_{\mathrm{SN}} = 1394{,}31$-et ad); (2) kozmikus mega-\"uregekre ($R_v \sim 35\,h^{-1}\;\mathrm{Mpc}$, $\delta_v \approx -0{,}8$, $g_{N,v}/a_{0,\mathrm{MOND}} = 0{,}00535$, $\nu_{\mathrm{QUMOND}} = 14{,}18$) a $|\Phi|/c^2 \sim 5\times 10^{-4} \ll 1$ gyenge t\'erbeli potenci\'al nagys\'agrendileg csak $|\Delta w_0^{\mathrm{app}}| < 10^{-3}$-ot ad.
-\end{theorem}
-
-\section{1.\ \'All\'it\'as: Felt\'eteles $f_{v,0} = 72{,}34\%$ kalibr\'aci\'o \'es Jacobi-\'erz\'ekenys\'eg (H1)}
-
-\begin{hypothesis}[Horizont--fal gyorsul\'asi \'atmenet-azonos\'it\'as --- \textbf{H1}]
-\label{hyp:H1}
-A Buchert--Wiltshire trackerben a $q_{\mathrm{wall}}(f_v) = 0$ fal-keretbeli gyorsul\'asi \'atmenet v\"or\"oseltol\'od\'asa megegyezik az $z_{\mathrm{acc}}^{\mathrm{hor}} = (2\Omega_{\Lambda,0}/\Omega_{m,0})^{1/3} - 1$ inflexi\'os v\"or\"oseltol\'od\'assal: $z(f_{\mathrm{acc}}) = z_{\mathrm{acc}}^{\mathrm{hor}}$.
-\end{hypothesis}
-
-\begin{proposition}[Felt\'eteles algebrai \"uregar\'any-kalibr\'aci\'o \'es Jacobi-\'erz\'ekenys\'eg]
-\label{prop:void-fraction}
-A Buchert--Wiltshire trackerben \cite{Wiltshire2009PRD,LaneWiltshire2025MNRAS} a $q_{\mathrm{wall}}(f_v) = \frac{8f_v^4 + 31f_v^3 - 51f_v^2 + 4f_v + 8}{16f_v^4 + 8f_v^3 + 33f_v^2 + 8f_v + 16} = 0$ egyetlen fizikai gy\"oke $f_{\mathrm{acc}} = \mathbf{0{,}58670773}$. A \ref{hyp:H1}.\ Hipot\'ezis minden $\Omega_{m,0}$-hoz egy\'ertelm\H{u}en rendeli $f_{v,0}(\Omega_{m,0})$-t: Planck $\Omega_{m,0} = 0{,}3153$-n\'al $f_{v,0} = \mathbf{0{,}723358}$ ($\mathbf{72{,}34\%}$; az egyes\'itett $\Omega_{m,0} = 0{,}3093$ illeszt\'esn\'el $f_{v,0} = 0{,}7256$). A lapos $\mathrm{d}f_{v,0}/\mathrm{d}z_{\mathrm{acc}} \approx 0{,}141$ Jacobi-meredeks\'eg miatt a \textbf{H1} param\'etermentes kalibr\'aci\'o, nem keskeny f\"uggetlen predikci\'o.
-\end{proposition}
-
-\section{2.\ \'All\'it\'as: K\"ozvetlen \texttt{Pantheon++DESI BAO+CMB $\theta_*$} illeszt\'es \'es $\alpha \in [0,1]$ profil}
-
-Wiltshire \cite{Wiltshire2009PRD} \'es Lane \'es mtsai.\ \cite{LaneWiltshire2025MNRAS} egzakt dressed t\'avols\'ag\'at ($d_A^{\mathrm{TS}}(z) = c\,t^{2/3}[\mathcal{F}(t_0)-\mathcal{F}(t)]$, $D_{\mathrm{TS}}(z) = (1+z)d_A^{\mathrm{TS}}(z)$, $\mathrm{d}E_{\mathrm{TS}}/\mathrm{d}z|_0 = 0{,}758852$) k\"ozvetlen\"ul tesztelj\"uk az \"osszes geometriai pr\'ob\'an (\texttt{Pantheon+}, \texttt{DESI} BAO $D_M/r_d$ \'es $D_H/r_d$, \texttt{Planck} CMB $100\theta_* = 100\,r_s(z_*)/D_M(z_*)$, BBN $\omega_b$ \'es Moresco CC):
-
-\begin{hypothesis}[Konstans s\'uly\'u ($p=0$) vs.\ \"ureg-t\'erfogatar\'annyal s\'ulyozott ($p=1$) modellek --- \textbf{H2}]
-\label{hyp:H2}
-Legyen $\alpha \in [0,1]$ (mind az $\alpha_0 = \frac{5\sqrt{3}}{24} = 0{,}360844$ prioron, mind szabad param\'eterk\'ent vizsg\'alva):
+A dimenzi\'omentes $\tilde{D}_{\mathrm{TS}}(z) := H_0^{\mathrm{TS}} D_{\mathrm{TS}}(z)/c$ ($\tilde{D}_{\mathrm{TS}}'(0) = 1$) \'es $D_{\mathrm{hor}}(z) = \int_0^z E_{\mathrm{hor}}(z')^{-1}\mathrm{d}z'$ kombin\'aci\'oj\'at egyetlen szabad $\alpha \in [0, 1]$ param\'eteres fenomenologikus modellk\'ent vizsg\'aljuk:
 \begin{enumerate}
-    \item \textbf{Konstans s\'uly\'u integr\'alt modell (\textbf{H2a}, $p = 0$):} $D_{\mathrm{obs}}(z) = (1 - \alpha)D_{\mathrm{hor}}(z) + \alpha D_{\mathrm{TS}}(z)$ minden $z$-n, m\'eg a rekombin\'aci\'okor ($z_* \simeq 1090$, ahol m\'eg nincsenek nemline\'aris \"uregek, $f_v(z_*) \approx 0{,}002$) is nemz\'erus $\alpha$-t felt\'etelezve.
-    \item \textbf{Fizikai \"ureg-t\'erfogatar\'annyal s\'ulyozott tranzitt\"orv\'eny (\textbf{H2-vol}, $p = 1$) \'es csatolt Sachs-ODE (\textbf{El\H{o}re \texttt{H2-Sachs}}, $p = 1$):} Mivel az \"ureg-\'ora effektus csak a f\'enysug\'ar ment\'en elfoglalt fizikai \"ureg-t\'erfogatar\'annyal ar\'anyosan l\'ephet fel, a lok\'alis s\'ulyt $\alpha_{\mathrm{eff}}(z) := \alpha\,\frac{f_v(z)}{f_{v,0}}$ alakban adjuk meg ($z=0$-ban $\alpha$, a korai homog\'en univerzumban $z \to z_*$ pedig automatikusan $\propto (1+z)^{-1} \to 0$):
+    \item \textit{Konstans s\'uly\'u ansatz} (\texttt{H2a}, $p = 0$): $\tilde{D}_{\mathrm{obs}}(z) = (1 - \alpha)D_{\mathrm{hor}}(z) + \alpha \tilde{D}_{\mathrm{TS}}(z)$ minden $z$-n (m\'eg $z_* \simeq 1090$-n\'el is).
+    \item \textit{\"Ureg-t\'erfogatar\'annyal s\'ulyozott tranzitt\"orv\'eny} (\texttt{H2-vol}, $p = 1$) \'es \textit{csatolt Sachs-ODE} (\texttt{Forward H2-Sachs}, $p = 1$): $\alpha_{\mathrm{eff}}(z) := \alpha\,\frac{f_v(z)}{f_{v,0}}$ s\'ulyoz\'assal ($z \to z_*$ hat\'aresetben automatikusan elt\H{u}nik):
     \begin{equation}
-        \frac{c}{H_0}\frac{\mathrm{d}D_{\mathrm{obs}}^{\mathrm{(H2\text{-}vol)}}}{\mathrm{d}z} = \frac{1 - \alpha_{\mathrm{eff}}(z)}{E_{\mathrm{hor}}(z)} + \alpha_{\mathrm{eff}}(z)\frac{\mathrm{d}(H_0 D_{\mathrm{TS}}/c)}{\mathrm{d}z}, \qquad \alpha_{\mathrm{eff}}(z) = \alpha\,\frac{f_v(z)}{f_{v,0}},
-        \label{eq:h2-vol-p1}
+        \frac{\mathrm{d}\tilde{D}_{\mathrm{obs}}^{\mathrm{(H2\text{-}vol)}}}{\mathrm{d}z} = \frac{1 - \alpha_{\mathrm{eff}}(z)}{E_{\mathrm{hor}}(z)} + \alpha_{\mathrm{eff}}(z)\frac{\mathrm{d}\tilde{D}_{\mathrm{TS}}}{\mathrm{d}z}, \qquad D_M^{\mathrm{obs}}(z) = \frac{c}{H_0}\tilde{D}_{\mathrm{obs}}(z),
+        \label{eq:h2-vol}
     \end{equation}
-    valamint az el\H{o}re ir\'anyul\'o $\frac{\mathrm{d}}{\mathrm{d}z}\bigl[(1+z)^2 E_{\mathrm{ray}}(z)\frac{\mathrm{d}D_A}{\mathrm{d}z}\bigr] + \frac{3}{2}\Omega_{m,0}\frac{(1+z)^3}{E_{\mathrm{ray}}(z)}D_A(z) = 0$ Sachs-ODE-ban.
+    illetve az el\H{o}re ir\'anyul\'o $\frac{\mathrm{d}}{\mathrm{d}z}\bigl[(1+z)^2 E_{\mathrm{ray}}(z)\frac{\mathrm{d}\tilde{D}_A}{\mathrm{d}z}\bigr] + \frac{3}{2}\Omega_{m,0}\frac{(1+z)^3}{E_{\mathrm{ray}}(z)}\tilde{D}_A(z) = 0$ egyenletben.
 \end{enumerate}
-\end{hypothesis}
 
-\begin{proposition}[Szupern\'ova-ekvivalencia vs.\ k\"ozvetlen \texttt{SN+BAO+CMB} $\alpha$-profil konkordancia]
-\label{prop:ocsr-void-clock}
-Az \"on\'all\'o BDF2 \texttt{RECFAST} v1.5 rekombin\'aci\'os integr\'atorral (\texttt{verify\_C9}) v\'egzett elemz\'es h\'arom eredm\'enyt ad (\ref{fig:sub4-synthesis}.\ \'abra, \ref{tab:alpha-profile}--\ref{tab:multiprobe}.\ t\'abl\'azat):
-\begin{enumerate}
-    \item \textbf{Csak a \texttt{Pantheon+}-on ($N=1580$) a modellek statisztikailag ekvivalensek a $\Lambda$CDM-mel, \'es $\alpha \in [0; 0{,}43]$ nem meghat\'arozott:} Fix $\Omega_{m,0}=0{,}3153$ mellett $\alpha_0 = 0{,}3608$-n\'al $w_0^{\mathrm{app}}(0) = -0{,}8996$, \'es a \textbf{H2a} ($\chi^2_{\mathrm{SN}} = 1386{,}59$, $\Delta\chi^2 = -0{,}74$), a \textbf{H2-vol} ($1386{,}31$, $-1{,}02$) \'es az \textbf{El\H{o}re \texttt{H2-Sachs}} ($1386{,}11$, $-1{,}21$) \emph{statisztikailag megk\"ul\"onb\"oztethetetlen} a $\Lambda$CDM-t\H{o}l ($1387{,}33$), mik\"ozben megsz\"unteti a tiszta Timescape $+16{,}50$-es b\"untet\'es\'et ($1403{,}83$). Az $\alpha \in [0; 0{,}43]$ s\'av lapos ($\min\Delta\chi^2_{\mathrm{SN}} = -1{,}32$ $\alpha = 0{,}218$-n\'al) az $\Omega_{m,0}$-eltol\'assal val\'o degener\'aci\'o miatt (szabad $\Omega_{m,0}=0{,}3326$-os $\Lambda$CDM: $\Delta\chi^2_{\mathrm{SN}} = -0{,}92$).
-    \item \textbf{A k\"ozvetlen \texttt{CMB $\theta_*$ + DESI BAO} teszt kiz\'arja a $p=0$ konstans s\'ulyt (\textbf{H2a}) \'es igazolja az \"ureg-t\'erfogatar\'anyos s\'ulyoz\'ast ($p=1$):} A konstans s\'uly\'u \textbf{H2a} ($p=0$) elrontja a $z_* \simeq 1090$ hanghorizont-t\'avols\'agot ($100\theta_* = 1{,}0230$, $\chi^2_{\theta_*} = 3408{,}5$ Planck-param\'eterekn\'el), \'es m\'eg $(h,\omega_b,\omega_c,M_B)$ profiloz\'asa ut\'an is $\Delta\chi^2 = \mathbf{+5{,}56}$-tal rosszabb a $\Lambda$CDM-n\'el $N=1610$-en ($\chi^2_{\mathrm{BAO}} = 16{,}47$ vs.\ $10{,}73$). Ezzel szemben az $\alpha_{\mathrm{eff}}(z) = \alpha_0 f_v(z)/f_{v,0}$ ($p=1$, $k=4$, z\'er\'o extra param\'eter a $\Lambda$CDM \texttt{M0}-hoz k\'epest) modell egyszerre jav\'it a \texttt{Pantheon+}-on ($1390{,}57 \to \mathbf{1386{,}09}$) \'es a \texttt{DESI} BAO-n ($10{,}73 \to \mathbf{8{,}68}$) $100\theta_* = \mathbf{1{,}04110}$ ($\chi^2_{\theta_*} = 0{,}000$, $H_0 = 67{,}52$, $\Omega_{m,0} = 0{,}3093$) mellett, $\chi^2_{N=1610} = \mathbf{1401{,}20}$-at \'erve el ($\Delta\chi^2 = \Delta\mathrm{AIC} = \Delta\mathrm{BIC} = \mathbf{-6{,}47}$ vs.\ $\Lambda$CDM \texttt{M0}, $\Delta\mathrm{BIC} = \mathbf{-14{,}71}$ vs.\ szabad CPL \texttt{M1b} $1401{,}14$; CC n\'elk\"ul $N=1595$-re $\mathbf{-6{,}57}$; \textbf{El\H{o}re \texttt{H2-Sachs}} $p=1$: $\mathbf{1401{,}30}$, $\Delta\chi^2 = \mathbf{-6{,}37}$).
-    \item \textbf{Az egyes\'itett $N=1610$ $\alpha$-profil feloldja az $\Omega_{m,0}$-degener\'aci\'ot ($\hat{\alpha}_{\mathrm{MLE}} = 0{,}330 \pm 0{,}139$):} Szabad $\alpha \in [0,1]$ mellett a glob\'alis optimum $\hat{\alpha}_{\mathrm{MLE}} = \mathbf{0{,}330 \pm 0{,}139}$ ($\min\chi^2_{N=1610} = 1401{,}15$, $\Delta\chi^2 = -6{,}52$, m\'ers\'ekelt $\sim 2{,}55\sigma$ preferencia $\alpha=0$ felett; $\alpha=1$ kiz\'arva $+11{,}02$-vel), amelyt\H{o}l az $\alpha_0 = 0{,}3608$ prior mind\"ossze $\mathbf{0{,}22\sigma}$-ra ($\Delta\chi^2 = +0{,}05$) fekszik (\ref{tab:alpha-profile}.\ t\'abl\'azat).
-\end{enumerate}
-\end{proposition}
+\paragraph{K\"oz\"os $H_0$-norm\'al\'as \'es $k = 5$ param\'etersz\'aml\'al\'as.} Az \eqref{eq:h2-vol} t\"orv\'enyben mindk\'et \'ag ugyanazzal a $H_0 = 100h\;\mathrm{km\,s^{-1}\,Mpc^{-1}}$ jelenlegi Hubble-norm\'al\'assal szerepel ($\tilde{D}_{\mathrm{obs}}'(0) = 1$), m\'ig $r_d$ \'es $r_s(z_*)$ a korai FLRW-h\'att\'erb\H{o}l ad\'odik; ha ehelyett a norm\'alatlan bare $\mathrm{d}(\bar{H}_0 D_{\mathrm{TS}}/c)/\mathrm{d}z$ meredeks\'eget keverj\"uk ($\bar{H}_0/H_0^{\mathrm{TS}} \simeq 0{,}749$), a BAO+CMB illeszt\'es $\hat{\alpha} = 0{,}000 \pm 0{,}043$-ra szor\'itja a s\'ulyt. Mivel a $p = 1$ s\'ulyoz\'ast a $p = 0$ modell korai univerzumos kudarca ut\'an v\'alasztottuk, a \texttt{H2-vol} \'es a \texttt{Forward H2-Sachs} szigor\'uan $k = 5$ szabad param\'eteres modell ($h, \omega_b, \omega_c, M_B, \alpha$; $\Delta k = +1$ a $\Lambda$CDM-hez \'es $\Delta k = -1$ a $k = 6$ CPL-hez k\'epest).
 
-\begin{table}[ht!]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{3.5pt}
-\renewcommand{\arraystretch}{1.12}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{lcccccccccc}
-\toprule
-\textbf{Kever\'esi s\'uly $\alpha$} & $0{,}00$ ($\Lambda$CDM) & $0{,}10$ & $0{,}20$ & $0{,}218$ (SN min) & $0{,}30$ & $\mathbf{0{,}330}$ (\textbf{MLE}) & $\mathbf{0{,}361}$ ($\boldsymbol{\alpha_0}$) & $0{,}45$ & $0{,}60$ & $1{,}00$ (TS) \\
-\midrule
-Csak \texttt{Pantheon+} $\Delta\chi^2_{\mathrm{SN}}$ (\textbf{H2a}, $p=0$) & $0{,}00$ & $-0{,}93$ & $-1{,}31$ & $-1{,}32$ & $-1{,}13$ & $-0{,}95$ & $-0{,}74$ & $+0{,}21$ & $+2{,}86$ & $+16{,}50$ \\
-Csak \texttt{Pantheon+} $\Delta\chi^2_{\mathrm{SN}}$ (\textbf{H2-vol}, $p=1$) & $0{,}00$ & $-0{,}87$ & $-1{,}29$ & $-1{,}32$ & $-1{,}26$ & $-1{,}16$ & $-1{,}02$ & $-0{,}35$ & $+1{,}60$ & $+12{,}06$ \\
-\textbf{Egyes\'itett $N=1610$ $\Delta\chi^2$ (\textbf{H2-vol}, $p=1$)} & $\mathbf{0{,}00}$ & $\mathbf{-3{,}48}$ & $\mathbf{-5{,}59}$ & $\mathbf{-5{,}84}$ & $\mathbf{-6{,}47}$ & $\mathbf{-6{,}52}$ & $\mathbf{-6{,}47}$ & $\mathbf{-5{,}80}$ & $\mathbf{-3{,}13}$ & $\mathbf{+11{,}02}$ \\
-Profilozott $(H_0,\;\Omega_{m,0})$ ($N=1610$) & $(68{,}56;0{,}296)$ & $(68{,}25;0{,}300)$ & $(67{,}95;0{,}303)$ & $(67{,}90;0{,}304)$ & $(67{,}68;0{,}307)$ & $(67{,}60;0{,}308)$ & $(67{,}52;0{,}309)$ & $(67{,}31;0{,}313)$ & $(66{,}99;0{,}318)$ & $(66{,}42;0{,}334)$ \\
-\bottomrule
-\end{tabular}%
-}
-\caption{Profil $\Delta\chi^2(\alpha)$ a $\Lambda$CDM-hez ($\alpha=0$) k\'epest csak a \texttt{Pantheon+}-on ($N=1580$, fix $\Omega_{m,0}=0{,}3153$), illetve a k\"ozvetlen \texttt{Pantheon++DESI BAO+CC+CMB $\theta_*$+BBN} ($N=1610$) egy\"uttes illeszt\'esen ($\hat{\alpha}_{\mathrm{MLE}} = 0{,}330 \pm 0{,}139$).}
-\label{tab:alpha-profile}
-\end{table}
+\section{Adatsorok, t\"obbkatal\'ogusos eredm\'enyek \'es 3D l\'at\'oir\'any-teszt}
+Az \"on\'all\'o \texttt{NumPy}/\texttt{SciPy} csomag (\texttt{verify\_C9}, $\sim 35\;\mathrm{s}$ fut\'asid\H{o}) BDF2 \texttt{RECFAST}~v1.5 rekombin\'aci\'ot \'es Fermi--Dirac neutr\'in\'ointegr\'alt ($\sum m_\nu = 0{,}06\;\mathrm{eV}$) haszn\'al n\'egy nyilv\'anos SN~Ia katal\'oguson (\texttt{Pantheon+} $N=1580$ \cite{Brout2022}, \'ujrakalibr\'alt \texttt{DES-Dovekie} $N=1820$ \cite{PopovicDovekie2025}, \texttt{DES-SN5YR} $N=1829$ \cite{DESSN5YR2024}, \texttt{Union3} $N=22$ spline-csom\'opont \cite{RubinUnion3_2025}), a 13-pontos \texttt{DESI} BAO-n \cite{DESI2024VI,DESIDR2_2025} \'es a \texttt{Planck} 2018 \texttt{TT,TE,EE+lowE} $3\times 3$-as $(\omega_b, \omega_c, 100\theta_*)$ MCMC kovarianci\'aj\'an \cite{Planck2018VI} (keresztellen\H{o}rz\'esk\'ent a Chen--Huang--Wang \cite{ChenHuangWang2019} $(R, \ell_A, \omega_b)$ priorral \'es a 15 Moresco kozmikus kronom\'eterrel \cite{Moresco2020}).
 
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=0.99\textwidth]{fig_sub4_void_clock_des2026_and_galactic_dip_hu.png}
-    \caption{(A) A szupern\'ova-degener\'aci\'o (szaggatott sz\"urke) felold\'asa a k\"ozvetlen \texttt{Pantheon++DESI BAO+CMB $\theta_*$+CC+BBN} illeszt\'essel ($N=1610$, k\'ek, $\hat{\alpha}_{\mathrm{MLE}} = 0{,}330 \pm 0{,}139$, $\Delta\chi^2 = -6{,}52$); (B) szeml\'eltet\H{o} 2D $(w_0^{\mathrm{app}}, w_a^{\mathrm{app}})$ s\'ik az \texttt{M1b} egzakt $5\times 5$ Hesse-kovarianci\'aj\'aval \'es a \texttt{DES} Y6 + CMB kont\'urral \cite{DES2026DynDE}; (C) 43 \texttt{JWST/HST} korong tesztje \cite{ManceraPina2025} lapos aszimptotik\'aj\'u Standard MOND \cite{Milgrom1983} \'es McGaugh RAR \cite{McGaugh2016} kernelekkel.}
-    \label{fig:sub4-synthesis}
+    \caption{(A) A \texttt{H2-vol} ($p=1$) profil $\Delta\chi^2(\alpha)$ g\"orb\'ei mind a n\'egy SN~Ia katal\'oguson (\texttt{DESI} BAO + \texttt{Planck} 2018 mellett) a lapos \texttt{Pantheon+}-only g\"orb\'evel (szaggatott sz\"urke) szemben; (B) az egzakt $5\times 5$ Hesse-m\'atrixb\'ol sz\'amolt $68\%/95\%$-os CPL kont\'urok \'es az 1-param\'eteres \texttt{H2-vol} l\'atsz\'olagos $(w_0^{\mathrm{app}}, w_a^{\mathrm{app}})$ g\"orb\'eje; (C) $N = 311$ \texttt{Pantheon+} l\'at\'oir\'any 3D sug\'ark\"ovet\'ese az \texttt{SDSS} DR7 \texttt{VoidFinder} katal\'oguson \cite{Douglass2023ApJS} kereszt\"ul ($-58 \pm 36\;\mathrm{mmag}$ empirikus GLS s\'av, $-14\;\mathrm{mmag}$ $z \le 0{,}10$ elm\'eleti h\'ej, \'es $-53\;\mathrm{mmag}$ $z \le 0{,}70$ \texttt{DESI}/\texttt{Euclid} el\H{o}rejelz\'es).}
+    \label{fig:v7-main}
 \end{figure}
 
 \begin{table}[ht!]
 \centering
 \scriptsize
-\setlength{\tabcolsep}{2.6pt}
+\setlength{\tabcolsep}{3.0pt}
 \renewcommand{\arraystretch}{1.13}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{llcccccc}
+\begin{tabular}{llcccccccc}
 \toprule
-\textbf{Modellv\'altozat \'es st\'atusz} & \textbf{$k_{\mathrm{tot}}$ ($k_{\mathrm{dark}}$)} & \textbf{Optimum $(H_0,\;\Omega_{m,0})$} & \textbf{\texttt{Pantheon+} $\chi^2_{\mathrm{SN}}$ ($1580$)$^{\S}$} & \textbf{\texttt{DESI} BAO ($13$) / CMB $\chi^2_{\theta_*}$} & \textbf{Egyes\'itett $N=1610$ $\chi^2$ ($\Delta\chi^2$)} & \textbf{Egyes\'itett $\Delta\mathrm{AIC}$ / $\Delta\mathrm{BIC}$} & \textbf{43 korong $\chi^2$ (Std.\ MOND / RAR)$^{\dagger}$} \\
+SN~Ia katal\'ogus (+ \texttt{DESI} BAO + \texttt{Planck18}) & Modell & $k$ & Optimum $(H_0,\;\Omega_{m,0})$ & $\hat{\alpha} \pm \sigma_\alpha$ vagy $(w_0,\;w_a)$ & $\chi^2_{\mathrm{SN}}$ / $\chi^2_{\mathrm{BAO}}$ / $\chi^2_{\mathrm{CMB}}$ & $\chi^2_{\mathrm{tot}}$ & $\Delta\chi^2$ vs.\ $\Lambda$CDM ($1\mathrm{dof}\;\sigma$) & $\Delta\mathrm{AIC}$ / $\Delta\mathrm{BIC}$ vs.\ $\Lambda$CDM & $\Delta\mathrm{BIC}$ vs.\ CPL \\
 \midrule
-Standard s\'ik $\Lambda$CDM (\texttt{M0}, alapvonal) & $4$ ($1$: $\Omega_{c,0}$) & $(68{,}56;\;0{,}2963)$ & $1390{,}57$ ($1387{,}33$ fix) & $10{,}73$ / $0{,}005$ & $1407{,}67$ ($0{,}00$) & $0{,}00$ / $0{,}00$ & $107{,}53$ / $186{,}55$ (KH) \\
-Homog\'en CPL (\texttt{M1a}, DES Y6+CMB fix) & $6$ ($3$: $\Omega_{c,0},w_0,w_a$) & $(67{,}50;\;0{,}3097)$ & $1386{,}97$ ($1387{,}30$ fix) & $9{,}83$ / $0{,}005$ & $1403{,}42$ ($-4{,}24$) & $-0{,}24$ / $+10{,}52$ & $121{,}65$ / $217{,}44$ (r\"ogz.) \\
-Homog\'en CPL (\texttt{M1b}, szabad $w_0,w_a$) & $6$ ($3$: $\Omega_{c,0},w_0,w_a$) & $(67{,}32;\;0{,}3061)$ & $1386{,}06$ & $8{,}68$ / $0{,}000$ & $1401{,}14$ ($-6{,}53$) & $-2{,}53$ / $+8{,}24$ & Elt\"unteti a v\"olgyet \\
-S\'ulyozatlan Timescape ($\alpha=1$, \textbf{H1}) \cite{Wiltshire2009PRD} & $4$ ($1$: $\Omega_{c,0}$) & $(66{,}42;\;0{,}3343)$ & $1401{,}41$ ($1403{,}83$ fix) & $10{,}44$ / $0{,}001$ & $1418{,}69$ ($+11{,}02$) & $+11{,}02$ / $+11{,}02$ & Nincs galaxist\"orv\'eny \\
-Konstans s\'uly\'u \textbf{H2a} ($p=0$, $\alpha_0=0{,}3608$) & $4$ ($1$, fenom.) & $(69{,}28;\;0{,}3429)$ & $1389{,}52$ ($1386{,}59$ fix) & $16{,}47$ / $0{,}043^{\ddagger}$ & $1413{,}23$ ($\mathbf{+5{,}56}$) & $+5{,}56$ / $+5{,}56$ & \textbf{BAO+CMB kiz\'arja} \\
+\texttt{Pantheon+} ($N_{\mathrm{SN}}=1580$, $N_{\mathrm{tot}}=1596$) & S\'ik $\Lambda$CDM (\texttt{M0}) & $4$ & $(68{,}42;\;0{,}3009)$ & $\alpha \equiv 0$ & $1389{,}56$ / $13{,}31$ / $4{,}09$ & $1406{,}97$ & $0{,}00$ (---) & $0{,}00$ / $0{,}00$ & $-5{,}92$ \\
+ & \texttt{H2-vol} ($p=1$, \"ureg-s\'ulyozott) & $5$ & $(67{,}32;\;0{,}3138)$ & $0{,}422 \pm 0{,}127$ & $1386{,}64$ / $8{,}82$ / $0{,}55$ & $1396{,}01$ & $-10{,}96$ ($3{,}31\sigma$) & $-8{,}96$ / $-3{,}59$ & $-9{,}51$ \\
+ & \texttt{Forward H2-Sachs} ($p=1$) & $5$ & $(67{,}39;\;0{,}3121)$ & $0{,}471 \pm 0{,}151$ & $1386{,}47$ / $9{,}20$ / $1{,}43$ & $1397{,}10$ & $-9{,}87$ ($3{,}14\sigma$) & $-7{,}87$ / $-2{,}49$ & $-8{,}42$ \\
+ & Szabad CPL (\texttt{M1b}, Hesse) & $6$ & $(67{,}61;\;0{,}3103)$ & $(-0{,}843\pm 0{,}056;\;-0{,}553\pm 0{,}215)$ & $1386{,}53$ / $10{,}36$ / $1{,}26$ & $1398{,}14$ & $-8{,}83$ (---) & $-4{,}83$ / $+5{,}92$ & $0{,}00$ \\
+ & Tiszta Timescape ($\alpha=1$) & $4$ & $(66{,}54;\;0{,}3273)$ & $\alpha \equiv 1$ & $1400{,}62$ / $14{,}08$ / $3{,}13$ & $1417{,}82$ & $+10{,}85$ (---) & $+10{,}85$ / $+10{,}85$ & $+4{,}93$ \\
 \midrule
-\textbf{\"Ureg-t\'erfogatos \texttt{H2-vol} ($p=1$, $\alpha_0=0{,}3608$)} & $4$ ($1$, fenom.) & $(\mathbf{67{,}52};\;\mathbf{0{,}3093})$ & $\mathbf{1386{,}09}$ ($1386{,}31$ fix) & $\mathbf{8{,}68}$ / $\mathbf{0{,}000}$ & $\mathbf{1401{,}20}$ ($\mathbf{-6{,}47}$) & $\mathbf{-6{,}47}$ / $\mathbf{-6{,}47}$ & $\mathbf{107{,}53}$ / $\mathbf{186{,}55}$ (v\"olgy) \\
-\textbf{\"Ureg-t\'erfogatos \texttt{El\H{o}re H2-Sachs} ($p=1$, $\alpha_0$)} & $4$ ($1$, fenom.) & $(\mathbf{67{,}72};\;\mathbf{0{,}3062})$ & $\mathbf{1386{,}04}$ ($1386{,}11$ fix) & $\mathbf{8{,}82}$ / $\mathbf{0{,}000}$ & $\mathbf{1401{,}30}$ ($\mathbf{-6{,}37}$) & $\mathbf{-6{,}37}$ / $\mathbf{-6{,}37}$ & $\mathbf{107{,}53}$ / $\mathbf{186{,}55}$ (v\"olgy) \\
-\textbf{\"Ureg-t\'erfogatos \texttt{H2-vol} ($p=1$, szabad $\hat{\alpha}=0{,}330$)} & $5$ ($2$: $\Omega_{c,0},\alpha$) & $(67{,}60;\;0{,}3080)$ & $1386{,}00$ & $8{,}76$ / $0{,}000$ & $1401{,}15$ ($-6{,}52$) & $-4{,}52$ / $+0{,}87$ & $\mathbf{107{,}53}$ / $\mathbf{186{,}55}$ (v\"olgy) \\
-\'Erz\'ekenys\'egi \texttt{H2-vol} ($p=2$, $\alpha_0=0{,}3608$) & $4$ ($1$, $\Delta k_{\mathrm{hyp}}=1$) & $(67{,}57;\;0{,}3059)$ & $1386{,}03$ ($1386{,}16$ fix) & $8{,}78$ / $0{,}001$ & $1401{,}25$ ($-6{,}42$) & $-4{,}42$ / $+0{,}96$ & $\mathbf{107{,}53}$ / $\mathbf{186{,}55}$ (v\"olgy) \\
+\texttt{DES-Dovekie} ($N_{\mathrm{SN}}=1820$, $N_{\mathrm{tot}}=1836$) & S\'ik $\Lambda$CDM (\texttt{M0}) & $4$ & $(68{,}39;\;0{,}3013)$ & $\alpha \equiv 0$ & $1635{,}19$ / $13{,}65$ / $3{,}85$ & $1652{,}70$ & $0{,}00$ (---) & $0{,}00$ / $0{,}00$ & $-3{,}06$ \\
+ & \texttt{H2-vol} ($p=1$, \"ureg-s\'ulyozott) & $5$ & $(67{,}31;\;0{,}3139)$ & $0{,}432 \pm 0{,}122$ & $1630{,}75$ / $8{,}76$ / $0{,}53$ & $1640{,}04$ & $-12{,}66$ ($3{,}56\sigma$) & $-10{,}66$ / $-5{,}14$ & $-8{,}20$ \\
+ & \texttt{Forward H2-Sachs} ($p=1$) & $5$ & $(67{,}32;\;0{,}3129)$ & $0{,}509 \pm 0{,}148$ & $1630{,}12$ / $9{,}13$ / $1{,}28$ & $1640{,}52$ & $-12{,}18$ ($3{,}49\sigma$) & $-10{,}18$ / $-4{,}66$ & $-7{,}72$ \\
+ & Szabad CPL (\texttt{M1b}, Hesse) & $6$ & $(67{,}48;\;0{,}3118)$ & $(-0{,}818\pm 0{,}057;\;-0{,}644\pm 0{,}228)$ & $1629{,}47$ / $10{,}30$ / $0{,}96$ & $1640{,}72$ & $-11{,}98$ (---) & $-7{,}98$ / $+3{,}06$ & $0{,}00$ \\
+\midrule
+\texttt{DES-SN5YR} ($N_{\mathrm{SN}}=1829$, $N_{\mathrm{tot}}=1845$) & S\'ik $\Lambda$CDM (\texttt{M0}) & $4$ & $(68{,}32;\;0{,}3022)$ & $\alpha \equiv 0$ & $1649{,}46$ / $14{,}40$ / $3{,}40$ & $1667{,}25$ & $0{,}00$ (---) & $0{,}00$ / $0{,}00$ & $+4{,}35$ \\
+ & \texttt{H2-vol} ($p=1$, \"ureg-s\'ulyozott) & $5$ & $(67{,}07;\;0{,}3175)$ & $0{,}545 \pm 0{,}121$ & $1638{,}29$ / $8{,}63$ / $0{,}03$ & $1646{,}95$ & $-20{,}30$ ($4{,}51\sigma$) & $-18{,}30$ / $-12{,}78$ & $-8{,}43$ \\
+ & \texttt{Forward H2-Sachs} ($p=1$) & $5$ & $(67{,}04;\;0{,}3164)$ & $0{,}644 \pm 0{,}148$ & $1637{,}75$ / $9{,}45$ / $0{,}59$ & $1647{,}79$ & $-19{,}46$ ($4{,}41\sigma$) & $-17{,}46$ / $-11{,}94$ & $-7{,}59$ \\
+ & Szabad CPL (\texttt{M1b}, Hesse) & $6$ & $(66{,}87;\;0{,}3177)$ & $(-0{,}760\pm 0{,}058;\;-0{,}796\pm 0{,}233)$ & $1637{,}56$ / $9{,}50$ / $0{,}80$ & $1647{,}87$ & $-19{,}39$ (---) & $-15{,}39$ / $-4{,}35$ & $0{,}00$ \\
+\midrule
+\texttt{Union3} ($N_{\mathrm{bins}}=22$, $N_{\mathrm{tot}}=38$) & S\'ik $\Lambda$CDM (\texttt{M0}) & $4$ & $(68{,}44;\;0{,}3007)$ & $\alpha \equiv 0$ & $28{,}54$ / $13{,}16$ / $4{,}21$ & $45{,}90$ & $0{,}00$ (---) & $0{,}00$ / $0{,}00$ & $+7{,}75$ \\
+ & \texttt{H2-vol} ($p=1$, \"ureg-s\'ulyozott) & $5$ & $(66{,}98;\;0{,}3189)$ & $0{,}594 \pm 0{,}141$ & $22{,}07$ / $8{,}68$ / $0{,}00$ & $30{,}76$ & $-15{,}15$ ($3{,}89\sigma$) & $-13{,}15$ / $-11{,}51$ & $-3{,}76$ \\
+ & \texttt{Forward H2-Sachs} ($p=1$) & $5$ & $(66{,}94;\;0{,}3177)$ & $0{,}699 \pm 0{,}179$ & $21{,}77$ / $9{,}73$ / $0{,}40$ & $31{,}90$ & $-14{,}00$ ($3{,}74\sigma$) & $-12{,}00$ / $-10{,}37$ & $-2{,}61$ \\
+ & Szabad CPL (\texttt{M1b}, Hesse) & $6$ & $(66{,}07;\;0{,}3258)$ & $(-0{,}678\pm 0{,}091;\;-1{,}014\pm 0{,}308)$ & $21{,}59$ / $8{,}68$ / $0{,}61$ & $30{,}88$ & $-15{,}03$ (---) & $-11{,}03$ / $-7{,}75$ & $0{,}00$ \\
 \bottomrule
 \end{tabular}%
 }
-\caption{K\"ozvetlen t\"obbpr\'ob\'as likelihood-összevet\'es az \"osszes $N=1610$ kozmol\'ogiai ponton \'es a $43$ \texttt{JWST/HST} korongon (\texttt{verify\_C9}, \texttt{verify\_C6\_C7}). $^{\S}$Z\'ar\'ojelben a fix Planck ($\Omega_{m,0}=0{,}3153$) \texttt{Pantheon+}-only $\chi^2_{\mathrm{SN}}$, ahol $\Delta\chi^2_{\mathrm{SN}} \in [-1{,}21;-0{,}74]$ statisztikailag ekvivalens a $\Lambda$CDM-mel ($1387{,}33$). CC n\'elk\"ul ($N=1595$: \texttt{SN+BAO+CMB+BBN}) az \texttt{M0} $1401{,}35$, a \textbf{H2-vol} ($p=1$) $1394{,}78$ ($\Delta\chi^2 = \mathbf{-6{,}57}$), az \textbf{El\H{o}re \texttt{H2-Sachs}} ($p=1$) $1394{,}87$ ($\Delta\chi^2 = \mathbf{-6{,}48}$). $^{\dagger}$Lapos aszimptotik\'aj\'u Standard MOND \cite{Milgrom1983} \'es McGaugh RAR \cite{McGaugh2016} $a_0(0)=1{,}20\times 10^{-10}\;\mathrm{m\,s^{-2}}$-n\'el (monoton $a_0 \propto H(z)$: $169{,}44$ / $297{,}76$). $^{\ddagger}$Fix Planck-param\'eterekn\'el a \textbf{H2a} ($p=0$) $\chi^2_{\theta_*} = 3408{,}5$-tel bukik el.}
-\label{tab:multiprobe}
+\caption{K\"ozvetlen t\"obbpr\'ob\'as illeszt\'esek mind a n\'egy nyilv\'anos SN~Ia katal\'oguson a \texttt{DESI} 13-pontos BAO \'es a t\"om\"or\'itett \texttt{Planck} 2018 $3\times 3$ $(\omega_b, \omega_c, 100\theta_*)$ MCMC prior mellett (\texttt{verify\_C9}, \H{o}szinte $k=5$ param\'etersz\'aml\'al\'assal). Konstans s\'uly\'u \texttt{H2a} ($p=0$) $\alpha = \hat{\alpha}_{p=1}$-n\'el $\Delta\chi^2 = +115{,}4 \dots +264{,}5$-tel kiz\'art.}
+\label{tab:multi-sn}
 \end{table}
 
-\section{Konkl\'uzi\'o: T\"obbpr\'ob\'as szint\'ezis, korl\'atok \'es \texttt{Euclid} tesztek}
+\begin{table}[ht!]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4.0pt}
+\renewcommand{\arraystretch}{1.12}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccc|ccccc}
+\toprule
+ & \multicolumn{4}{c|}{\texttt{Chen--Huang--Wang (2019)} $(R,\ell_A,\omega_b)$ CMB prior ($k=5$ \texttt{H2-vol})} & \multicolumn{5}{c}{Fix-$f_{v,0}$ \'erz\'ekenys\'eg \texttt{H1} n\'elk\"ul (\texttt{Pantheon++DESI+Planck18})} \\
+Mutat\'o & \texttt{Pantheon+} & \texttt{DES-Dovekie} & \texttt{DES-SN5YR} & \texttt{Union3} & $f_{v,0}=0{,}650$ & $f_{v,0}=0{,}695$ & $f_{v,0}=0{,}724$ (\texttt{H1}) & $f_{v,0}=0{,}762$ \cite{Wiltshire2009PRD} & $f_{v,0}=0{,}800$ \\
+\midrule
+$\hat{\alpha} \pm \sigma_\alpha$ & $0{,}398 \pm 0{,}130$ & $0{,}409 \pm 0{,}125$ & $0{,}529 \pm 0{,}124$ & $0{,}580 \pm 0{,}149$ & $0{,}058 \pm 0{,}090$ & $0{,}351 \pm 0{,}182$ & $0{,}431 \pm 0{,}122$ & $0{,}259 \pm 0{,}074$ & $0{,}137 \pm 0{,}044$ \\
+$\Delta\chi^2$ vs.\ $\Lambda$CDM & $-9{,}49$ ($3{,}08\sigma$) & $-11{,}11$ ($3{,}33\sigma$) & $-18{,}51$ ($4{,}30\sigma$) & $-13{,}43$ ($3{,}66\sigma$) & $-0{,}43$ & $-4{,}81$ & $-10{,}98$ & $-11{,}27$ & $-9{,}39$ \\
+$\Delta\mathrm{BIC}$ vs.\ $\Lambda$CDM / CPL & $-2{,}11$ / $-8{,}97$ & $-3{,}59$ / $-7{,}71$ & $-10{,}99$ / $-7{,}82$ & $-9{,}79$ / $-3{,}18$ & $+6{,}94$ & $+2{,}56$ & $-3{,}61$ & $-3{,}89$ & $-2{,}01$ \\
+\bottomrule
+\end{tabular}%
+}
+\caption{Balra: \texttt{H2-vol} ($p=1$, $k=5$) keresztellen\H{o}rz\'es a Chen--Huang--Wang \cite{ChenHuangWang2019} $(R, \ell_A, \omega_b)$ priorral. Jobbra: \'erz\'ekenys\'eg fix $f_{v,0} \in [0{,}65; 0{,}80]$ \'ert\'ekekre a \texttt{H1} kalibr\'aci\'o felt\'etelez\'ese n\'elk\"ul.}
+\label{tab:chw-fv0}
+\end{table}
+
 \begin{enumerate}
-    \item \textbf{Mi\'ert d\"ont\H{o} a k\"ozvetlen \texttt{BAO + CMB $\theta_*$} teszt?} M\'ig a \texttt{Pantheon+} \"onmag\'aban nem k\"ul\"onb\"ozteti meg az $\alpha \in [0; 0{,}43]$ tartom\'anyt a $\Lambda$CDM-t\H{o}l, a \texttt{DESI} BAO \'es a \texttt{Planck} $\theta_*$ k\"ozvetlen bevon\'asa egyr\'eszt kiz\'arja a fizik\'atlan konstans s\'ulyoz\'ast (\textbf{H2a}, $p=0$, $\Delta\chi^2 = +5{,}56$), m\'asr\'eszt az \"ureg-t\'erfogatar\'annyal s\'ulyozott $\alpha_{\mathrm{eff}}(z) = \alpha f_v(z)/f_{v,0}$ ($p=1$) t\"orv\'eny alatt feloldja az SNe~Ia ($\Omega_{m,0} \approx 0{,}333$) \'es a BAO+CMB ($\Omega_{m,0} \approx 0{,}296$) ellent\'etes h\'uz\'as\'at ($\hat{\alpha}_{\mathrm{MLE}} = 0{,}330 \pm 0{,}139$, $\Delta\chi^2 = -6{,}52$, $\sim 2{,}55\sigma$). Ez m\'ers\'ekelt t\"obbpr\'ob\'as preferenci\'anak felel meg (k\'et szabad param\'eterrel kevesebb\H{o}l el\'eri a 6-param\'eteres szabad CPL \texttt{M1b} illeszked\'es\'et, $\Delta\mathrm{BIC} = -14{,}71$), \'es \"osszhangban \'all Efstathiou \cite{Efstathiou2025SN} $\sim 0{,}04\;\mathrm{mag}$-os fotometriai nullpont-elemz\'es\'evel.
-    \item \textbf{M\'odszertani hat\'arok \'es \texttt{Euclid} falszifik\'aci\'o:} (i) A tiszta Timescape a nyers f\'enyg\"orb\'ek \'ujrailleszt\'es\'evel \cite{LaneWiltshire2025MNRAS,SeifertWiltshire2025MNRAS} er\H{o}sebb illeszked\'est \'er el, mint a standard SALT2 kovarianci\'an; (ii) a 43 \texttt{JWST/HST} korong ($0{,}787 \le z \le 1{,}03$) a minimum f\"ol\"otti amplit\'ud\'ot m\'eri; (iii) a \textbf{H1} \'es \textbf{H2-vol} fenomenologikus modellek, amelyek \texttt{Euclid + Rubin LSST} l\'at\'oir\'any-sz\'etv\'alaszt\'assal ($w_0^{\mathrm{app}} \to -0{,}89$ vs.\ $-1{,}00$) \'es $a_0(z)/[cH(z)|1-q(z)|] = \text{konst.}$ tomogr\'afi\'aval falszifik\'alhat\'ok.
+    \item \textit{T\"obbkatal\'ogusos konkordancia (\ref{fig:v7-main}A--B.\ \'abra, \ref{tab:multi-sn}--\ref{tab:chw-fv0}.\ t\'abl\'azat):} M\'ig puszt\'an a \texttt{Pantheon+} szupern\'ov\'akon az $\alpha \in [0; 0{,}43]$ s\'av lapos az $\Omega_{m,0}$-eltol\'assal val\'o degener\'aci\'o miatt, a \texttt{DESI} BAO \'es a t\"om\"or\'itett \texttt{Planck} 2018 prior bevon\'asa mind a n\'egy mint\'an egym\'assal $<1\sigma$-n bel\"ul egyez\H{o} $\hat{\alpha} \in [0{,}42; 0{,}59]$ optimumot \'es negat\'iv $\Delta\mathrm{AIC}$ / $\Delta\mathrm{BIC}$ \'ert\'ekeket ad ($\Delta\chi^2 = -10{,}96$ \texttt{Pantheon+}, $-12{,}66$ \texttt{DES-Dovekie}, $-20{,}30$ \texttt{DES-SN5YR}, $-15{,}15$ \texttt{Union3}; diagon\'alis $\theta_*+\mathrm{BBN}+\omega_c+\mathrm{CC15}$ ellen\H{o}rz\'es: $\chi^2_{\Lambda\mathrm{CDM}} = 1413{,}85$, $\Delta\chi^2 = -11{,}31$, $\hat{\alpha} = 0{,}425 \pm 0{,}125$). A \texttt{DES-Dovekie} + \texttt{DESI} + \texttt{Planck18} szabad CPL illeszt\'es $(-0{,}818 \pm 0{,}057;\; -0{,}644 \pm 0{,}228)$ k\"ozvetlen\"ul reproduk\'alja a \texttt{DES} Y6 + CMB eredm\'enyt \cite{DES2026DynDE}.
+    \item \textit{3D \texttt{SDSS} DR7 \texttt{VoidFinder} sug\'ark\"ovet\'eses l\'at\'oir\'any-teszt (\ref{fig:v7-main}C.\ \'abra):} Az \'eszaki galaktikus sapka bels\H{o} tartom\'any\'aban fekv\H{o} $N = 311$ \texttt{Pantheon+} szupern\'ova f\'eny\'utj\'at egzakt 1D h\'ur-uni\'oval \'atk\"ovetve a $39\,735$ \texttt{Planck} 2018 koordin\'at\'aj\'u 3D \texttt{VoidFinder} g\"omb\"on \cite{Douglass2023ApJS}, a t\'erfogaton bel\"uli ($0{,}02 \le z \le 0{,}105$, $N = 151$) minta $\mathrm{d}\Delta\mu/\mathrm{d}f_{v,\mathrm{LOS}} = -0{,}093 \pm 0{,}066\;\mathrm{mag}$ ($-1{,}41\sigma$, \'egbolt-permut\'aci\'os $p = 0{,}106$), a $[30, 300]\,h^{-1}\,\mathrm{Mpc}$ el\H{o}t\'erh\'ej m\"og\"otti ($z > 0{,}11$, $N = 160$) minta $-0{,}040 \pm 0{,}044\;\mathrm{mag}$ ($-0{,}92\sigma$, $p = 0{,}387$), az egyes\'itett $N = 311$ minta pedig $-0{,}058 \pm 0{,}036\;\mathrm{mag}$ ($-1{,}59\sigma$) meredeks\'eget ad. Ez az el\H{o}jel megegyezik az \"ureg-\'or\'ak j\'oslat\'aval ($\Delta\mu < 0$), \'am $z_{\mathrm{void}} \le 0{,}105$ m\'elys\'egn\'el egyar\'ant konzisztens a kis egyh\'ej\'u elm\'eleti v\'arhat\'o \'ert\'ekkel ($-0{,}007 \dots -0{,}014\;\mathrm{mag}$) \'es a statisztikai zajjal; a $z \le 0{,}70$-ig terjed\H{o} \texttt{DESI} + \texttt{Euclid}/\texttt{LSST} 3D \"uregtomogr\'afia ($-0{,}053\;\mathrm{mag}$ meredeks\'eg, $N_{\mathrm{SN}} \ge 5\,000$) $> 5\sigma$ szignifikanci\'aval d\"ont a modell \'es a homog\'en s\"ot\'et energia k\"oz\"ott.
 \end{enumerate}
 
-\paragraph{Adat- \'es k\'odhozz\'af\'erhet\H{o}s\'eg.} Mind a n\'egy \"on\'all\'o szkript (\texttt{verify\_C9}, \texttt{verify\_C5}, \texttt{verify\_C3\_C4}, \texttt{verify\_C6\_C7}; puszta \texttt{NumPy}/\texttt{SciPy} alatt $\sim 10\;\mathrm{s}$) \'es mind a kilenc nyers adatf\'ajl a \texttt{supplementary\_code\_and\_data/} mapp\'aban tal\'alhat\'o.
+\section{Konkl\'uzi\'o}
+A $z \to z_*$ hat\'aresetben elt\H{u}n\H{o}, 1 szabad param\'eteres ($k = 5$) \"ureg-t\'erfogati s\'ulyoz\'as mind a n\'egy nyilv\'anos szupern\'ova-katal\'oguson feloldja az SN--BAO $\Omega_{m,0}$-fesz\"ults\'eget ($\Delta\chi^2 = -9{,}5 \dots -20{,}3$, $\hat{\alpha} \in [0{,}40; 0{,}59]$), eggyel kevesebb param\'eterrel el\'erve a 2-param\'eteres CPL illeszked\'es\'et ($\Delta\mathrm{BIC} = -3{,}2 \dots -9{,}5$ a CPL-hez k\'epest). Nyitott elm\'eleti feladat az \eqref{eq:h2-vol} t\"orv\'eny levezet\'ese egyetlen inhomog\'en 4D metrika f\'enyk\'up-\'atlagol\'as\'ab\'ol, valamint a $0{,}1 \le z \le 0{,}7$ tartom\'any\'u \texttt{DESI}/\texttt{Euclid} l\'at\'oir\'any-tomogr\'afia v\'egrehajt\'asa.
+
+\paragraph{Adat- \'es k\'odhozz\'af\'erhet\H{o}s\'eg.} {\sloppy Az \"on\'all\'o \texttt{NumPy}/\texttt{SciPy} ellen\H{o}rz\H{o} szkript (\path{verify_C9_void_clock_timescape_apparent_w0_wa_audit.py}, $\sim 35\;\mathrm{s}$ fut\'asid\H{o}, \texttt{-{}-no-asserts} kapcsol\'oval) \'es minden nyers adatsor megtal\'alhat\'o a \path{supplementary_code_and_data/} mapp\'aban \'es a Zenod\'on (\href{https://doi.org/10.5281/zenodo.24354218}{doi:10.5281/zenodo.24354218}).\par}
 
 \begin{thebibliography}{99}
-\bibitem{DES2026DynDE} DES Collaboration, \textit{Constraints on Dynamical Dark Energy from Multiple Probes in the Full Dark Energy Survey}, arXiv:2605.27221 (2026).
-\bibitem{DESSN5YR2024} DES Collaboration, \textit{The Dark Energy Survey: Cosmology Results with $\sim 1500$ New High-redshift Type Ia Supernovae Using the Full 5 Year Dataset}, Astrophys.\ J.\ Lett.\ \textbf{973}, L14 (2024), arXiv:2401.02929.
+\bibitem{DESI2024VI} A.~G.~Adame \textit{et al.} (DESI Collaboration), \textit{DESI 2024 VI: Cosmological Constraints from the Measurements of Baryon Acoustic Oscillations}, JCAP \textbf{02}, 021 (2025), arXiv:2404.03002.
 \bibitem{DESIDR2_2025} DESI Collaboration, \textit{DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints}, arXiv:2503.14738 (2025).
+\bibitem{Planck2018VI} N.~Aghanim \textit{et al.} (Planck Collaboration), \textit{Planck 2018 results. VI. Cosmological parameters}, Astron.\ Astrophys.\ \textbf{641}, A6 (2020), arXiv:1807.06209.
+\bibitem{DES2026DynDE} DES Collaboration, \textit{Constraints on Dynamical Dark Energy from Multiple Probes in the Full Dark Energy Survey}, arXiv:2605.27221 (2026).
 \bibitem{Efstathiou2025SN} G.~Efstathiou, \textit{Evolving Dark Energy or Supernovae Systematics?}, Mon.\ Not.\ R.\ Astron.\ Soc.\ \textbf{538}, 875 (2025), arXiv:2408.07175.
+\bibitem{DESSN5YR2024} M.~Vincenzi \textit{et al.} (DES Collaboration), \textit{The Dark Energy Survey: Cosmology Results with $\sim 1500$ New High-redshift Type Ia Supernovae Using the Full 5 Year Dataset}, Astrophys.\ J.\ Lett.\ \textbf{973}, L14 (2024), arXiv:2401.02929.
 \bibitem{Brout2022} D.~Brout \textit{et al.}, \textit{The Pantheon+ Analysis: Cosmological Constraints}, Astrophys.\ J.\ \textbf{938}, 110 (2022), arXiv:2202.04077.
+\bibitem{PopovicDovekie2025} B.~Popovic \textit{et al.} (DES Collaboration), \textit{DES-Dovekie Recalibrated Type Ia Supernova Compilation and Covariance Release}, GitHub \texttt{des-science/DES-SN5YR} (2025).
+\bibitem{RubinUnion3_2025} D.~Rubin \textit{et al.}, \textit{Union Through UNITY: Cosmology with $2,000$ SNe Using a Unified Bayesian Framework}, Astrophys.\ J.\ (2025), arXiv:2311.12098.
+\bibitem{Wiltshire2009PRD} D.~L.~Wiltshire, \textit{Average observational quantities in the timescape cosmology}, Phys.\ Rev.\ D \textbf{80}, 123512 (2009), arXiv:0909.0749.
 \bibitem{LaneWiltshire2025MNRAS} Z.~G.~Lane, A.~Seifert, R.~Ridden-Harper, and D.~L.~Wiltshire, \textit{Cosmological foundations revisited with Pantheon+}, Mon.\ Not.\ R.\ Astron.\ Soc.\ \textbf{536}, 1752 (2025), arXiv:2311.01438.
 \bibitem{SeifertWiltshire2025MNRAS} A.~Seifert, Z.~G.~Lane, M.~Galoppo, R.~Ridden-Harper, and D.~L.~Wiltshire, \textit{Supernovae evidence for foundational change to cosmological models}, Mon.\ Not.\ R.\ Astron.\ Soc.\ Lett.\ \textbf{537}, L55 (2025), arXiv:2412.15143.
-\bibitem{Wiltshire2009PRD} D.~L.~Wiltshire, \textit{Average observational quantities in the timescape cosmology}, Phys.\ Rev.\ D \textbf{80}, 123512 (2009), arXiv:0909.0749.
-\bibitem{Milgrom1983} M.~Milgrom, \textit{A modification of the Newtonian dynamics as a possible alternative to the hidden mass hypothesis}, Astrophys.\ J.\ \textbf{270}, 365 (1983).
-\bibitem{McGaugh2016} S.~S.~McGaugh, F.~Lelli, and J.~M.~Schombert, \textit{Radial Acceleration Relation in Rotationally Supported Galaxies}, Phys.\ Rev.\ Lett.\ \textbf{117}, 201101 (2016), arXiv:1609.05917.
-\bibitem{ManceraPina2025} P.~E.~Mancera Pi\~na, E.~M.~Di~Teodoro, S.~M.~Fall, A.~Marasco, M.~Kriek, and M.~Martorano, \textit{Kinematic scaling relations of disc galaxies from ionised gas at $z \sim 1$ and their connection with dark matter haloes}, Astron.\ Astrophys.\ (2025), arXiv:2511.08685.
 \bibitem{Kantowski1969} R.~Kantowski, \textit{Corrections in the Luminosity-Redshift Relations of the Homogeneous Friedmann Models}, Astrophys.\ J.\ \textbf{155}, 89 (1969).
 \bibitem{DyerRoeder1973} C.~C.~Dyer and R.~C.~Roeder, \textit{Distance-Redshift Relations for Universes with Some Intergalactic Medium}, Astrophys.\ J.\ Lett.\ \textbf{180}, L31 (1973); Astrophys.\ J.\ \textbf{174}, L115 (1972).
 \bibitem{Weinberg1976} S.~Weinberg, \textit{Apparent Luminosities in a Locally Inhomogeneous Universe}, Astrophys.\ J.\ Lett.\ \textbf{208}, L1 (1976).
-\bibitem{Planck2018VI} N.~Aghanim \textit{et al.} (Planck Collaboration), \textit{Planck 2018 results. VI. Cosmological parameters}, Astron.\ Astrophys.\ \textbf{641}, A6 (2020).
-\bibitem{TauCoreZenodo2026} J.~Olcsak, \textit{Covariant Horizon-Coupled Modified Gravity and Multi-Probe Verification Suite}, Zenodo (2026), \href{https://doi.org/10.5281/zenodo.24305895}{doi:10.5281/zenodo.24305895} \'es \href{https://doi.org/10.5281/zenodo.24354218}{doi:10.5281/zenodo.24354218}.
+\bibitem{Douglass2023ApJS} K.~A.~Douglass, D.~Veyrat, and S.~BenZvi, \textit{Updated Void Catalogs of the SDSS DR7 Main Sample}, Astrophys.\ J.\ Suppl.\ Ser.\ \textbf{265}, 7 (2023), arXiv:2202.01226; Zenodo \href{https://doi.org/10.5281/zenodo.11043278}{doi:10.5281/zenodo.11043278}.
+\bibitem{ChenHuangWang2019} L.~Chen, Q.-G.~Huang, and K.~Wang, \textit{Distance Priors from Planck Final Release}, JCAP \textbf{02}, 028 (2019), arXiv:1808.05724.
+\bibitem{Moresco2020} M.~Moresco \textit{et al.}, \textit{Setting the Stage for Cosmic Chronometers. II. Impact of Stellar Population Synthesis Models Systematics and Full Covariance Matrix}, Astrophys.\ J.\ \textbf{898}, 82 (2020), arXiv:2003.07362.
 \end{thebibliography}
 
 \end{document}

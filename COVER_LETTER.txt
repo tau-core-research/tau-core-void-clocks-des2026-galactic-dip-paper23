@@ -1,21 +1,56 @@
-Dear Editors of Monthly Notices of the Royal Astronomical Society Letters / JCAP,
+Dear Editors,
 
-Please find enclosed our revised Letter manuscript (v6.0):
-"Kodama-Hayward Galactic Acceleration Trough vs. DES Year 6 Dynamical Dark Energy: Background-Dependence Theorem, Direct Pantheon++DESI BAO+CMB Likelihood Tests, and Void-Volume-Weighted Optical Models"
-by Jozsef Olcsak (ORCID: 0009-0003-7311-6522).
+Please find enclosed the revised manuscript (v7.0),
 
-What is new in Revision v6.0 (addressing all points of the v5 referee report):
-1. Retraction of SN-only "beats LambdaCDM" overclaim and full alpha in [0, 1] profile likelihood:
-   - On Pantheon+ alone (N=1,580, fixed Omega_m0=0.3153), Delta_chi^2_SN in [-1.21, -0.74] is now explicitly classified as statistically equivalent to LambdaCDM (<1.1 sigma), and the full alpha in [0, 1] profile chi^2_SN(alpha) is tabulated (showing the flat [0, 0.43] plateau due to SN-only Omega_m0 degeneracy).
-2. Direct multi-probe fitting of D_obs(z) to Pantheon+ + DESI BAO + Planck CMB 100*theta_* + BBN (+ Moresco CC) and exact 5x5 Hessian covariance:
-   - Demonstrates that naive constant-weight H2a (p=0) is ruled out by CMB theta_* + BAO (Delta_chi^2 = +5.56 on N=1,610; chi^2_theta = 3408.5 at fixed Planck parameters) because nonlinear cosmic voids vanish at recombination (z_* ~ 1090).
-   - Weighting the Wiltshire (2009) transit rate by the physical void volume fraction alpha_eff(z) = alpha * f_v(z) / f_v0 (H2-vol, p=1, vanishing automatically as z -> z_*) breaks the Omega_m0 degeneracy: unconstrained profiling across N=1,610 yields empirical MLE alpha_hat = 0.330 +/- 0.139 (Delta_chi^2 = -6.52, ~2.55 sigma moderate preference over alpha=0 while excluding pure Timescape alpha=1 at +11.02), and fixing the prior hypothesis alpha_0 = 5*sqrt(3)/24 = 0.3608 (0.22 sigma from alpha_hat, k=4, zero extra parameters vs. LambdaCDM) achieves Delta_chi^2 = -6.47 (Delta_AIC = Delta_BIC = -6.47 vs. LambdaCDM, Delta_BIC = -14.71 vs. free CPL; Delta_chi^2 = -6.57 on SN+BAO+CMB+BBN without CC; -6.37 for Forward H2-Sachs).
-   - Replaces all hand-typed M1b 2D errors with the exact 5x5 numerical Hessian marginalized covariance around (-0.8895, -0.2250): sigma_w0 = 0.0597, sigma_wa = 0.2686, rho = -0.8860.
-3. True asymptotic-flat MOND and McGaugh RAR kernels on the 43 JWST/HST disks & formal retraction of deep-MOND RAR equivalence for the companion logarithmic kernel:
-   - Formally retracts deep-MOND RAR equivalence for v_log = v_bar*[1 + alpha_0*w(u)*ln(1+u)] (which decays as r^(-1/2) ln r -> 0 as r -> inf, giving g_obs/g_bar = 11.49 vs. RAR 32.13 at g_bar/a_0 = 10^-3), and tests Theorem 1 primarily using Milgrom's standard MOND mu(y) = y/sqrt(1+y^2) (chi^2 = 107.53, chi^2/dof = 2.50 at canonical a_0(0)=1.20e-10 m/s^2 vs. 121.65 DES-CPL anchored [+14.12 raw / +5.65 rescaled] and 169.44 monotonic cH; or 95.93, chi^2/dof = 2.23 at a_0^KH(0)) and McGaugh's RAR (186.55 vs. 217.44, +30.89 / +7.12 rescaled).
-4. Classical citations (Kantowski 1969; Dyer & Roeder 1972, 1973; Weinberg 1976) in Theorem 2 and primary-source separation of DES Y6 + CMB (arXiv:2605.27221) and DESI DR2 (arXiv:2503.14738).
+  "Void-Volume-Weighted Optical Distances Confronting DESI BAO, Compressed Planck CMB,
+   and Four Type Ia Supernova Compilations"
 
-All four verification scripts execute standalone with NumPy + SciPy only (`verify_C9` runs in ~10 s).
+by Jozsef Olcsak, prepared as a regular research article for JCAP, Physical Review D, or
+The Open Journal of Astrophysics.
+
+Following constructive referee feedback on v6.0, this v7.0 revision streamlines the paper
+into a focused, self-contained cosmological analysis and incorporates four major empirical
+and methodological upgrades:
+
+1. Honest k = 5 Parameter Accounting & Restrained Academic Framing:
+   - Galactic disk-kinematics material and external algebraic coupling priors have been
+     completely separated out so this manuscript focuses strictly on late-time cosmological
+     distances with standard academic prose.
+   - Because p = 1 void-volume weighting is adopted after redshift-independent weighting
+     (p = 0) fails CMB + BAO constraints, H2-vol and Forward H2-Sachs are penalized
+     throughout as k = 5 models (one free parameter alpha beyond k = 4 flat LCDM, and one
+     fewer than k = 6 CPL), with post-data model-selection caveats stated explicitly.
+
+2. Full Compressed Planck 2018 CMB Priors & Explicit H_0 / f_{v,0} Sensitivity:
+   - Replaces the single theta_* prior with the full marginalized 3x3 Planck 2018
+     TT,TE,EE+lowE MCMC covariance on (omega_b, omega_c, 100*theta_*), cross-checked
+     independently against the Chen, Huang & Wang (2019, JCAP 02, 028) (R, l_A, omega_b)
+     distance prior.
+   - Explicitly documents common-H_0 vs. bare-Hbar_0 normalization and demonstrates
+     robustness across fixed f_{v,0} in [0.72, 0.80] (including Wiltshire's 0.762 benchmark)
+     without requiring transition-matching calibration H1.
+
+3. Multi-Compilation Concordance Across Pantheon+, DES-Dovekie, DES-SN5YR, and Union3:
+   - Bundling and fitting all four public SN Ia datasets jointly with DESI BAO and Planck
+     2018 priors yields mutually consistent mixing weights:
+       * Pantheon+:   alpha_hat = 0.422 +- 0.127 (Delta_chi^2 = -10.96, Delta_BIC = -3.59)
+       * DES-Dovekie: alpha_hat = 0.432 +- 0.122 (Delta_chi^2 = -12.66, Delta_BIC = -5.14)
+       * DES-SN5YR:   alpha_hat = 0.545 +- 0.121 (Delta_chi^2 = -20.30, Delta_BIC = -12.78)
+       * Union3:      alpha_hat = 0.594 +- 0.141 (Delta_chi^2 = -15.15, Delta_BIC = -11.51)
+     matching 2-parameter CPL in total chi^2 within <= 2.1 on every sample (Delta_BIC =
+     -3.76 to -9.51 relative to CPL) and reproducing the DES-Dovekie + DESI + Planck CPL
+     result (-0.818 +- 0.057, -0.644 +- 0.228) directly from public data.
+
+4. Direct 3D Cosmic-Void Sightline Ray-Tracing Test (Pantheon+ x SDSS DR7 VoidFinder):
+   - Cross-correlating N = 311 Pantheon+ sightlines through the 39,735 3D VoidFinder
+     spheres of Douglass, Veyrat & BenZvi (2023, ApJS 265, 7) yields a z-detrended GLS
+     slope d(Delta_mu)/d(f_{v,LOS}) = -0.058 +- 0.036 mag (-1.59 sigma), matching the
+     negative sign predicted by faster void clocks while remaining statistically consistent
+     with both the small z <= 0.105 single-shell expectation (-0.007 to -0.014 mag) and
+     noise, and establishing a -0.053 mag (> 5 sigma) forecast for DESI + Euclid/LSST.
+
+All raw data and the standalone NumPy/SciPy verification script (~35 s runtime, supporting
+`--no-asserts` for custom prior exploration) are bundled in `supplementary_code_and_data/`.
 
 Sincerely,
 Jozsef Olcsak
