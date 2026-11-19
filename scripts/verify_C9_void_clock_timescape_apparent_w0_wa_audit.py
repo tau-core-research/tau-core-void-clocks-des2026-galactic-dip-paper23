@@ -109,6 +109,11 @@ def compute_live_43disks_chi2(csv_path: Path) -> Dict[str, Any]:
     u_tau = math.sqrt(3.0) / 24.0
     alpha_ocsr = 5.0 * u_tau
     i_kh = 5.0 * math.sqrt(3.0) / 96.0
+    # Canonical K_4 screening parameter mu = m_eff_hat^2 = (4 + 3*m_bg^2)/(1 + u) = 4.4967230277 (Sub1 Eq. 3 / F54):
+    _q_half = 0.5 * math.sqrt(5.0)
+    _disc = math.sqrt(_q_half**2 + (4.0 / 3.0) ** 3)
+    _m_bg = (_q_half + _disc) ** (1.0 / 3.0) - (_disc - _q_half) ** (1.0 / 3.0)
+    mu_coca = (4.0 + 3.0 * (_m_bg**2)) / (1.0 + u_tau)
     h0_si = 67.36 * 1000.0 / MPC_M
 
     q0_lcdm = 0.5 * (0.3153 + (1.0 + 3.0 * (-1.0)) * 0.6847)
@@ -123,12 +128,12 @@ def compute_live_43disks_chi2(csv_path: Path) -> Dict[str, Any]:
         v2 = (G_SI * (mbar_msun * M_SUN_KG) / r_m) * eta
         return math.sqrt(max(v2, 0.0)) / 1000.0, v2 / r_m
 
-    def _predict_v_coca_dilog(v_bar_kms: float, a_n: float, a0_val: float) -> float:
+    def _predict_v_coca_dilog(v_bar_kms: float, a_n: float, a0_val: float, use_legacy_alg: bool = False) -> float:
         u = a0_val / a_n
-        scr = u / math.sqrt(1.0 + u * u)
-        return v_bar_kms * (1.0 + alpha_ocsr * scr * math.log(1.0 + u))
+        scr = (u / math.sqrt(1.0 + u * u)) if use_legacy_alg else (-math.expm1(-mu_coca * u))
+        return v_bar_kms * (1.0 + alpha_ocsr * scr * math.log1p(u))
 
-    def eval_mode(mode: str) -> float:
+    def eval_mode(mode: str, use_legacy_alg: bool = False) -> float:
         tot_chi2 = 0.0
         for row in rows:
             zv = float(row["z"])
@@ -176,16 +181,24 @@ def compute_live_43disks_chi2(csv_path: Path) -> Dict[str, Any]:
             else:
                 raise ValueError(mode)
 
-            v_pred = _predict_v_coca_dilog(v_bar, a_n, a0_z)
+            v_pred = _predict_v_coca_dilog(v_bar, a_n, a0_z, use_legacy_alg=use_legacy_alg)
             dlogv = math.log10(max(v_pred, 1e-6) / max(v_obs, 1e-6))
             tot_chi2 += (dlogv / sig_logv) ** 2
         return tot_chi2
 
-    chi2_w_m1 = eval_mode("w_minus1_horizon_KH")
-    chi2_des_anchored = eval_mode("DES_CPL_z0_anchored_ratio")
-    chi2_des_direct = eval_mode("DES_CPL_direct_unanchored_abs")
-    chi2_naive_ch = eval_mode("naive_monotonic_cH")
+    # Primary canonical evaluation using unified Sub1/F54 exponential COCA kernel w_COCA(u) = 1 - exp(-mu*u):
+    chi2_w_m1 = eval_mode("w_minus1_horizon_KH", use_legacy_alg=False)
+    chi2_des_anchored = eval_mode("DES_CPL_z0_anchored_ratio", use_legacy_alg=False)
+    chi2_des_direct = eval_mode("DES_CPL_direct_unanchored_abs", use_legacy_alg=False)
+    chi2_naive_ch = eval_mode("naive_monotonic_cH", use_legacy_alg=False)
     chi2_dof = chi2_w_m1 / 43.0
+
+    # Secondary historical sensitivity check (legacy algebraic screening u / sqrt(1 + u^2)):
+    leg_w_m1 = eval_mode("w_minus1_horizon_KH", use_legacy_alg=True)
+    leg_des_anc = eval_mode("DES_CPL_z0_anchored_ratio", use_legacy_alg=True)
+    leg_des_dir = eval_mode("DES_CPL_direct_unanchored_abs", use_legacy_alg=True)
+    leg_naive_ch = eval_mode("naive_monotonic_cH", use_legacy_alg=True)
+    leg_dof = leg_w_m1 / 43.0
 
     # Exact intermediate numbers for Theorem 1 proof at z_dip = (2*0.6847/0.3153)^(1/3) - 1
     z_dip = (2.0 * 0.6847 / 0.3153) ** (1.0 / 3.0) - 1.0
@@ -202,7 +215,7 @@ def compute_live_43disks_chi2(csv_path: Path) -> Dict[str, Any]:
         "n_galaxies": len(rows),
         "observable_type": (
             "Catalog summary-statistic evaluation at r_eval = 2 R_eff with Tacconi+20 gas scaling "
-            "and error propagation (testing post-trough z ~ 0.9 amplitude suppression)"
+            "and error propagation using the unified canonical exponential COCA kernel w_COCA(u) = 1 - exp(-mu*u)"
         ),
         "z_range": [min(float(r["z"]) for r in rows), max(float(r["z"]) for r in rows)],
         "theorem_1_exact_intermediate_values_at_z_dip": {
@@ -215,10 +228,11 @@ def compute_live_43disks_chi2(csv_path: Path) -> Dict[str, Any]:
         },
         "a0_KH_0_w_minus1_OCSR_kernel_m_s2": round(a0_kh_0_lcdm, 14),
         "a0_KH_0_DES_CPL_OCSR_kernel_m_s2": round(a0_kh_0_des, 14),
+        "mu_coca_screening_parameter": round(mu_coca, 10),
         "ocsr_kernel_scale_note": (
-            "a0_KH(0) = 0.9015e-10 m/s^2 is the z=0 scale of the logarithmic OCSR velocity kernel "
-            "v = v_bar*[1 + alpha_OCSR*(u/sqrt(1+u^2))*ln(1+u)], which corresponds to McGaugh's "
-            "a0_MOND ~ 1.20e-10 m/s^2 under the standard RAR interpolation function."
+            "Canonical unified kernel F_OD(u) = 1 + alpha_OCSR * (1 - exp(-mu*u)) * ln(1 + u) "
+            "with mu = m_eff_hat^2 = 4.496723 and a0_KH(0) = 0.9015e-10 m/s^2 (matching Sub1 Eq. 3 & F54, "
+            "corresponding to McGaugh's a0_MOND ~ 1.20e-10 m/s^2 under standard RAR interpolation)."
         ),
         "DES_CPL_z0_a0_drop_percent": round((a0_kh_0_des / a0_kh_0_lcdm - 1.0) * 100.0, 4),
         "chi2_w_minus1_horizon_with_dip": round(chi2_w_m1, 2),
@@ -231,6 +245,15 @@ def compute_live_43disks_chi2(csv_path: Path) -> Dict[str, Any]:
         "delta_chi2_DES_CPL_direct_abs_error_rescaled": round((chi2_des_direct - chi2_w_m1) / chi2_dof, 2),
         "chi2_naive_monotonic_cH_without_1_minus_q": round(chi2_naive_ch, 2),
         "delta_chi2_naive_cH_vs_w_minus1": round(chi2_naive_ch - chi2_w_m1, 2),
+        "legacy_algebraic_screening_sensitivity": {
+            "screening_form": "u / sqrt(1 + u^2)",
+            "chi2_w_minus1": round(leg_w_m1, 2),
+            "chi2_DES_CPL_z0_anchored": round(leg_des_anc, 2),
+            "delta_chi2_DES_CPL_z0_anchored": round(leg_des_anc - leg_w_m1, 2),
+            "delta_chi2_DES_CPL_z0_anchored_error_rescaled": round((leg_des_anc - leg_w_m1) / leg_dof, 2),
+            "chi2_DES_CPL_direct_unanchored": round(leg_des_dir, 2),
+            "chi2_naive_cH": round(leg_naive_ch, 2),
+        },
     }
 
 
