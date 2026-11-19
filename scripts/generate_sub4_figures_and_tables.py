@@ -2,7 +2,7 @@
 """
 generate_sub4_figures_and_tables.py
 ===================================
-Bundled figure & LaTeX table generator for Sub4 v8.0.
+Bundled figure & LaTeX table generator for Sub4 v10.0.
 Automatically invoked by `verify_C9_void_clock_timescape_apparent_w0_wa_audit.py`
 (or callable standalone via `python3 generate_sub4_figures_and_tables.py`).
 """
@@ -46,8 +46,9 @@ def _add_cov_ellipse(ax, mean_x, mean_y, sx, sy, rho, n_chi2_2dof, facecolor, ed
     ))
 
 
-def compute_apparent_cpl_locus() -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """Compute exact joint (SN + DESI BAO + Planck18) apparent CPL (w_0^app, w_a^app) locus of H2-vol(alpha)."""
+def compute_apparent_cpl_loci() -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Compute exact joint (SN + DESI BAO + Planck18) apparent CPL (w_0^app, w_a^app) loci for BOTH
+    H2-vol (p=1, alpha in [0, 0.75]) AND Linder (2015, Eq. 3) strictly non-phantom thawing (w_0 in [-1.0, -0.60])."""
     import verify_C9_void_clock_timescape_apparent_w0_wa_audit as c9
     data = c9.load_all_cosmological_datasets()
     st = c9.build_recfast_zstar_stencil()
@@ -64,41 +65,28 @@ def compute_apparent_cpl_locus() -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
 
     u_nodes = np.linspace(0.0, math.log1p(1200.0), 1001)
     zp1_nodes = np.exp(u_nodes)
-    h_fid, ob_fid, oc_fid = 0.6736, 0.022373, 0.119994
+    a_nodes = 1.0 / zp1_nodes
+    h_fid, ob_fid, oc_fid = 0.6736, 0.0223732, 0.1199938
     rec0 = c9.recfast_v15_cpl_observables(h_fid, ob_fid, oc_fid, -1.0, 0.0, zstar_stencil=st)
     om0_fid = rec0["Omega_m0"]
     fv0_fid = 0.7239
     H0_si0 = 100.0 * h_fid * 1000.0 / c9.MPC_M
     Om_g0 = c9.RHO_G0_SI / (3.0 * H0_si0**2 / (8.0 * math.pi * c9.G_SI))
     Om_r0 = Om_g0 * (1.0 + 0.2271073 * 3.044)
-    Eh0 = np.sqrt(Om_r0 * zp1_nodes**4 + om0_fid * zp1_nodes**3 + (1.0 - om0_fid - Om_r0))
+    om_de0 = 1.0 - om0_fid - Om_r0
+    Eh0 = np.sqrt(Om_r0 * zp1_nodes**4 + om0_fid * zp1_nodes**3 + om_de0)
     D_hor0 = integrate.cumulative_trapezoid(zp1_nodes / Eh0, u_nodes, initial=0.0)
     _, sdD_ts, sfv_ts, _ = c9.build_vectorized_wiltshire_splines(fv0_fid)
     u_star0 = math.log1p(rec0["z_star"])
     dh0 = c9.C_KMS / (100.0 * h_fid)
 
-    alphas = np.linspace(0.0, 0.75, 16)
-    w0s, was = [], []
-    prev_p = np.array([h_fid, ob_fid, oc_fid, -1.0, 0.0])
-    for av in alphas:
-        if av == 0.0:
-            w0s.append(-1.0); was.append(0.0)
-            continue
-        aeff = av * (sfv_ts(u_nodes) / fv0_fid)
-        delta_dD = aeff * (sdD_ts(u_nodes) - 1.0 / Eh0)
-        dD_syn = 1.0 / Eh0 + delta_dD
-        delta_D = integrate.cumulative_trapezoid(zp1_nodes * delta_dD, u_nodes, initial=0.0)
-        D_syn = D_hor0 + delta_D
-        spl_D_syn = interpolate.CubicSpline(u_nodes, D_syn)
-        spl_dH_syn = interpolate.CubicSpline(u_nodes, dD_syn)
-
+    def _project_to_cpl(spl_D_syn, spl_dH_syn, dm_star_syn, prev_p):
         mu_syn = 5.0 * np.log10((1.0 + z_sn) * spl_D_syn(u_sn))
         dm_b0, dh_b0 = spl_D_syn(desi_u), spl_dH_syn(desi_u)
         bao_syn = (dh0 / rec0["r_d_zdrag_Mpc"]) * np.array([
             dm_b0[i] if qt == "DM_over_rs" else (dh_b0[i] if qt == "DH_over_rs" else (desi_z[i] * dm_b0[i]**2 * dh_b0[i])**(1.0/3.0))
             for i, qt in enumerate(desi_types)
         ])
-        dm_star_syn = rec0["D_M_zstar_Mpc"] + dh0 * float(np.interp(u_star0, u_nodes, delta_D))
         cmb_syn = np.array([ob_fid, oc_fid, 100.0 * rec0["r_s_zstar_Mpc"] / dm_star_syn])
 
         def cpl_syn_chi2(x):
@@ -109,8 +97,7 @@ def compute_apparent_cpl_locus() -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
             om = rc["Omega_m0"]
             H0s = 100.0 * h * 1000.0 / c9.MPC_M
             Or = (c9.RHO_G0_SI / (3.0 * H0s**2 / (8.0 * math.pi * c9.G_SI))) * (1.0 + 0.2271073 * 3.044)
-            a_n = 1.0 / zp1_nodes
-            de_n = (zp1_nodes ** (3.0 * (1.0 + w0_v + wa_v))) * np.exp(-3.0 * wa_v * (1.0 - a_n))
+            de_n = (zp1_nodes ** (3.0 * (1.0 + w0_v + wa_v))) * np.exp(-3.0 * wa_v * (1.0 - a_nodes))
             En = np.sqrt(Or * zp1_nodes**4 + om * zp1_nodes**3 + (1.0 - om - Or) * de_n)
             Dn = integrate.cumulative_trapezoid(zp1_nodes / En, u_nodes, initial=0.0)
             sD = interpolate.CubicSpline(u_nodes, Dn)
@@ -133,10 +120,40 @@ def compute_apparent_cpl_locus() -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
 
         sol = optimize.minimize(cpl_syn_chi2, prev_p, method="L-BFGS-B",
                                 bounds=[(0.60, 0.75), (0.021, 0.024), (0.105, 0.140), (-1.2, -0.4), (-2.0, 0.5)])
-        prev_p = sol.x
-        w0s.append(float(sol.x[3]))
-        was.append(float(sol.x[4]))
-    return alphas, np.array(w0s), np.array(was)
+        return sol.x
+
+    # 1. H2-vol (p=1) locus:
+    alphas = np.linspace(0.0, 0.75, 16)
+    w0s, was = [], []
+    prev_p = np.array([h_fid, ob_fid, oc_fid, -1.0, 0.0])
+    for av in alphas:
+        if av == 0.0:
+            w0s.append(-1.0); was.append(0.0); continue
+        aeff = av * (sfv_ts(u_nodes) / fv0_fid)
+        delta_dD = aeff * (sdD_ts(u_nodes) - 1.0 / Eh0)
+        dD_syn = 1.0 / Eh0 + delta_dD
+        delta_D = integrate.cumulative_trapezoid(zp1_nodes * delta_dD, u_nodes, initial=0.0)
+        D_syn = D_hor0 + delta_D
+        dm_star_syn = rec0["D_M_zstar_Mpc"] + dh0 * float(np.interp(u_star0, u_nodes, delta_D))
+        prev_p = _project_to_cpl(interpolate.CubicSpline(u_nodes, D_syn), interpolate.CubicSpline(u_nodes, dD_syn), dm_star_syn, prev_p)
+        w0s.append(float(prev_p[3])); was.append(float(prev_p[4]))
+
+    # 2. Exact Linder (2015, Eq. 3, b=0.5, p=1) non-phantom algebraic thawing CPL projection:
+    w0_l15_in = np.linspace(-1.0, -0.60, 9)
+    w0_l15_proj, wa_l15_proj = [], []
+    prev_l = np.array([h_fid, ob_fid, oc_fid, -1.0, 0.0])
+    for w0_v in w0_l15_in:
+        if w0_v == -1.0:
+            w0_l15_proj.append(-1.0); wa_l15_proj.append(0.0); continue
+        b_l = 0.5
+        de_l = np.exp(3.0 * (1.0 + w0_v) * ((1.0 + b_l) - ((1.0 + b_l)**(2.0/3.0)) * ((a_nodes**3 + b_l)**(1.0/3.0))))
+        E_l = np.sqrt(Om_r0 * zp1_nodes**4 + om0_fid * zp1_nodes**3 + om_de0 * de_l)
+        D_l = integrate.cumulative_trapezoid(zp1_nodes / E_l, u_nodes, initial=0.0)
+        dm_star_l = rec0["D_M_zstar_Mpc"] + dh0 * float(np.interp(u_star0, u_nodes, D_l - D_hor0))
+        prev_l = _project_to_cpl(interpolate.CubicSpline(u_nodes, D_l), interpolate.CubicSpline(u_nodes, 1.0 / E_l), dm_star_l, prev_l)
+        w0_l15_proj.append(float(prev_l[3])); wa_l15_proj.append(float(prev_l[4]))
+
+    return alphas, np.array(w0s), np.array(was), np.array(w0_l15_proj), np.array(wa_l15_proj)
 
 
 def compute_deduplicated_sightline_bins() -> Tuple[np.ndarray, np.ndarray, np.ndarray, float]:
@@ -318,16 +335,14 @@ def make_figure(lang: str, res_json: Dict[str, Any], locus_data, bin_data) -> Pa
         _add_cov_ellipse(ax, m["w0_hat"], m["wa_hat"], m["sigma_w0_hessian"], m["sigma_wa_hessian"], m["rho_w0_wa_hessian"], 2.2957, col, col, label=lbl + " (68%/95%)", alpha=0.17, lw=1.35)
         _add_cov_ellipse(ax, m["w0_hat"], m["wa_hat"], m["sigma_w0_hessian"], m["sigma_wa_hessian"], m["rho_w0_wa_hessian"], 6.1801, "none", col, alpha=0.0, lw=0.85, ls="--")
 
-    # Linder (2015, PRD 91, 063006, Eq. 3) non-phantom algebraic thawing effective CPL projection:
-    w0_l15 = np.linspace(-1.0, -0.60, 12)
-    wa_l15 = -0.78 * (1.0 + w0_l15)
-    ax.plot(w0_l15, wa_l15, color="#8e44ad", ls=":", lw=1.8, zorder=5,
+    # Exact joint CPL projection of Linder (2015, PRD 91, 063006, Eq. 3) non-phantom algebraic thawing:
+    alphas_loc, w0_loc, wa_loc, w0_l15, wa_l15 = locus_data
+    ax.plot(w0_l15, wa_l15, color="#8e44ad", ls=":", lw=1.85, zorder=5,
             label=("Linder (2015) non-phantom thawing (k=5)" if lang == "en" else "Linder (2015) nem-fantom thawing (k=5)"))
     w0_line = np.linspace(-1.0, -0.60, 100)
     ax.plot(w0_line, -3.30 * (1.0 + w0_line), color="#7f8c8d", ls="-.", lw=1.55, zorder=5,
             label=("Phantom-crossing line wₐ = −3.3(1+w₀) (k=5)" if lang == "en" else "Fantom-átlépő egyenes wₐ = −3,3(1+w₀) (k=5)"))
 
-    alphas_loc, w0_loc, wa_loc = locus_data
     ax.plot(w0_loc, wa_loc, color="#111111", lw=2.15, zorder=6,
             label=("H2-vol (p=1) locus α ∈ [0, 0.75] (k=5)" if lang == "en" else "H2-vol (p=1) görbe α ∈ [0; 0,75] (k=5)"))
     for a_mark, col_m in [(0.40, "#1f77b4"), (0.52, "#d62728")]:
@@ -344,7 +359,7 @@ def make_figure(lang: str, res_json: Dict[str, Any], locus_data, bin_data) -> Pa
     ax.grid(True, alpha=0.25)
     ax.legend(loc="lower left", frameon=True, framealpha=0.92)
 
-    # --- PANEL C: Deduplicated 3D SDSS DR7 VoidFinder Exploratory Sightline Check ---
+    # --- PANEL C: Multi-Catalog 3D Void Sightline GLS Measurements (SDSS DR7 + Deep DESI DR1) ---
     ax = axes[2]
     bx, by, be, f_mean = bin_data
     sl_res = res_json["section_4_3d_cosmic_void_sightline_exploratory_null_check"]
@@ -352,30 +367,31 @@ def make_figure(lang: str, res_json: Dict[str, Any], locus_data, bin_data) -> Pa
     sl_emp = comb["z_controlled_GLS_slope_dmu_dfv_mag"]
     esl_emp = comb["sigma_slope_mag"]
     n_uniq = comb["N_unique_SNe"]
+    deep_d = sl_res["deep_DESI_DR1_3d_void_sightline_tests"]["ASTRA_DESI_DR1_BGS_LRG_0p10_le_z_le_0p95"]
+    sl_desi = deep_d["z_controlled_GLS_slope_dmu_dfv_mag"]
+    esl_desi = deep_d["sigma_slope_mag"]
+    n_desi = deep_d["N_unique_SNe"]
     th = sl_res["theoretical_H2_vol_scale_and_exploratory_null_status"]
-    sl_th_sdss = th["predicted_slope_dmu_dfv_in_volume_z0p075_mag"]
     sl_th_deep = th["predicted_slope_dmu_dfv_deep_z0p70_tracker_mag"]
 
     xf = np.linspace(0.12, 0.92, 100)
     dx = xf - f_mean
-    ax.fill_between(xf, (sl_emp - esl_emp) * dx * 1000.0, (sl_emp + esl_emp) * dx * 1000.0, color="#1f77b4", alpha=0.15)
+    ax.fill_between(xf, (sl_emp - esl_emp) * dx * 1000.0, (sl_emp + esl_emp) * dx * 1000.0, color="#1f77b4", alpha=0.14)
     ax.plot(xf, sl_emp * dx * 1000.0, color="#1f77b4", lw=1.9,
-            label=(f"SDSS DR7×Pantheon+ GLS ({sl_emp*1000:+.0f}±{esl_emp*1000:.0f} mmag)" if lang == "en"
-                   else f"SDSS DR7×Pantheon+ GLS ({sl_emp*1000:+.0f}±{esl_emp*1000:.0f} mmag)"))
-    ax.plot(xf, sl_th_sdss * dx * 1000.0, color="#009e73", lw=1.7, ls="--",
-            label=(f"H2-vol z ≤ 0.10 shell ({sl_th_sdss*1000:+.0f} mmag, ~0.3σ)" if lang == "en"
-                   else f"H2-vol z ≤ 0,10 héj ({sl_th_sdss*1000:+.0f} mmag, ~0,3σ)"))
-    ax.plot(xf, sl_th_deep * dx * 1000.0, color="#d62728", lw=1.8, ls="-.",
-            label=(f"Deep z ≤ 0.70 tracker scale ({sl_th_deep*1000:+.0f} mmag)" if lang == "en"
-                   else f"Mély z ≤ 0,70 tracker-skála ({sl_th_deep*1000:+.0f} mmag)"))
-    ax.errorbar(bx, by * 1000.0, yerr=be * 1000.0, fmt="o", color="#222222", capsize=3, ms=5.2, zorder=6,
-                label=(f"Unique SNe (N = {n_uniq}, 5 bins)" if lang == "en" else f"Egyedi SNe (N = {n_uniq}, 5 bin)"))
+            label=(f"SDSS DR7 z≤0.105 GLS ({sl_emp*1000:+.0f}±{esl_emp*1000:.0f} mmag, N={n_uniq})"))
+    ax.plot(xf, sl_desi * dx * 1000.0, color="#009e73", lw=1.85, ls="--",
+            label=(f"DESI DR1 z≤0.95 GLS ({sl_desi*1000:+.0f}±{esl_desi*1000:.0f} mmag, N={n_desi})"))
+    ax.plot(xf, sl_th_deep * dx * 1000.0, color="#d62728", lw=1.45, ls=":",
+            label=(f"Conditional directional z≤0.70 ({sl_th_deep*1000:+.0f} mmag)" if lang == "en"
+                   else f"Feltételes irányfüggő z≤0,70 ({sl_th_deep*1000:+.0f} mmag)"))
+    ax.errorbar(bx, by * 1000.0, yerr=be * 1000.0, fmt="o", color="#222222", capsize=3, ms=5.0, zorder=6,
+                label=(f"SDSS DR7 unique SNe (N = {n_uniq}, 5 bins)" if lang == "en" else f"SDSS DR7 egyedi SNe (N = {n_uniq}, 5 bin)"))
     ax.axhline(0.0, color="black", lw=0.8, alpha=0.5)
     ax.set_xlim(0.12, 0.92)
     ax.set_ylim(-68.0, 58.0)
     ax.set_xlabel(r"3D ray-traced void path fraction $f_{v,\mathrm{LOS}}$" if lang == "en" else r"3D sugárkövetett üreg-útarány $f_{v,\mathrm{LOS}}$")
     ax.set_ylabel("Detrended Hubble residual Δμ [mmag]" if lang == "en" else "Detrendelt Hubble-maradék Δμ [mmag]")
-    ax.set_title("(C) Exploratory z ≤ 0.105 Void Sightline Check" if lang == "en" else "(C) Feltáró z ≤ 0,105 üreg-látóirány nullteszt", fontweight="bold")
+    ax.set_title("(C) 3D Void Sightline GLS Checks (SDSS + DESI DR1)" if lang == "en" else "(C) 3D üreg-látóirány GLS-tesztek (SDSS + DESI DR1)", fontweight="bold")
     ax.grid(True, alpha=0.25)
     ax.legend(loc="lower left", frameon=True, framealpha=0.92)
 
@@ -415,7 +431,7 @@ def write_latex_tables_snippet(res_json: Dict[str, Any]) -> Path:
 def regenerate_all_from_json(res_json: Dict[str, Any] | None = None) -> None:
     if res_json is None:
         res_json = json.loads(JSON_PATH.read_text(encoding="utf-8"))
-    loc = compute_apparent_cpl_locus()
+    loc = compute_apparent_cpl_loci()
     bins = compute_deduplicated_sightline_bins()
     p_en = make_figure("en", res_json, loc, bins)
     p_hu = make_figure("hu", res_json, loc, bins)

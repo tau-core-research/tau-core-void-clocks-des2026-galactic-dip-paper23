@@ -2,7 +2,7 @@
 """
 verify_C9_void_clock_timescape_apparent_w0_wa_audit.py
 ======================================================
-Self-Contained, Reproducible Multi-Probe Verification Suite (v8.0) for:
+Self-Contained, Reproducible Multi-Probe Verification Suite (v10.0) for:
   "Void-Volume-Weighted Optical Distances Confronting DESI BAO, Compressed Planck CMB,
    and Four Type Ia Supernova Compilations"
 
@@ -16,7 +16,7 @@ Dependencies & Single-Command Reproducibility:
   - Contains NO hardcoded dataset chi^2 assertions; mathematical unit tests can be skipped via `--no-asserts`.
   - Typical wall-clock runtime: ~25-60 seconds on a modern laptop CPU (up to ~2-3 min on older CPUs).
 
-Key v8.0 Upgrades Addressing External Referee Reports 1 & 2:
+Key v8.0-v10.0 Upgrades Addressing External Referee Reports 1 & 2:
   1. Exact polynomial factorization (f_v - 1)*(8*f_v^3 + 39*f_v^2 - 12*f_v - 8) = 0 for f_acc = 0.58670773
      (eliminating floating-point rounding of the trivial f_v = 1 root in Python 3.9 / NumPy 1.26).
   2. Exact early-matter-dominated scaling diagnostics: f_v(z) ~ (1+z)^{-3/2}, f_v(z_*=1089.9) = 8.71e-5,
@@ -463,8 +463,10 @@ def load_all_cosmological_datasets() -> Dict[str, Any]:
     chw_mean = np.array(planck_json["chen_huang_wang_2019_R_lA_omegab"]["mean"], dtype=np.float64)
     chw_invcov = np.array(planck_json["chen_huang_wang_2019_R_lA_omegab"]["invcov"], dtype=np.float64)
 
-    # 8. SDSS DR7 Planck-2018 3D VoidFinder catalog (Douglass, Veyrat & BenZvi 2023)
+    # 8. SDSS DR7 + DESI DR1 (DESIVAST VoidFinder & ASTRA-DESI BGS+LRG) 3D Cosmic Void Catalogs
     vf_npz = np.load(DATA_DIR / "sdss_dr7_voidfinder_planck2018_3d_catalog.npz")
+    dv_npz = np.load(DATA_DIR / "desivast_dr1_voidfinder_ngc_sgc.npz")
+    as_npz = np.load(DATA_DIR / "astra_desi_dr1_bgs_lrg_voids.npz")
 
     return {
         "sn_compilations": {
@@ -486,6 +488,14 @@ def load_all_cosmological_datasets() -> Dict[str, Any]:
         "voidfinder_sdss_dr7": {
             "holes": np.asarray(vf_npz["holes_xyz_r_vid"], dtype=np.float64),
             "maximal": np.asarray(vf_npz["maximal_table"], dtype=np.float64),
+        },
+        "desivast_dr1_voidfinder": {
+            "holes": np.asarray(dv_npz["holes_xyzr"], dtype=np.float64),
+            "maximal": np.asarray(dv_npz["maximals_xyzr"], dtype=np.float64),
+        },
+        "astra_desi_dr1": {
+            "bgs": np.asarray(as_npz["bgs_xyzr"], dtype=np.float64),
+            "lrg": np.asarray(as_npz["lrg_xyzr"], dtype=np.float64),
         },
     }
 
@@ -616,7 +626,7 @@ def H0_D_CPL_vec(z_arr: np.ndarray, w0: float, wa: float, om: float) -> np.ndarr
 
 
 # ==============================================================================
-# 3. UNIFIED LOG-GRID MULTI-COMPILATION JOINT LIKELIHOOD ENGINE (v8.0)
+# 3. UNIFIED LOG-GRID MULTI-COMPILATION JOINT LIKELIHOOD ENGINE (v10.0)
 # ==============================================================================
 def run_multi_sn_joint_likelihood_suite(data: Dict[str, Any], f_acc: float) -> Dict[str, Any]:
     stencil = build_recfast_zstar_stencil(NU_MASSES_LCDM_EV)
@@ -1401,8 +1411,74 @@ def run_3d_void_sightline_audit(data: Dict[str, Any]) -> Dict[str, Any]:
     delta_D_deep = float(integrate.trapezoid((sfv_ts(np.log1p(zt_deep)) / 0.724) * (sdD_ts(np.log1p(zt_deep)) - 1.0 / np.sqrt(0.314 * (1.0 + zt_deep) ** 3 + 0.686)), zt_deep))
     dmu_th_deep_z07 = (5.0 / math.log(10.0)) * (0.40 / 0.61) * delta_D_deep / float(H0_D_CPL_vec(np.array([0.70]), -1.0, 0.0, 0.314)[0])
 
+    # Deep 3D DESI DR1 Ray-Tracing Tests (DESIVAST VoidFinder z<=0.24 & ASTRA-DESI DR1 BGS+LRG 0.10<=z<=0.95):
+    def trace_custom_spheres(centers_arr, radii_arr, unit_dirs, s_min, s_max):
+        r2 = radii_arr ** 2
+        cn2 = np.sum(centers_arr ** 2, axis=1)
+        out = np.zeros(len(unit_dirs), dtype=np.float64)
+        for i in range(len(unit_dirs)):
+            s0, s1 = float(s_min[i]), float(s_max[i])
+            if s1 - s0 <= 10.0:
+                continue
+            sp = np.einsum("md,d->m", centers_arr, unit_dirs[i])
+            d2 = cn2 - sp * sp
+            hit = np.where(d2 < r2)[0]
+            if len(hit) == 0:
+                continue
+            hc = np.sqrt(r2[hit] - d2[hit])
+            aa = np.maximum(s0, sp[hit] - hc)
+            bb = np.minimum(s1, sp[hit] + hc)
+            val = bb > aa
+            if not np.any(val):
+                continue
+            ivs = sorted(zip(aa[val], bb[val]))
+            tot = 0.0
+            ca, cb = ivs[0]
+            for na, nb in ivs[1:]:
+                if na <= cb:
+                    if nb > cb:
+                        cb = nb
+                else:
+                    tot += cb - ca
+                    ca, cb = na, nb
+            tot += cb - ca
+            out[i] = tot / (s1 - s0)
+        return out
+
+    # (a) Official DESI DR1 DESIVAST VoidFinder (NGC+SGC, 101,863 spheres, r in [180, 665] Mpc/h, z <= 0.24):
+    dv_h = data["desivast_dr1_voidfinder"]["holes"]
+    dv_m = data["desivast_dr1_voidfinder"]["maximal"]
+    dv_dirs = dv_m[:, :3] / np.linalg.norm(dv_m[:, :3], axis=1, keepdims=True)
+    with np.errstate(divide="ignore", over="ignore", invalid="ignore"):
+        in_dv = np.max(n_hat @ dv_dirs.T, axis=1) >= math.cos(math.radians(3.5))
+    idx_dv_in = np.where(in_dv & (r_sn_mpch >= 240.0) & (r_sn_mpch <= 665.0))[0]
+    z_dvi, r_dvi, y_dvi, cov_dvi, u_dvi, _, _ = deduplicate_by_cid(idx_dv_in)
+    fv_dvi = trace_custom_spheres(dv_h[:, :3], dv_h[:, 3], u_dvi, np.full(len(u_dvi), 180.0), r_dvi)
+    stats_desivast_in = gls_dedup_stats(z_dvi, y_dvi, cov_dvi, fv_dvi, len(idx_dv_in))
+
+    # (b) Deep ASTRA-DESI DR1 BGS_BRIGHT + LRG (NGC+SGC, 35,122 voids, r in [150, 2350] Mpc/h, 0.10 <= z <= 0.95):
+    as_all = np.vstack([data["astra_desi_dr1"]["bgs"], data["astra_desi_dr1"]["lrg"]])
+    as_dirs = as_all[:, :3] / np.linalg.norm(as_all[:, :3], axis=1, keepdims=True)
+    with np.errstate(divide="ignore", over="ignore", invalid="ignore"):
+        in_as = np.max(n_hat @ as_dirs.T, axis=1) >= math.cos(math.radians(2.5))
+
+    idx_as_full = np.where(in_as & (r_sn_mpch >= 300.0) & (r_sn_mpch <= 2350.0))[0]
+    z_asf, r_asf, y_asf, cov_asf, u_asf, _, _ = deduplicate_by_cid(idx_as_full)
+    fv_asf = trace_custom_spheres(as_all[:, :3], as_all[:, 3], u_asf, np.full(len(u_asf), 150.0), r_asf)
+    stats_astra_0p10_0p95 = gls_dedup_stats(z_asf, y_asf, cov_asf, fv_asf, len(idx_as_full))
+
+    idx_as_deep = np.where(in_as & (r_sn_mpch >= 580.0) & (r_sn_mpch <= 2350.0))[0]
+    z_asd, r_asd, y_asd, cov_asd, u_asd, _, _ = deduplicate_by_cid(idx_as_deep)
+    fv_asd = trace_custom_spheres(as_all[:, :3], as_all[:, 3], u_asd, np.full(len(u_asd), 150.0), r_asd)
+    stats_astra_0p20_0p95 = gls_dedup_stats(z_asd, y_asd, cov_asd, fv_asd, len(idx_as_deep))
+
+    idx_as_lrg = np.where(in_as & (r_sn_mpch >= 1150.0) & (r_sn_mpch <= 2350.0))[0]
+    z_asl, r_asl, y_asl, cov_asl, u_asl, _, _ = deduplicate_by_cid(idx_as_lrg)
+    fv_asl = trace_custom_spheres(as_all[:, :3], as_all[:, 3], u_asl, np.full(len(u_asl), 1150.0), r_asl)
+    stats_astra_lrg_0p42_0p95 = gls_dedup_stats(z_asl, y_asl, cov_asl, fv_asl, len(idx_as_lrg))
+
     return {
-        "catalog_citation": "Douglass, Veyrat & BenZvi (2023), ApJS 265, 7 (SDSS DR7 VoidFinder Planck 2018 3D catalog, 39,735 spheres)",
+        "catalog_citation": "Douglass, Veyrat & BenZvi (2023), ApJS 265, 7 (SDSS DR7 VoidFinder) + DESI DR1 DESIVAST VoidFinder (v1.0) + ASTRA-DESI DR1 BGS/LRG (Zenodo 22003899)",
         "deduplicated_in_volume_SNe_0p02_le_z_le_0p105": stats_in,
         "deduplicated_background_SNe_z_gt_0p11_fixed_shell_30_to_300_Mpch": stats_bg,
         "combined_deduplicated_NGC_interior_SNe": {
@@ -1413,6 +1489,15 @@ def run_3d_void_sightline_audit(data: Dict[str, Any]) -> Dict[str, Any]:
             "slope_t_stat_sigma": round(sl_comb / esl_comb, 2),
             "raw_undeduplicated_N311_slope_mag": round(float(bhr[4]), 4),
             "raw_undeduplicated_N311_sigma_mag": round(math.sqrt(float(cbr[4, 4])), 4),
+        },
+        "deep_DESI_DR1_3d_void_sightline_tests": {
+            "DESIVAST_VoidFinder_NGC_SGC_0p08_le_z_le_0p23": stats_desivast_in,
+            "ASTRA_DESI_DR1_BGS_LRG_0p10_le_z_le_0p95": stats_astra_0p10_0p95,
+            "ASTRA_DESI_DR1_BGS_LRG_0p20_le_z_le_0p95": stats_astra_0p20_0p95,
+            "ASTRA_DESI_DR1_LRG_only_0p42_le_z_le_0p95": stats_astra_lrg_0p42_0p95,
+            "empirical_3sigma_sample_size_forecast_in_DESI_footprint": int(
+                round(stats_astra_0p10_0p95["N_unique_SNe"] * ((stats_astra_0p10_0p95["sigma_slope_mag"] / (abs(dmu_th_deep_z07) / 3.0)) ** 2))
+            ),
         },
         "theoretical_H2_vol_scale_and_exploratory_null_status": {
             "expected_SNR_in_SDSS_DR7_shell_sigma": round(abs(dmu_th_in_sdss) / esl_comb, 2),
@@ -1548,8 +1633,8 @@ def run_audit(run_asserts: bool = True, generate_figures: bool = True) -> Dict[s
     elapsed = round(time.perf_counter() - t_start, 2)
     results = {
         "audit_version": (
-            "v8.0 (CAMB r_d Calibration, k=5 Thawing vs Phantom-Crossing DE Controls, "
-            "BAO+CMB Out-of-Sample SN Split, Free-alpha p=0/1/2, & Deduplicated 3D VoidFinder Null Check)"
+            "v10.0 (Exact 100*theta_* Planck PR3 Cov, Linder 2015 Non-Phantom Thawing, "
+            "Uniform BAO+CMB Out-of-Sample SN Split, & Deep 3D DESI DR1 Void Sightlines z <= 0.95)"
         ),
         "runtime_seconds": elapsed,
         "section_1_wiltshire_benchmarks_and_recombination_scaling": {
@@ -1580,7 +1665,7 @@ def run_audit(run_asserts: bool = True, generate_figures: bool = True) -> Dict[s
 
     JSON_OUT.write_text(json.dumps(results, indent=2), encoding="utf-8")
     print(json.dumps(results, indent=2))
-    print(f"\n[PASS] v8.0 Verification Suite completed in {elapsed:.2f}s -> {JSON_OUT}")
+    print(f"\n[PASS] v10.0 Verification Suite completed in {elapsed:.2f}s -> {JSON_OUT}")
 
     if generate_figures:
         try:
@@ -1593,7 +1678,7 @@ def run_audit(run_asserts: bool = True, generate_figures: bool = True) -> Dict[s
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Standalone v8.0 Void-Weighted Cosmology Verification Suite")
+    parser = argparse.ArgumentParser(description="Standalone v10.0 Void-Weighted Cosmology Verification Suite")
     parser.add_argument("--no-asserts", action="store_true", help="Disable unit-test assertions for custom prior exploration")
     parser.add_argument("--no-figures", action="store_true", help="Skip regenerating Figure 1 PNGs and LaTeX table snippets")
     args = parser.parse_args()

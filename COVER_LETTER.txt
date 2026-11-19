@@ -1,42 +1,47 @@
 Dear Editors and Referees,
 
-Please find enclosed the final JCAP-ready revision (v9.0),
+Please find enclosed the final JCAP-ready revision (v10.0),
 
   "Void-Volume-Weighted Optical Distances Confronting DESI BAO, Compressed Planck CMB,
    and Four Type Ia Supernova Compilations"
 
 by Jozsef Olcsak.
 
-We thank both Referees for their exceptionally careful independent code verification of v8.0.
-Every remaining targeted item raised by Referee 1 and Referee 2 has been resolved in v9.0:
+We thank both Referees for their exceptionally careful independent code verification of v9.0.
+In v10.0 we have resolved every remaining figure, table, and wording point AND added a
+major empirical extension of the 3D void-sightline test out to z <= 0.95 using official
+public DESI DR1 3D void catalogs:
 
-1. Exact Planck PR3 `100*theta_*` Covariance & Extraction Script (Referee 1):
-   - Replaced the `100*theta_MC` covariance in `planck2018_compressed_priors.json` with the
-     exact weighted posterior covariance of `100*theta_*` (column `thetastar*`,
-     sigma = 0.0003068) computed directly from the 25,225 samples of the four official
-     Planck PR3 `base_plikHM_TTTEEE_lowl_lowE_lensing` MCMC chains, and bundled the
-     extraction script `supplementary_code_and_data/build_planck2018_compressed_prior.py`.
-   - Re-running the entire suite reproduces p = 1 Delta_chi^2 = -9.80, -11.34, -18.53, -13.62.
+1. Deep 3D DESI DR1 Void-Sightline Extension out to z <= 0.95 (Section 4.2 & Fig. 1C):
+   - Extended the 3D cosmic-void ray-tracing of deduplicated Pantheon+ SNe Ia from shallow
+     SDSS DR7 (z <= 0.105, N_uniq = 280: -0.0552 +- 0.0362 mag, -1.52 sigma) to two public
+     DESI DR1 3D void catalogs bundled in the package:
+       * Official DESIVAST DR1 VoidFinder (NGC+SGC, 101,863 spheres, 0.08 <= z <= 0.23,
+         N_uniq = 68): -0.0471 +- 0.0497 mag (-0.95 sigma).
+       * Deep ASTRA-DESI DR1 BGS+LRG (35,122 voids, 0.10 <= z <= 0.95, N_uniq = 735):
+         -0.0344 +- 0.0341 mag (-1.01 sigma); restricted 0.20 <= z <= 0.95 (N_uniq = 540):
+         -0.0478 +- 0.0443 mag (-1.08 sigma); LRG-only 0.42 <= z <= 0.95 (N_uniq = 167):
+         +0.0341 +- 0.0365 mag (+0.94 sigma).
+   - All three catalogs are currently consistent with noise; scaling the measured ASTRA-DESI
+     DR1 GLS covariance gives an empirical forecast of N_SN >= 2,860 unique SNe Ia inside
+     the DESI footprint for a 3-sigma test of a -0.052 mag directional signal.
 
-2. Strictly Non-Phantom Linder (2015, Eq. 3) Algebraic Thawing Control (Referee 1):
-   - Replaced the linear CPL thawing line (which crossed w = -1 at z ~ 1.72) with Linder's
-     (2015, PRD 91, 063006, Eq. 3) 1-parameter algebraic thawing model (p = 1, b = 0.5,
-     w_0 >= -1, guaranteeing w(a) >= -1 at all z), giving Delta_chi^2 = -2.54, -3.75,
-     -8.79, -3.54 (outperformed by H2-vol p = 1 by Delta_chi^2 = -7.26 to -10.08).
+2. Figure 1B Exact Projected Linder (2015) Curve & Figure 1C Labeling (Referees 1 & 2):
+   - Replaced the fixed w_a = -0.78(1+w_0) proxy line in Panel B with the exact joint
+     projected (w_0^eff, w_a^eff) trajectory of Linder's (2015, Eq. 3) non-phantom thawing
+     model (passing through (-0.904, -0.146) at w_0 = -0.90).
+   - Labeled the -52 mmag reference in Panel C explicitly as a conditional directional
+     illustration ("Conditional directional z<=0.70 (-52 mmag)") alongside both SDSS DR7
+     and deep ASTRA-DESI DR1 measurements.
 
-3. Uniform BAO+CMB-Only & Out-of-Sample SN Predictive Table (Referees 1 & 2):
-   - Added Table 1 comparing p = 0, p = 1, p = 2, and the phantom-crossing CPL line on equal
-     footing (k = 4 without M_B) on DESI BAO + Planck18 alone (N = 16) together with their
-     out-of-sample SN predictions across all four compilations, and fixed `LCDM_no_MB_k3`
-     parameter counting in JSON.
-
-4. Sightline Check, Abstract Scope, & JCAP Formatting (Referees 1 & 2):
-   - Kept the deduplicated N_unique = 280 GLS slope (-0.055 +- 0.036 mag, -1.52 sigma) as an
-     exploratory check, removed the permutation p-values, and qualified the -0.052 mag deep
-     scale as requiring an explicit directional hypothesis beyond sky-averaged Eq. (4).
-   - Stated the bare-Hbar_0 and all-z Sachs limitations directly in the Abstract, narrowed the
-     "Timescape + LCDM acoustic calibration" phrasing, trimmed JCAP keywords to 4, and
-     updated runtime notes to 1-6 min.
+3. Table 1 Parameter-Tension Framing, Table 3 Exact Rounding & Text Polish (Referees 1 & 2):
+   - Clarified in Table 1 that the out-of-sample SN predictions hold background parameters
+     fixed at the BAO+CMB MLE (with analytic M_B profiling), noting that p=1 achieves small
+     parameter tension (0.8 sigma) whereas phantom CPL exhibits a 1.65 sigma shift.
+   - Added explicit explanation of Linder's compressed-CMB penalty (chi^2_CMB = 5.07-6.05),
+     matched Table 3's rounded digits exactly to the regenerated v10.0 JSON, updated the
+     Abstract range to 2.2-4.2 sigma, and updated the script banner and runtime notes to
+     v10.0 (~1.5-7 min).
 
 Sincerely,
 Jozsef Olcsak
