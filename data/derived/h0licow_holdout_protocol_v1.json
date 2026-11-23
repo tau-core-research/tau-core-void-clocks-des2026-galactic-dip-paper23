@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-23",
+  "design": "Retrospective held-out external sample; neither blinded nor prospective. All six H0LiCOW XIII released lenses; original MontePython likelihood factorization and column order. No cosmology-parameter chains or measured H0 used. No refit, lens exclusion, or new selection on the lens data.",
+  "upstream_commit": "57cf97357e16a94ba0065472bd4185cfbc604aa3",
+  "training_receipt_sha256": "720783f1a586c3083bba99f31aef89e700de813c228b39fe36db9b52b59b1175",
+  "tracker_implementation_sha256": "790ab80c474a1f2139bab3fc9afc30dfc7c187db8ae7e13900aee01f6333f7b5",
+  "grid": "2800",
+  "model_order": ["p1", "mirage", "LCDM"],
+  "geometry": "Common flat effective distance-sum rule, D_d=D_M(z_d)/(1+z_d), D_dt=D_M(z_d)D_M(z_s)/(D_M(z_s)-D_M(z_d)); no predicted line-of-sight geometry or lens-mass effect from the optical model.",
+  "primary_score": "Sum of ln L(p1) minus ln L(mirage), fixed plug-in point predictions, default upstream Scott bandwidth factor. Positive favors p1. LCDM is a fixed reference, not the primary comparator.",
+  "controls": "Leave one lens out without refitting, Scott bandwidth multipliers 0.75 and 1.5, published-density scale from each single-lens covariance, lower training integration grid as input sensitivity; analytic constant-X flat distance check; likelihood-score identity under identical predictions; no significance or probability-of-model calculation.",
+  "bandwidth_factors": [1.0, 0.75, 1.5],
+  "lenses": [
+    ["B1608", 0.6304, 1.394, "B1608_Dd_Ddt_params.dat", "analytic"],
+    ["J1206", 0.745, 1.789, "J1206_final.csv", "dt_dd_csv"],
+    ["WFI2033", 0.6575, 1.662, "wfi2033_dt_bic.dat", "weighted_dt_csv"],
+    ["HE0435", 0.4546, 1.693, "HE0435_Ddt_AO+HST.dat", "dt"],
+    ["PG1115", 0.311, 1.722, "PG1115_AO+HST_Dd_Ddt.dat", "dd_dt"],
+    ["RXJ1131", 0.295, 0.654, "RXJ1131_AO+HST_Dd_Ddt.dat", "dd_dt"]
+  ]
+}

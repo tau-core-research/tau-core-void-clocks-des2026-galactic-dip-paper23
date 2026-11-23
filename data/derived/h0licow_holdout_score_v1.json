@@ -1,0 +1,442 @@
+{
+  "scope": "Held-out fixed-distance comparison under a common flat distance-sum and the released H0LiCOW lens profile assumptions; no mechanism inference",
+  "protocol_sha256": "516394d95046a4bc6b2286d459c1464c8fa14919427ace1e85a448e44a50ebdf",
+  "prediction_sha256": "ccfa74b4d31c5a6ea793b732d000ab2d83059492c13ca0772ce98ded2f907dfc",
+  "versions": {
+    "numpy": "1.26.4",
+    "scipy": "1.13.1"
+  },
+  "inputs": {
+    "B1608": {
+      "url": "https://raw.githubusercontent.com/shsuyu/H0LiCOW-public/57cf97357e16a94ba0065472bd4185cfbc604aa3/MontePython_cosmo_sampling/data/timedelay_6lenses/B1608_Dd_Ddt_params.dat",
+      "sha256": "494da93a660138f6fa083b36915cc669d8c76975dc2597d802fc4fa0cb360028",
+      "bytes": 499
+    },
+    "J1206": {
+      "url": "https://raw.githubusercontent.com/shsuyu/H0LiCOW-public/57cf97357e16a94ba0065472bd4185cfbc604aa3/MontePython_cosmo_sampling/data/timedelay_6lenses/J1206_final.csv",
+      "sha256": "f06db9a129f0d53231d908115a1abcccf5de9f76ec87275ba7126fac44c93d7a",
+      "bytes": 2282383
+    },
+    "WFI2033": {
+      "url": "https://raw.githubusercontent.com/shsuyu/H0LiCOW-public/57cf97357e16a94ba0065472bd4185cfbc604aa3/MontePython_cosmo_sampling/data/timedelay_6lenses/wfi2033_dt_bic.dat",
+      "sha256": "fb0dc9af101f99ab57bcd1eb3fa38c08937dffa5569479079b6487324e211ad9",
+      "bytes": 20637340
+    },
+    "HE0435": {
+      "url": "https://raw.githubusercontent.com/shsuyu/H0LiCOW-public/57cf97357e16a94ba0065472bd4185cfbc604aa3/MontePython_cosmo_sampling/data/timedelay_6lenses/HE0435_Ddt_AO%2BHST.dat",
+      "sha256": "f710c5001b2cb0b31909924ac37a5f29298904a79b2c00472df41eb6a3f440da",
+      "bytes": 3600000
+    },
+    "PG1115": {
+      "url": "https://raw.githubusercontent.com/shsuyu/H0LiCOW-public/57cf97357e16a94ba0065472bd4185cfbc604aa3/MontePython_cosmo_sampling/data/timedelay_6lenses/PG1115_AO%2BHST_Dd_Ddt.dat",
+      "sha256": "4f88ce31b7e0c33aee8cc618e8dabd3c2c6fc1e7f458d221a1e11cb5b848091d",
+      "bytes": 83637978
+    },
+    "RXJ1131": {
+      "url": "https://raw.githubusercontent.com/shsuyu/H0LiCOW-public/57cf97357e16a94ba0065472bd4185cfbc604aa3/MontePython_cosmo_sampling/data/timedelay_6lenses/RXJ1131_AO%2BHST_Dd_Ddt.dat",
+      "sha256": "9183ff074f0d514dd12c3a3dd94a0a5dc60f96447a21084ff10d67147822f96d",
+      "bytes": 11545946
+    }
+  },
+  "lenses": {
+    "B1608": {
+      "scores": {
+        "2800": {
+          "1.0": {
+            "p1": -13.50442552733377,
+            "mirage": -13.464113834211677,
+            "LCDM": -13.57943599660798
+          },
+          "0.75": {
+            "p1": -13.50442552733377,
+            "mirage": -13.464113834211677,
+            "LCDM": -13.57943599660798
+          },
+          "1.5": {
+            "p1": -13.50442552733377,
+            "mirage": -13.464113834211677,
+            "LCDM": -13.57943599660798
+          }
+        },
+        "1400": {
+          "1.0": {
+            "p1": -13.504441103270542,
+            "mirage": -13.464130319832591,
+            "LCDM": -13.579453389344977
+          },
+          "0.75": {
+            "p1": -13.504441103270542,
+            "mirage": -13.464130319832591,
+            "LCDM": -13.579453389344977
+          },
+          "1.5": {
+            "p1": -13.504441103270542,
+            "mirage": -13.464130319832591,
+            "LCDM": -13.579453389344977
+          }
+        }
+      },
+      "active_coordinates": [
+        "Ddt",
+        "Dd"
+      ],
+      "chain_rows": null,
+      "marginal_distance_width_Mpc": [
+        274.39813073558446,
+        168.51446165583624
+      ],
+      "p1_mirage_relative_separation": [
+        0.003976242121944473,
+        0.00017171786719760718
+      ],
+      "p1_mirage_separation_over_marginal_width": [
+        0.0757469247758578,
+        0.001464212383326235
+      ],
+      "primary_delta_loglike": -0.04031169312209393
+    },
+    "J1206": {
+      "scores": {
+        "2800": {
+          "1.0": {
+            "p1": -14.329119868903815,
+            "mirage": -14.32908316648558,
+            "LCDM": -14.320011763459314
+          },
+          "0.75": {
+            "p1": -14.307482860879412,
+            "mirage": -14.307397371410422,
+            "LCDM": -14.30071560698439
+          },
+          "1.5": {
+            "p1": -14.364312633534082,
+            "mirage": -14.363369772543281,
+            "LCDM": -14.356037460961504
+          }
+        },
+        "1400": {
+          "1.0": {
+            "p1": -14.329118102396688,
+            "mirage": -14.329081243283829,
+            "LCDM": -14.320011197467766
+          },
+          "0.75": {
+            "p1": -14.307481391018722,
+            "mirage": -14.307395535572377,
+            "LCDM": -14.30071538763816
+          },
+          "1.5": {
+            "p1": -14.364311172965264,
+            "mirage": -14.36336833026125,
+            "LCDM": -14.356036938630123
+          }
+        }
+      },
+      "active_coordinates": [
+        "Ddt",
+        "Dd"
+      ],
+      "chain_rows": 67570,
+      "marginal_distance_width_Mpc": [
+        601.797877362198,
+        513.1543081858449
+      ],
+      "p1_mirage_relative_separation": [
+        0.0022882944604538658,
+        0.0006133287452281255
+      ],
+      "p1_mirage_separation_over_marginal_width": [
+        0.02223820042669177,
+        0.0018382665450648655
+      ],
+      "primary_delta_loglike": -3.670241823527931e-05
+    },
+    "WFI2033": {
+      "scores": {
+        "2800": {
+          "1.0": {
+            "p1": -7.0714423213537785,
+            "mirage": -7.024771957477075,
+            "LCDM": -7.133065348495844
+          },
+          "0.75": {
+            "p1": -7.077926262177257,
+            "mirage": -7.028831456206618,
+            "LCDM": -7.1386869549892085
+          },
+          "1.5": {
+            "p1": -7.063044345391025,
+            "mirage": -7.017969764719229,
+            "LCDM": -7.124924050508773
+          }
+        },
+        "1400": {
+          "1.0": {
+            "p1": -7.071456100708756,
+            "mirage": -7.0247888234668645,
+            "LCDM": -7.133079362955926
+          },
+          "0.75": {
+            "p1": -7.077940449476141,
+            "mirage": -7.028849453786306,
+            "LCDM": -7.138700166955353
+          },
+          "1.5": {
+            "p1": -7.063057848976208,
+            "mirage": -7.017985865669077,
+            "LCDM": -7.124938461731617
+          }
+        }
+      },
+      "active_coordinates": [
+        "Ddt"
+      ],
+      "chain_rows": 693105,
+      "marginal_distance_width_Mpc": [
+        387.3546902282662
+      ],
+      "p1_mirage_relative_separation": [
+        0.0031748520412757664
+      ],
+      "p1_mirage_separation_over_marginal_width": [
+        0.0406612000821279
+      ],
+      "primary_delta_loglike": -0.04667036387670365
+    },
+    "HE0435": {
+      "scores": {
+        "2800": {
+          "1.0": {
+            "p1": -6.371884985618328,
+            "mirage": -6.323518724198579,
+            "LCDM": -6.376818298826054
+          },
+          "0.75": {
+            "p1": -6.375082074062062,
+            "mirage": -6.327965178080404,
+            "LCDM": -6.379474832786242
+          },
+          "1.5": {
+            "p1": -6.36638779255374,
+            "mirage": -6.318553841870925,
+            "LCDM": -6.371628202131802
+          }
+        },
+        "1400": {
+          "1.0": {
+            "p1": -6.3718918591687075,
+            "mirage": -6.323529753502717,
+            "LCDM": -6.3768288536016735
+          },
+          "0.75": {
+            "p1": -6.375088231386254,
+            "mirage": -6.3279767689228645,
+            "LCDM": -6.379484180794759
+          },
+          "1.5": {
+            "p1": -6.366395055387331,
+            "mirage": -6.318564034766327,
+            "LCDM": -6.371639470297558
+          }
+        }
+      },
+      "active_coordinates": [
+        "Ddt"
+      ],
+      "chain_rows": 300000,
+      "marginal_distance_width_Mpc": [
+        181.83986815414892
+      ],
+      "p1_mirage_relative_separation": [
+        0.004189052182210107
+      ],
+      "p1_mirage_separation_over_marginal_width": [
+        0.0647813051114468
+      ],
+      "primary_delta_loglike": -0.048366261419748646
+    },
+    "PG1115": {
+      "scores": {
+        "2800": {
+          "1.0": {
+            "p1": -13.957549835789305,
+            "mirage": -13.88663946951562,
+            "LCDM": -13.909569425393428
+          },
+          "0.75": {
+            "p1": -13.944528497462858,
+            "mirage": -13.89138385497403,
+            "LCDM": -13.908256930822677
+          },
+          "1.5": {
+            "p1": -13.956306774386148,
+            "mirage": -13.878862727978111,
+            "LCDM": -13.903863925522382
+          }
+        },
+        "1400": {
+          "1.0": {
+            "p1": -13.957556481308307,
+            "mirage": -13.88664899943684,
+            "LCDM": -13.909586482616689
+          },
+          "0.75": {
+            "p1": -13.944534300290965,
+            "mirage": -13.891390888837844,
+            "LCDM": -13.908268744557535
+          },
+          "1.5": {
+            "p1": -13.956313921196456,
+            "mirage": -13.878873084675655,
+            "LCDM": -13.903882826773469
+          }
+        }
+      },
+      "active_coordinates": [
+        "Ddt",
+        "Dd"
+      ],
+      "chain_rows": 3626960,
+      "marginal_distance_width_Mpc": [
+        136.7662636664254,
+        165.05756375411028
+      ],
+      "p1_mirage_relative_separation": [
+        0.004400579980327279,
+        0.002445029355055972
+      ],
+      "p1_mirage_separation_over_marginal_width": [
+        0.0549385150330999,
+        0.014268106239036146
+      ],
+      "primary_delta_loglike": -0.07091036627368474
+    },
+    "RXJ1131": {
+      "scores": {
+        "2800": {
+          "1.0": {
+            "p1": -14.652869966376551,
+            "mirage": -14.51790346006823,
+            "LCDM": -14.432707676683542
+          },
+          "0.75": {
+            "p1": -14.731746450216681,
+            "mirage": -14.555279260333108,
+            "LCDM": -14.428156511742268
+          },
+          "1.5": {
+            "p1": -14.60257078873594,
+            "mirage": -14.491222353382673,
+            "LCDM": -14.434405071451408
+          }
+        },
+        "1400": {
+          "1.0": {
+            "p1": -14.652869955751513,
+            "mirage": -14.517909577097212,
+            "LCDM": -14.432740216528655
+          },
+          "0.75": {
+            "p1": -14.731746885949605,
+            "mirage": -14.555287789580152,
+            "LCDM": -14.428198237466507
+          },
+          "1.5": {
+            "p1": -14.602570809893711,
+            "mirage": -14.491226903742998,
+            "LCDM": -14.434428692156448
+          }
+        }
+      },
+      "active_coordinates": [
+        "Ddt",
+        "Dd"
+      ],
+      "chain_rows": 500000,
+      "marginal_distance_width_Mpc": [
+        116.83785359948796,
+        131.46897173575817
+      ],
+      "p1_mirage_relative_separation": [
+        0.005043510307944699,
+        0.0025251797140406484
+      ],
+      "p1_mirage_separation_over_marginal_width": [
+        0.10351947754876896,
+        0.017846265637092643
+      ],
+      "primary_delta_loglike": -0.13496650630832185
+    }
+  },
+  "totals": {
+    "2800": {
+      "1.0": {
+        "relative_to_LCDM": {
+          "p1": -0.13568399590937474,
+          "mirage": 0.20557789750940003,
+          "LCDM": 0.0
+        },
+        "p1_minus_mirage": -0.3412618934187748
+      },
+      "0.75": {
+        "relative_to_LCDM": {
+          "p1": -0.20646483819928108,
+          "mirage": 0.15975587871650987,
+          "LCDM": 0.0
+        },
+        "p1_minus_mirage": -0.36622071691579094
+      },
+      "1.5": {
+        "relative_to_LCDM": {
+          "p1": -0.08675315475085199,
+          "mirage": 0.23620241247795093,
+          "LCDM": 0.0
+        },
+        "p1_minus_mirage": -0.3229555672288029
+      }
+    },
+    "1400": {
+      "1.0": {
+        "relative_to_LCDM": {
+          "p1": -0.13563410008882215,
+          "mirage": 0.20561078589564374,
+          "LCDM": 0.0
+        },
+        "p1_minus_mirage": -0.3412448859844659
+      },
+      "0.75": {
+        "relative_to_LCDM": {
+          "p1": -0.20641225463492674,
+          "mirage": 0.15978935022516794,
+          "LCDM": 0.0
+        },
+        "p1_minus_mirage": -0.3662016048600947
+      },
+      "1.5": {
+        "relative_to_LCDM": {
+          "p1": -0.08671013275532857,
+          "mirage": 0.2362312399862816,
+          "LCDM": 0.0
+        },
+        "p1_minus_mirage": -0.32294137274161017
+      }
+    }
+  },
+  "primary_fixed_likelihood_ratio_p1_over_mirage": 0.7108727109409728,
+  "leave_one_out_p1_minus_mirage": {
+    "B1608": -0.30095020029668085,
+    "J1206": -0.3412251910005395,
+    "WFI2033": -0.29459152954207113,
+    "HE0435": -0.29289563199902613,
+    "PG1115": -0.27035152714509003,
+    "RXJ1131": -0.20629538711045292
+  },
+  "max_relative_separation": 0.005043510307944699,
+  "max_separation_over_marginal_width": 0.10351947754876896,
+  "controls": [
+    "same prediction => identical score",
+    "KDE pdf vs logpdf",
+    "both predeclared bandwidth perturbations and lower training grid",
+    "leave-one-lens-out without refitting"
+  ]
+}
