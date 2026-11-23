@@ -3,8 +3,62 @@
 
 **Author:** Jozsef Olcsak (`ORCID: 0009-0003-7311-6522`)  
 **Date:** 18 November 2026 (Revised Referee Edition v5)  
-**Repository Visibility:** Private pre-submission repository  
+**Repository Visibility:** Public reproducibility repository<br>
 **Epistemic Closure Status:** `NATURE_LEVEL_CLOSURE = false`
+
+## 2026-11-23: held-out strong-lens check
+
+The six [H0LiCOW XIII lenses](https://shsuyu.github.io/H0LiCOW/site/h0licow_data.html)
+were not used in the Pantheon+ / DESI BAO-13 / compressed Planck training
+fit. Using the released per-lens distance likelihoods and the same flat
+distance-sum rule for both fixed predictions, the smooth mirage CPL
+template scores slightly better than the linear void optical template:
+**ln L(void) − ln L(mirage) = −0.341**. Their largest fractional
+separation is 0.504% (0.104 of a corresponding marginal distance standard
+deviation). The ranking survives the predeclared smoothing and
+leave-one-lens-out checks. The result is not decisive and does not test
+direction-dependent void transport, curved Timescape, or the entire
+class of smooth dark-energy models. The point-likelihood ratio is not a
+Bayes factor.
+
+- [Protocol](data/derived/h0licow_holdout_protocol_v1.json)
+- [Frozen predictions](data/derived/h0licow_holdout_predictions_v1.json)
+- [Scores, controls and six upstream file checksums](data/derived/h0licow_holdout_score_v1.json)
+
+With Python 3.10+, NumPy 2.2.6 and SciPy 1.15.3 (about 122 MB of pinned
+public lens inputs are fetched at score time; inputs are not redistributed):
+
+~~~bash
+python3 -W error scripts/score_h0licow_holdout.py predict --output /tmp/p23_lens_predictions.json
+python3 -W error scripts/score_h0licow_holdout.py score --output /tmp/p23_lens_score.json
+~~~
+
+The first command does not access lens data. The second uses and verifies
+the shipped frozen predictions by default; pass `--predictions` to use the
+newly generated copy. Do not use existing output filenames for a rerun.
+
+## 2026-11-23: matched same-data validation
+
+The English working manuscript includes a separate full-vector re-fit of
+Pantheon+, DESI DR2 BAO-13 and the compressed Planck calibration.
+The linear optical template gains 9.826 in chi-squared; the smooth mirage
+CPL line gains 8.078. The three-template tangent null gives tail 0.0064145
+on the local score, not a global nonlinear detection or independent data
+test. The smooth comparator is highly aligned (0.927) with the optical
+shape after nuisance projection. No mechanism is selected.
+
+Reproduce with Python 3.10 or newer, NumPy 2.2.6 and SciPy 1.15.3:
+
+~~~bash
+python3 -W error scripts/validate_pantheon_joint_tangent.py \
+  --source '<working Sub4>/supplementary_code_and_data' \
+  --output /tmp/pantheon_matched_new.json
+~~~
+
+The script verifies the original input hashes; no additional catalog is
+pooled. The accepted receipt is
+[pantheon_joint_tangent_20261123_strict.json](data/derived/pantheon_joint_tangent_20261123_strict.json).
+The previously submitted PRD version remains unchanged.
 
 ---
 

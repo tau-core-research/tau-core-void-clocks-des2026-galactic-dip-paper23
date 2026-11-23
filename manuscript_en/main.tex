@@ -28,10 +28,23 @@
 \maketitle
 
 \begin{abstract}
-\noindent Joint cosmological fits combining Type~Ia supernovae (SNe~Ia), baryon acoustic oscillations (BAO), and cosmic microwave background (CMB) distance priors exhibit a $2.2\text{--}4.2\sigma$ preference for late-time deviations from flat $\Lambda$CDM ($w_0 > -1$, $w_a < 0$) driven largely by the offset between higher SN-only matter densities ($\Omega_{m,0} \simeq 0.33\text{--}0.36$) and lower BAO+CMB constraints ($\Omega_{m,0} \simeq 0.30$). Motivated by inhomogeneous clock-dressing (\textit{Timescape}) models in which faster proper clocks inside cosmic voids ($\mathrm{d}\tau/\mathrm{d}t > 1$) induce an apparent $w_0^{\mathrm{app}} > -1$, we test a 1-parameter phenomenological transit-distance template ($k = 5$, unconstrained mixing parameter $\alpha$ beyond flat $\Lambda$CDM) weighting the normalized Wiltshire distance derivative by powers of the cosmic void volume fraction, $\alpha_{\mathrm{eff}}(z) = \alpha\,[f_v(z)/f_{v,0}]^p$. Using a CAMB-calibrated baryon drag sound horizon ($r_d = 147.10\;\mathrm{Mpc}$ at fiducial \texttt{Planck} parameters), \texttt{DESI} BAO, and the marginalized $3\times 3$ \texttt{Planck} 2018 \texttt{TT,TE,EE+lowE+lensing} $(\omega_b, \omega_c, 100\theta_*)$ covariance across four overlapping SN~Ia compilations, the exploratory linear void-weighted template ($p = 1$) improves over flat $\Lambda$CDM by $\Delta\chi^2 = -9.80$ ($\hat{\alpha} = 0.397 \pm 0.126$, $\Delta\mathrm{AIC} = -7.80$, $\Delta\mathrm{BIC} = -2.43$) on \texttt{Pantheon+}, $-11.34$ ($\hat{\alpha} = 0.407 \pm 0.121$, $\Delta\mathrm{BIC} = -3.82$) on recalibrated \texttt{DES-Dovekie}, $-18.53$ ($\hat{\alpha} = 0.517 \pm 0.120$, $\Delta\mathrm{BIC} = -11.01$) on \texttt{DES-SN5YR}, and $-13.62$ ($\hat{\alpha} = 0.558 \pm 0.141$, $\Delta\mathrm{BIC} = -9.98$) on \texttt{Union3}. Fitting \texttt{DESI} BAO + \texttt{Planck} alone ($\Delta\chi^2 = -7.47$, $\hat{\alpha} = 0.521 \pm 0.163$) yields out-of-sample SN improvements ($\Delta\chi^2_{\mathrm{SN}} = -1.47$ to $-11.59$ at fixed cosmological parameters, marginalized over $M_B$) on all four datasets. Head-to-head $k = 5$ comparisons show that $p = 1$ outperforms constant-$w$ dark energy ($w$CDM) by $\Delta\chi^2 = -9.14$ to $-14.75$ and Linder's strictly non-phantom algebraic thawing quintessence ($w(a) \ge -1$ everywhere) by $\Delta\chi^2 = -7.26$ to $-10.08$, while remaining geometrically degenerate at the sky-averaged background level with an empirical phantom-crossing CPL line $w_a = -3.3(1+w_0)$ ($|\Delta\chi^2| \le 1.73$). Crucially, the effect currently resides strictly in the phenomenological transit template: bare-$\bar{H}_0$ normalization drives $\hat{\alpha} \approx 0$, consistent all-$z$ forward Sachs integration suppresses the signal ($\hat{\alpha} = -0.048 \pm 0.024$ for homogeneous focusing; $+0.005 \pm 0.002$ for Dyer--Roeder), and $\hat{\alpha}$ is strongly degenerate with $f_{v,0}$. Extending 3D void-sightline ray-tracing from \texttt{SDSS} DR7 \texttt{VoidFinder} ($z \le 0.105$, $N = 280$ unique \texttt{Pantheon+} SNe: $-0.055 \pm 0.036\;\mathrm{mag}$) to two correlated \texttt{DESI} DR1 void catalogs (\texttt{DESIVAST} $0.08 \le z \le 0.23$, $N = 68$: $-0.047 \pm 0.050\;\mathrm{mag}$; \texttt{ASTRA-DESI} BGS+LRG effective-radius spheres $0.10 \le z \le 0.95$, $N = 734$: $-0.035 \pm 0.034\;\mathrm{mag}$, $95\%$ GLS interval $[-0.102, +0.032]\;\mathrm{mag}$; strict LRG-only $0.42 \le z \le 0.95$, $N = 123$: $+0.017 \pm 0.049\;\mathrm{mag}$) yields null-consistent slopes across all redshift regimes. Under conditional $N^{-1/2}$ scaling assuming identical per-SN sensitivity and a fixed hypothetical $-0.052\;\mathrm{mag}$ directional amplitude, a $3\sigma$ test corresponds to an order-of-magnitude sample of $N_{\mathrm{SN}} \sim 2.8 \times 10^3$ SNe within the \texttt{DESI} footprint.
+\noindent We compare a void-volume-weighted distance template with flat $\Lambda$CDM and smooth dark-energy controls using DESI BAO, compressed Planck acoustic information and four overlapping Type~Ia supernova compilations. With the stated acoustic calibration and tied void-fraction prescription, the linear template lowers the stored joint $\chi^2$ by $9.80$, $11.34$, $18.53$, and $13.62$, respectively. A smooth phantom-crossing CPL line fits nearly as well. Simple geometric distances cannot identify the underlying mechanism, the reported fits are sensitive to the present void fraction and the sound horizon, and the exploratory directional tests are null-consistent.
+
+On six held-out H0LiCOW lenses, the smooth template slightly outscores the optical template under a common effective flat lens geometry ($\ln L_{\rm opt}-\ln L_{\rm mirage}=-0.341$); the difference is not decisive.
 
 \smallskip\noindent\textbf{Keywords:} dark energy theory, cosmological parameters from LSS, supernova type Ia - standard candles, cosmic web
 \end{abstract}
+
+\paragraph{Inference scope (23 November 2026).}
+The overlapping SN compilations are alternative sensitivity checks, not
+independent detections. Compressed Planck summaries are used under the
+stated acoustic calibration, not as a substitute for the full CMB
+likelihood in an arbitrary nonstandard early universe.
+Goodness-of-fit differences among these templates are not by themselves
+a calibrated detection significance; nuisance profiling, selection among
+templates, and model overlap must be included in a null calibration.
+A distance fit does not identify a microscopic void clock.
+
 
 \section{Introduction}
 Multi-probe cosmological analyses combining baryon acoustic oscillations from the Dark Energy Spectroscopic Instrument (\texttt{DESI}) \cite{DESI2024VI,DESIDR2_2025} and primary cosmic microwave background (CMB) anisotropies \cite{Planck2018VI} with Type~Ia supernova (SN~Ia) distance moduli report $2.5\text{--}4.2\sigma$ preferences for time-evolving dark energy parameterized by $w(a) = w_0 + w_a(1 - a)$ with $w_0 > -1$ and $w_a < 0$. In the 6-year Dark Energy Survey multi-probe analysis \cite{DES2026DynDE}, combining \texttt{DES} Y6 probes with \texttt{Planck} CMB yields $(w_0, w_a) = (-0.82 \pm 0.05, -0.63^{+0.21}_{-0.18})$, while Efstathiou \cite{Efstathiou2025SN} identified a $\sim 0.04\;\mathrm{mag}$ low-$z$/high-$z$ cross-calibration offset between the 2024 \texttt{DES-SN5YR} release \cite{DESSN5YR2024} and \texttt{Pantheon+} \cite{Brout2022}, motivating the \texttt{DES-Dovekie} photometric recalibration \cite{PopovicDovekie2025} alongside spline-binned compilations such as \texttt{Union3} \cite{RubinUnion3_2025}. Across all four public SN~Ia releases, flat-$\Lambda$CDM fits to SNe~Ia alone prefer higher present matter densities---$\Omega_{m,0} = 0.3326 \pm 0.0182$ (\texttt{Pantheon+}), $0.3303 \pm 0.0153$ (\texttt{DES-Dovekie}), $0.3520 \pm 0.0168$ (\texttt{DES-SN5YR}), and $0.3559 \pm 0.0270$ (\texttt{Union3})---than flat-$\Lambda$CDM fits to \texttt{DESI} BAO plus \texttt{Planck} CMB ($\Omega_{m,0} \simeq 0.301$).
@@ -45,7 +58,7 @@ Conversely, within a single-clock flat $\Lambda$CDM background ($E_{\mathrm{hor}
 \end{equation}
 leaves $D_A''(0) = -(2 + \frac{3}{2}\Omega_{m,0})\frac{c}{H_0}$ strictly unchanged because $D_A(0) = 0$. Single-clock beam de-focusing enters only at $\mathcal{O}(z^3)$, preserving $w_0^{\mathrm{app}}(z \to 0) = -1$ identically, while weak-field void potentials ($|\Phi|/c^2 \lesssim 5\times 10^{-4}$) shift $w_0^{\mathrm{app}}$ by $< 10^{-3}$.
 
-In this paper we test a 1-parameter phenomenological void-fraction-weighted distance template ($k = 5$) against \texttt{DESI} BAO, compressed \texttt{Planck} 2018 CMB priors, and four public SN~Ia compilations. Crucially, we perform head-to-head $k = 5$ comparisons against Linder's strictly non-phantom algebraic thawing model ($w(a) \ge -1$ at all $z$) and an empirical phantom-crossing CPL degeneracy curve, compare all 1-parameter templates on a uniform \texttt{BAO + CMB}-only and out-of-sample SN predictive split, map the full $f_{v,0} \in [0.60, 0.84]$ and $r_d$ sensitivity, and report exploratory multi-catalog 3D void-sightline GLS checks through \texttt{SDSS} DR7 \texttt{VoidFinder} \cite{Douglass2023ApJS} and deep \texttt{DESI} DR1 (\texttt{DESIVAST} \cite{DESIVAST2025} and \texttt{ASTRA-DESI} \cite{ASTRADESI2025}) out to $z \le 0.95$.
+In this paper we test a 1-parameter phenomenological void-fraction-weighted distance template ($k = 5$) against \texttt{DESI} BAO, compressed \texttt{Planck} 2018 CMB priors, and four public SN~Ia compilations. Crucially, we perform head-to-head $k = 5$ comparisons against Linder's strictly non-phantom algebraic thawing model ($w(a) \ge -1$ at all $z$) and an empirical phantom-crossing CPL degeneracy curve, compare all 1-parameter templates on a uniform \texttt{BAO + CMB}-only and SN point-estimate predictive split, map the full $f_{v,0} \in [0.60, 0.84]$ and $r_d$ sensitivity, and report exploratory multi-catalog 3D void-sightline GLS checks through \texttt{SDSS} DR7 \texttt{VoidFinder} \cite{Douglass2023ApJS} and deep \texttt{DESI} DR1 (\texttt{DESIVAST} \cite{DESIVAST2025} and \texttt{ASTRA-DESI} \cite{ASTRADESI2025}) out to $z \le 0.95$.
 
 \section{Phenomenological Distance Template and Background Degeneracy}
 \subsection{Dressed Wiltshire Distance, Recombination Scaling, and $f_{v,0}$ Dependence}
@@ -74,9 +87,31 @@ Because combining the flat-FLRW horizon expansion rate $E_{\mathrm{hor}}(z) = \s
 \end{equation}
 where $p = 0$ corresponds to constant weighting (\texttt{H2a}), $p = 1$ is linear void-volume weighting (\texttt{H2-vol}), and $p = 2$ tests steeper void suppression. Note an important distinction at recombination for $p \ge 1$: although the \textit{local} void weight at $z_* \simeq 1090$ is negligible ($\alpha_{\mathrm{eff}}(z_*) \simeq 4.8\times 10^{-5}$ for $p = 1$, $\alpha = 0.40$), leaving pre-recombination sound-horizon physics $r_s(z_*)$ and $r_d(z_{\mathrm{drag}})$ unmodified, the \textit{cumulative} late-time line-of-sight integral $\Delta D_M^{\mathrm{obs}}(z_*) = (c/H_0)\int_0^{z_*}\alpha_{\mathrm{eff}}(z)\bigl[\mathrm{d}\widetilde{D}_{\mathrm{TS}}/\mathrm{d}z - E_{\mathrm{hor}}(z)^{-1}\bigr]\mathrm{d}z$ is non-zero ($\simeq -10.6$ to $-14.0\;\mathrm{Mpc}$ at best fit), which shifts $100\theta_* = 100\,r_s(z_*)/D_M^{\mathrm{obs}}(z_*)$ and thereby re-weights $(H_0, \Omega_{m,0})$.
 
-\paragraph{Common-$H_0$ Identification and Background Geometric Degeneracy.} Defining the radial BAO scale via $D_H^{\mathrm{obs}}(z) = \mathrm{d}D_M^{\mathrm{obs}}/\mathrm{d}z = (c/H_0)\,\mathrm{d}\widetilde{D}_{\mathrm{obs}}^{(p)}/\mathrm{d}z$ with a common present Hubble normalization $H_0 = 100h\;\mathrm{km\,s^{-1}\,Mpc^{-1}}$ ($\widetilde{D}_{\mathrm{obs}}'(0) = 1$) makes Eq.~\eqref{eq:h2-vol} mathematically equivalent, for all sky-averaged background observables, to a spatially flat FLRW cosmology with smooth effective expansion rate $E_{\mathrm{eff}}(z) := [\mathrm{d}\widetilde{D}_{\mathrm{obs}}^{(p)}/\mathrm{d}z]^{-1}$ and effective dark-energy equation of state $w_{\mathrm{eff}}(z)$. Consequently, background distance probes (\texttt{SN + BAO + compressed CMB}) \textit{cannot} prove by themselves that a late-time preference for Eq.~\eqref{eq:h2-vol} originates from inhomogeneous void clocks rather than a smooth dark-energy fluid tracing the same $E_{\mathrm{eff}}(z)$. Moreover, this behavior relies on common-$H_0$ shape identification: if one instead weights the bare-clock slope $\mathrm{d}(\bar{H}_0 D_{\mathrm{TS}}/c)/\mathrm{d}z = (\bar{H}_0/H_0^{\mathrm{TS}})\mathrm{d}\widetilde{D}_{\mathrm{TS}}/\mathrm{d}z$, $\widetilde{D}_{\mathrm{obs}}'(0)$ drops at $z = 0$ by $\bar{H}_0/H_0^{\mathrm{TS}} \simeq 0.749$, creating a BAO/CMB scale mismatch that drives $\hat{\alpha} \to -0.011 \pm 0.053$ ($\Delta\chi^2 = -0.04$).
+\paragraph{Common-$H_0$ Identification and Background Geometric Degeneracy.} Defining the radial BAO scale via $D_H^{\mathrm{obs}}(z) = \mathrm{d}D_M^{\mathrm{obs}}/\mathrm{d}z = (c/H_0)\,\mathrm{d}\widetilde{D}_{\mathrm{obs}}^{(p)}/\mathrm{d}z$ with a common present Hubble normalization $H_0 = 100h\;\mathrm{km\,s^{-1}\,Mpc^{-1}}$ ($\widetilde{D}_{\mathrm{obs}}'(0) = 1$) makes Eq.~\eqref{eq:h2-vol} mathematically equivalent, for all sky-averaged background observables, to a spatially flat FLRW cosmology with smooth effective expansion rate $E_{\mathrm{eff}}(z) := [\mathrm{d}\widetilde{D}_{\mathrm{obs}}^{(p)}/\mathrm{d}z]^{-1}$ and effective dark-energy equation of state $w_{\mathrm{eff}}(z)$. Consequently, background distance probes (\texttt{SN + BAO + compressed CMB}) \textit{cannot} prove by themselves that a late-time preference for Eq.~\eqref{eq:h2-vol} originates from inhomogeneous void clocks rather than a smooth dark-energy fluid tracing the same $E_{\mathrm{eff}}(z)$. Moreover, this behavior relies on common-$H_0$ shape identification: if one instead weights the bare-clock slope $\mathrm{d}(\bar{H}_0 D_{\mathrm{TS}}/c)/\mathrm{d}z = (\bar{H}_0/H_0^{\mathrm{TS}})\mathrm{d}\widetilde{D}_{\mathrm{TS}}/\mathrm{d}z$, $\widetilde D_{\mathrm{obs}}'(0)=1+\alpha(\bar H_0/H_0^{\mathrm{TS}}-1)$, with $\bar H_0/H_0^{\mathrm{TS}}\simeq0.799$ at $f_{v,0}=0.7234$, creating a BAO/CMB scale mismatch that drives $\hat{\alpha} \to -0.011 \pm 0.053$ ($\Delta\chi^2 = -0.04$).
 
-Finally, integrating the coupled Sachs optical ODE smoothly across all $u = \ln(1+z) \in [0, \ln 1201]$ without any artificial intermediate redshift stitch reveals why a naive hybrid Sachs equation cannot substitute for covariant 4D light-cone averaging: replacing $E_{\mathrm{hor}} \to E_{\mathrm{ray}}$ in the expansion damping while keeping unmodified homogeneous FLRW Ricci focusing $\frac{3}{2}\Omega_{m,0}(1+z)^3$ breaks the FLRW cancellation $E(u)E'(u) = \frac{3}{2}\Omega_{m,0}e^{3u} + 2\Omega_r e^{4u}$, generating a secular $\mathcal{O}(\alpha)$ focusing drift in $D_M(z_*)$ that restricts $\hat{\alpha} = -0.048 \pm 0.024$ ($\Delta\chi^2 = -3.95$ on \texttt{Pantheon+}, or $\hat{\alpha} = +0.005 \pm 0.002$, $\Delta\chi^2 = -5.72$ under $(1-\alpha_{\mathrm{eff}})$-depleted Ricci focusing). We therefore evaluate the self-consistent effective metric template Eq.~\eqref{eq:h2-vol} directly across $p \in \{0, 1, 2\}$ and report $3$-trial look-elsewhere corrections alongside $\Delta\mathrm{AIC}$ and $\Delta\mathrm{BIC}$.
+Finally, integrating the coupled Sachs optical ODE smoothly across all $u = \ln(1+z) \in [0, \ln 1201]$ without any artificial intermediate redshift stitch reveals why a naive hybrid Sachs equation cannot substitute for covariant 4D light-cone averaging: replacing $E_{\mathrm{hor}} \to E_{\mathrm{ray}}$ in the expansion damping while keeping unmodified homogeneous FLRW Ricci focusing $\frac{3}{2}\Omega_{m,0}(1+z)^3$ breaks the FLRW cancellation $E(u)E'(u) = \frac{3}{2}\Omega_{m,0}e^{3u} + 2\Omega_r e^{4u}$, generating a secular $\mathcal{O}(\alpha)$ focusing drift in $D_M(z_*)$ that restricts $\hat{\alpha} = -0.048 \pm 0.024$ ($\Delta\chi^2 = -3.95$ on \texttt{Pantheon+}, or $\hat{\alpha} = +0.005 \pm 0.002$, $\Delta\chi^2 = -5.72$ under $(1-\alpha_{\mathrm{eff}})$-depleted Ricci focusing). We therefore evaluate the self-consistent effective metric template Eq.~\eqref{eq:h2-vol} directly across $p \in \{0, 1, 2\}$ and report descriptive fit differences alongside $\Delta\mathrm{AIC}$ and $\Delta\mathrm{BIC}$.
+
+\paragraph{Meaning of the fit comparison.}
+For fixed supernova covariance $C$ and residual vector $r$ before fitting
+the shared additive magnitude offset, its profiled contribution is
+\[
+ r^{T}C^{-1}r-
+ \frac{(\mathbf 1^{T}C^{-1}r)^2}{\mathbf 1^{T}C^{-1}\mathbf 1}.
+\]
+It is invariant under $r\mapsto r+b\mathbf 1$. Flat-prior integration
+changes this expression only by a model-independent term when $C$ and the
+offset convention are held fixed. The BAO and compressed CMB penalties
+are added under the adopted block likelihood; this is not a joint fit to
+raw supernova light curves or the full CMB spectra. The SN evaluation at
+each BAO+CMB optimum is a point-estimate check, not posterior prediction;
+the CPL-line slope used for comparison was chosen using joint-fit
+information, so the comparison is not a blind holdout. At $\alpha=0$
+the three choices of $p$ coincide; their likelihood-ratio statistics
+are correlated and $f_{v,0}$ is unidentifiable if it is free.
+We quote $\Delta\chi^2$ descriptively; no global null calibration for the
+template-selection protocol or combined significance over compilations
+has been established. AIC/BIC or Bayes factors refer only to the declared
+summary likelihood and its parameter-count or prior conventions.
 
 \section{Datasets, Sound-Horizon Calibration, and Sample Overlap}
 \label{sec:pipeline}
@@ -89,10 +124,10 @@ All calculations are executed on a unified logarithmic grid $u = \ln(1+z) \in [0
 
 \section{Results: Dark-Energy Controls, Predictive Split, and Sightline Check}
 \label{sec:results}
-\subsection{Uniform BAO+CMB-Only Fits and Out-of-Sample SN Predictions}
+\subsection{Uniform BAO+CMB-Only Fits and SN Evaluations at the BAO+CMB Optima}
 On \texttt{Pantheon+} alone at fixed $\Omega_{m,0} = 0.3153$, $\Delta\chi^2_{\mathrm{SN}}(\alpha)$ is flat across $\alpha \in [0, 0.40]$ ($\Delta\chi^2_{\mathrm{SN}} = 0.00$, $-0.87$, $-1.29$, $-1.32$, $-1.26$, $-0.77$, $+1.60$, $+12.06$ at $\alpha = 0$, $0.10$, $0.20$, $0.22$, $0.30$, $0.40$, $0.60$, $1.00$), degenerate with shifting $\Omega_{m,0}$ to $0.3326$ ($\Delta\chi^2_{\mathrm{SN}} = -0.92$).
 
-To test all 1-parameter templates on equal footing without SN data, Table~\ref{tab:bao-cmb-oos} reports the \texttt{DESI} BAO + \texttt{Planck} 2018 ($N = 16$, $M_B$-free) fits for flat $\Lambda$CDM ($k = 3$) and four 1-parameter ($k = 4$) templates ($p = 0, 1, 2$ and the phantom-crossing CPL line $w_a = -3.3(1+w_0)$, whose slope was calibrated to the joint fits), together with their out-of-sample SN $\chi^2$ evaluations at fixed \texttt{BAO + CMB} cosmological parameters (marginalized over $M_B$). While $p = 2$ achieves a slightly deeper \texttt{BAO + CMB} minimum ($\Delta\chi^2 = -7.93$ vs.\ $-7.47$ for $p = 1$) and the phantom CPL line matches $p = 1$ ($\Delta\chi^2 = -7.45$), evaluating at the \texttt{BAO + CMB} point estimate worsens \texttt{Pantheon+} and \texttt{DES-Dovekie} for $p = 2$ ($+9.50, +6.42$) and the phantom CPL line ($+17.37, +11.27$), whereas $p = 0$ and $p = 1$ improve all four SN compilations. Note, however, that \texttt{BAO + CMB} parameter uncertainties are substantial: comparing \texttt{BAO + CMB}-only to joint \texttt{Pantheon+} estimates gives a modest $\sim 0.8\sigma$ shift for $p = 1$ ($\hat{\alpha} = 0.521 \pm 0.163$ vs.\ $0.397$) compared to $\sim 1.65\sigma$ for the phantom CPL line ($\hat{w}_0 = -0.611 \pm 0.144$ vs.\ $-0.849$), so this represents a $1\text{--}2\sigma$ consistency difference rather than a decisive discriminator.
+To test all 1-parameter templates on equal footing without SN data, Table~\ref{tab:bao-cmb-oos} reports the \texttt{DESI} BAO + \texttt{Planck} 2018 ($N = 16$, $M_B$-free) fits for flat $\Lambda$CDM ($k = 3$) and four 1-parameter ($k = 4$) templates ($p = 0, 1, 2$ and the phantom-crossing CPL line $w_a = -3.3(1+w_0)$, whose slope was calibrated to the joint fits), together with their SN point-estimate $\chi^2$ evaluations at fixed \texttt{BAO + CMB} cosmological parameters (marginalized over $M_B$). While $p = 2$ achieves a slightly deeper \texttt{BAO + CMB} minimum ($\Delta\chi^2 = -7.93$ vs.\ $-7.47$ for $p = 1$) and the phantom CPL line matches $p = 1$ ($\Delta\chi^2 = -7.45$), evaluating at the \texttt{BAO + CMB} point estimate worsens \texttt{Pantheon+} and \texttt{DES-Dovekie} for $p = 2$ ($+9.50, +6.42$) and the phantom CPL line ($+17.37, +11.27$), whereas $p = 0$ and $p = 1$ improve all four SN compilations. Note, however, that \texttt{BAO + CMB} parameter uncertainties are substantial: comparing \texttt{BAO + CMB}-only to joint \texttt{Pantheon+} estimates gives a modest $\sim 0.8\sigma$ shift for $p = 1$ ($\hat{\alpha} = 0.521 \pm 0.163$ vs.\ $0.397$) compared to $\sim 1.65\sigma$ for the phantom CPL line ($\hat{w}_0 = -0.611 \pm 0.144$ vs.\ $-0.849$), so this represents a $1\text{--}2\sigma$ consistency difference rather than a decisive discriminator.
 
 \begin{table}[ht!]
 \centering
@@ -102,7 +137,7 @@ To test all 1-parameter templates on equal footing without SN data, Table~\ref{t
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccc|cccc}
 \toprule
-Model (\texttt{DESI} BAO + \texttt{Planck18} Only, $N=16$) & $k_{\mathrm{no}\,M_B}$ & Best-Fit $\hat{\alpha}$ or $\hat{w}_0$ & $(H_0,\;\Omega_{m,0})$ & $\Delta\chi^2_{\mathrm{BAO+CMB}}$ & \multicolumn{4}{c}{Out-of-Sample $\Delta\chi^2_{\mathrm{SN}}$ (Fixed \texttt{BAO+CMB} Params, $M_B$ Marg.)} \\
+Model (\texttt{DESI} BAO + \texttt{Planck18} Only, $N=16$) & $k_{\mathrm{no}\,M_B}$ & Best-Fit $\hat{\alpha}$ or $\hat{w}_0$ & $(H_0,\;\Omega_{m,0})$ & $\Delta\chi^2_{\mathrm{BAO+CMB}}$ & \multicolumn{4}{c}{SN Point-Estimate $\Delta\chi^2_{\mathrm{SN}}$ (Fixed \texttt{BAO+CMB} Params, $M_B$ Marg.)} \\
  & & & & & \texttt{Pantheon+} & \texttt{DES-Dovekie} & \texttt{DES-SN5YR} & \texttt{Union3} \\
 \midrule
 Flat $\Lambda$CDM & $3$ & $\alpha \equiv 0$ & $(68.41,\;0.3010)$ & $0.00$ ($\chi^2=15.87$) & $0.00$ ($1389.51$) & $0.00$ ($1635.24$) & $0.00$ ($1649.87$) & $0.00$ ($28.46$) \\
@@ -113,14 +148,14 @@ Phantom CPL Line ($w_a=-3.3(1+w_0)$) & $4$ & $-0.611 \pm 0.144$ & $(64.57,\;0.34
 \bottomrule
 \end{tabular}%
 }
-\caption{Uniform \texttt{DESI} BAO + \texttt{Planck} 2018 ($N=16$, no SNe) fits for all 1-parameter ($k = 4$ without $M_B$) templates and their out-of-sample SN $\chi^2$ evaluations at fixed \texttt{BAO+CMB} cosmological parameters (marginalized over $M_B$) relative to the \texttt{BAO+CMB} $\Lambda$CDM baseline.}
+\caption{Uniform \texttt{DESI} BAO + \texttt{Planck} 2018 ($N=16$, no SNe) fits for all 1-parameter ($k = 4$ without $M_B$) templates and their SN point-estimate $\chi^2$ evaluations at fixed \texttt{BAO+CMB} cosmological parameters (marginalized over $M_B$) relative to the \texttt{BAO+CMB} $\Lambda$CDM baseline.}
 \label{tab:bao-cmb-oos}
 \end{table}
 
 \subsection{Joint Compilation Sensitivity and $k = 5$ Dark-Energy Controls}
 Table~\ref{tab:multi-sn} and Figure~\ref{fig:v9-main}A--B present the joint \texttt{SN + DESI BAO + Planck18} fits across all four SN compilations alongside head-to-head $k = 5$ optical and smooth dark-energy benchmarks:
 \begin{enumerate}
-    \item \textit{Comparison Across $p \in \{0, 1, 2\}$ and Acoustic Calibration Consistency:} Inserting the dressed $D_{\mathrm{TS}}$ template directly at unit weight ($p = 0, \alpha \equiv 1$, $k = 4$) into a flat-$\Lambda$CDM early-universe acoustic calibration ($r_d, r_s$) is strongly inconsistent with BAO+CMB ($\Delta\chi^2 > +812$), whereas pure Timescape uses its own early-universe calibration \cite{Wiltshire2009PRD}; the unit-weight void-modulated limit ($p = 1, \alpha \equiv 1$, $k = 4$) gives $\Delta\chi^2 = +14.41$ (\texttt{Pantheon+}) to $-2.68$ (\texttt{Union3}). When $\alpha$ is floated freely ($k = 5$), constant-weight \texttt{H2a} ($p = 0$) is viable ($\hat{\alpha}_{p=0} \approx 0.085\text{--}0.095 \pm 0.029$, $\Delta\chi^2 = -7.98$ on \texttt{Pantheon+}, $-8.56$ on \texttt{DES-Dovekie}), only $1.82$ and $2.78$ worse than exploratory $p = 1$. Linear void weighting ($p = 1$) yields $\Delta\chi^2 = -9.80, -11.34, -18.53, -13.62$ ($2.79\sigma, 3.05\sigma, 4.06\sigma, 3.40\sigma$ after a $3$-trial look-elsewhere penalty over $p \in \{0, 1, 2\}$), outperforming free-$\alpha$ $p = 0$ substantially on deeper high-$z$ \texttt{DES-SN5YR} ($\Delta\chi^2_{p=1-p=0} = -8.30$) and \texttt{Union3} ($-5.76$), while $p = 2$ performs comparably ($\Delta\chi^2 = -7.71, -9.77, -17.97, -14.42$).
+    \item \textit{Comparison Across $p \in \{0, 1, 2\}$ and Acoustic Calibration Consistency:} Inserting the dressed $D_{\mathrm{TS}}$ template directly at unit weight ($p = 0, \alpha \equiv 1$, $k = 4$) into a flat-$\Lambda$CDM early-universe acoustic calibration ($r_d, r_s$) is strongly inconsistent with BAO+CMB ($\Delta\chi^2 > +812$), whereas pure Timescape uses its own early-universe calibration \cite{Wiltshire2009PRD}; the unit-weight void-modulated limit ($p = 1, \alpha \equiv 1$, $k = 4$) gives $\Delta\chi^2 = +14.41$ (\texttt{Pantheon+}) to $-2.68$ (\texttt{Union3}). When $\alpha$ is floated freely ($k = 5$), constant-weight \texttt{H2a} ($p = 0$) is viable ($\hat{\alpha}_{p=0} \approx 0.085\text{--}0.095 \pm 0.029$, $\Delta\chi^2 = -7.98$ on \texttt{Pantheon+}, $-8.56$ on \texttt{DES-Dovekie}), only $1.82$ and $2.78$ worse than exploratory $p = 1$. Linear void weighting ($p = 1$) yields $\Delta\chi^2 = -9.80, -11.34, -18.53, -13.62$, outperforming free-$\alpha$ $p = 0$ substantially on deeper high-$z$ \texttt{DES-SN5YR} ($\Delta\chi^2_{p=1-p=0} = -8.30$) and \texttt{Union3} ($-5.76$), while $p = 2$ performs comparably ($\Delta\chi^2 = -7.71, -9.77, -17.97, -14.42$).
     \item \textit{Strictly Non-Phantom Linder (2015) Thawing vs.\ Phantom-Crossing Dark Energy ($k = 5$):} Constant-$w$ $w$CDM ($w_a = 0$, $k = 5$) yields weak improvements ($\Delta\chi^2 = -0.54$ to $-3.79$). To test a dark-energy family that obeys $w(a) \ge -1$ at \textit{all} redshifts (unlike a linear CPL line $w_a = -1.58(1+w_0)$, which crosses $w = -1$ at $z = 1/0.58 \simeq 1.72$ when $w_0 > -1$), we evaluate Linder's \cite{Linder2015Thawing} 1-parameter algebraic thawing model (Eq.~3 of Ref.~\cite{Linder2015Thawing}, $p = 1, b = 0.5, w_0 \ge -1$):
     \begin{equation}
     \begin{split}
@@ -128,7 +163,7 @@ Table~\ref{tab:multi-sn} and Figure~\ref{fig:v9-main}A--B present the joint \tex
         \frac{\rho_{\mathrm{de}}(a)}{\rho_{\mathrm{de},0}} &= \exp\!\left\{3(1+w_0)\left[(1+b) - (1+b)^{2/3}(a^3+b)^{1/3}\right]\right\}.
     \end{split}
     \end{equation}
-    This strictly non-phantom family yields $\Delta\chi^2 = -2.54$ (\texttt{Pantheon+}), $-3.75$ (\texttt{DES-Dovekie}), $-8.79$ (\texttt{DES-SN5YR}), and $-3.54$ (\texttt{Union3})---worse than \texttt{H2-vol} ($p = 1$) by $\Delta\chi^2 = -7.26, -7.59, -9.74, -10.08$. Crucially, this penalty arises predominantly from the CMB ($\chi^2_{\mathrm{CMB}} = 5.07\text{--}6.05$ for Linder thawing vs.\ $0.00\text{--}0.34$ for \texttt{H2-vol}), reflecting the general \texttt{DESI} result that NEC-obeying dark energy struggles to preserve $D_M(z_*)$ rather than uniquely favoring voids. Conversely, the empirical phantom-crossing CPL degeneracy line $w_a = -3.3(1+w_0)$ ($k = 5$) yields $\Delta\chi^2 = -8.07, -10.93, -18.40, -14.20$, matching both 6-parameter free CPL (whose \texttt{DES-Dovekie} contour $(-0.818 \pm 0.057, -0.655 \pm 0.232)$ is numerically close to the \texttt{DES} Y6 + CMB result \cite{DES2026DynDE}) and \texttt{H2-vol} ($p = 1$) within $|\Delta\chi^2| \le 1.73$. Thus, background geometry prefers an effective phantom-crossing shape over Linder's non-phantom thawing family, but cannot distinguish phantom-crossing dark energy from void-weighted optical dressing.
+    {\sloppy This strictly non-phantom family yields $\Delta\chi^2 = -2.54$ (\texttt{Pantheon+}), $-3.75$ (\texttt{DES-Dovekie}), $-8.79$ (\texttt{DES-SN5YR}), and $-3.54$ (\texttt{Union3})---worse than \texttt{H2-vol} ($p = 1$) by $\Delta\chi^2 = -7.26, -7.59, -9.74, -10.08$. Crucially, this penalty arises predominantly from the CMB ($\chi^2_{\mathrm{CMB}} = 5.07\text{--}6.05$ for Linder thawing vs.\ $0.00\text{--}0.34$ for \texttt{H2-vol}), reflecting the general \texttt{DESI} result that NEC-obeying dark energy struggles to preserve $D_M(z_*)$ rather than uniquely favoring voids. Conversely, the empirical phantom-crossing CPL degeneracy line $w_a = -3.3(1+w_0)$ ($k = 5$) yields $\Delta\chi^2 = -8.07, -10.93, -18.40, -14.20$, matching both 6-parameter free CPL (whose \texttt{DES-Dovekie} contour $(-0.818 \pm 0.057, -0.655 \pm 0.232)$ is numerically close to the \texttt{DES} Y6 + CMB result \cite{DES2026DynDE}) and \texttt{H2-vol} ($p = 1$) within $|\Delta\chi^2| \le 1.73$. Thus, background geometry prefers an effective phantom-crossing shape over Linder's non-phantom thawing family, but cannot distinguish phantom-crossing dark energy from void-weighted optical dressing.\par}
     \item \textit{Full $f_{v,0} \in [0.60, 0.84]$, $r_d$, and CMB-Prior Sensitivity (Table~\ref{tab:chw-fv0}):} {\sloppy Fixing $f_{v,0}$ across $[0.60, 0.84]$ without \texttt{H1} demonstrates strong $(\alpha, f_{v,0})$ degeneracy: on \texttt{Pantheon+}, $\Delta\chi^2$ is negligible at $f_{v,0} \le 0.65$, rises to $-4.47$ at $f_{v,0} = 0.695$, peaks across $f_{v,0} \in [0.724, 0.762]$ ($\Delta\chi^2 = -9.84$ to $-9.86$), and declines to $-7.03$ at $0.840$. Varying fiducial $r_d$ by $\pm 0.15\%$ shifts \texttt{Pantheon+} $\Delta\chi^2$ between $-11.01$ and $-8.66$, while Chen--Huang--Wang $(R, \ell_A, \omega_b)$ priors give $\Delta\chi^2 = -8.46, -9.91, -16.90, -12.09$.\par}
 \end{enumerate}
 
@@ -147,44 +182,44 @@ Table~\ref{tab:multi-sn} and Figure~\ref{fig:v9-main}A--B present the joint \tex
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{llcccccccc}
 \toprule
-SN~Ia Compilation (+ \texttt{DESI} BAO + \texttt{Planck18}, CAMB $r_d$) & Model Variant & $k$ & Best $(H_0,\;\Omega_{m,0})$ & Best-Fit $\hat{\alpha} \pm \sigma_\alpha$ or $(w_0,\;w_a)$ & $\chi^2_{\mathrm{SN}}$ / $\chi^2_{\mathrm{BAO}}$ / $\chi^2_{\mathrm{CMB}}$ & $\chi^2_{\mathrm{tot}}$ & $\Delta\chi^2$ vs.\ $\Lambda$CDM ($1\mathrm{dof}$ / LEE $\sigma$) & $\Delta\mathrm{AIC}$ / $\Delta\mathrm{BIC}$ vs.\ $\Lambda$CDM & $\Delta\mathrm{BIC}$ vs.\ CPL \\
+SN~Ia Compilation (+ \texttt{DESI} BAO + \texttt{Planck18}, CAMB $r_d$) & Model Variant & $k$ & Best $(H_0,\;\Omega_{m,0})$ & Best-Fit $\hat{\alpha} \pm \sigma_\alpha$ or $(w_0,\;w_a)$ & $\chi^2_{\mathrm{SN}}$ / $\chi^2_{\mathrm{BAO}}$ / $\chi^2_{\mathrm{CMB}}$ & $\chi^2_{\mathrm{tot}}$ & $\Delta\chi^2$ vs.\ $\Lambda$CDM & $\Delta\mathrm{AIC}$ / $\Delta\mathrm{BIC}$ vs.\ $\Lambda$CDM & $\Delta\mathrm{BIC}$ vs.\ CPL \\
 \midrule
 \texttt{Pantheon+} ($N_{\mathrm{SN}}=1580$, $N_{\mathrm{tot}}=1596$) & Flat $\Lambda$CDM (\texttt{M0}) & $4$ & $(68.31,\;0.3024)$ & $\alpha \equiv 0$ & $1389.25$ / $12.68$ / $3.32$ & $1405.25$ & $0.00$ (---) & $0.00$ / $0.00$ & $-6.49$ \\
- & \texttt{H2-vol} ($p=1$, linear void) & $5$ & $(67.30,\;0.3144)$ & $0.397 \pm 0.126$ & $1386.49$ / $8.61$ / $0.34$ & $1395.45$ & $-9.80$ ($3.13\sigma$ / $2.79\sigma$) & $-7.80$ / $-2.43$ & $-8.92$ \\
- & \texttt{H2-vol} ($p=2$, quadratic void) & $5$ & $(67.11,\;0.3144)$ & $0.471 \pm 0.180$ & $1386.72$ / $8.96$ / $1.87$ & $1397.55$ & $-7.71$ ($2.78\sigma$ / $2.40\sigma$) & $-5.71$ / $-0.33$ & $-6.82$ \\
- & \texttt{H2a} ($p=0$, free-$\alpha$ const.) & $5$ & $(68.45,\;0.3059)$ & $0.085 \pm 0.029$ & $1387.27$ / $9.92$ / $0.08$ & $1397.27$ & $-7.98$ ($2.82\sigma$ / $2.45\sigma$) & $-5.98$ / $-0.60$ & $-7.10$ \\
- & Smooth $w$CDM ($w_a \equiv 0$) & $5$ & $(67.90,\;0.3052)$ & $(-0.981 \pm 0.024,\;0)$ & $1387.48$ / $12.41$ / $4.69$ & $1404.59$ & $-0.66$ ($0.81\sigma$) & $+1.34$ / $+6.71$ & $+0.22$ \\
- & Linder (2015) Thawing ($w\ge -1$) & $5$ & $(67.47,\;0.3089)$ & $w_0 = -0.939 \pm 0.038$ & $1386.16$ / $11.48$ / $5.07$ & $1402.71$ & $-2.54$ ($1.59\sigma$) & $-0.54$ / $+4.84$ & $-1.66$ \\
- & Phantom CPL Line ($w_a=-3.3(1+w_0)$) & $5$ & $(67.39,\;0.3122)$ & $(-0.849 \pm 0.055,\;-0.497)$ & $1386.55$ / $9.31$ / $1.32$ & $1397.18$ & $-8.07$ ($2.84\sigma$) & $-6.07$ / $-0.69$ & $-7.18$ \\
+ & \texttt{H2-vol} ($p=1$, linear void) & $5$ & $(67.30,\;0.3144)$ & $0.397 \pm 0.126$ & $1386.49$ / $8.61$ / $0.34$ & $1395.45$ & $-9.80$ & $-7.80$ / $-2.43$ & $-8.92$ \\
+ & \texttt{H2-vol} ($p=2$, quadratic void) & $5$ & $(67.11,\;0.3144)$ & $0.471 \pm 0.180$ & $1386.72$ / $8.96$ / $1.87$ & $1397.55$ & $-7.71$ & $-5.71$ / $-0.33$ & $-6.82$ \\
+ & \texttt{H2a} ($p=0$, free-$\alpha$ const.) & $5$ & $(68.45,\;0.3059)$ & $0.085 \pm 0.029$ & $1387.27$ / $9.92$ / $0.08$ & $1397.27$ & $-7.98$ & $-5.98$ / $-0.60$ & $-7.10$ \\
+ & Smooth $w$CDM ($w_a \equiv 0$) & $5$ & $(67.90,\;0.3052)$ & $(-0.981 \pm 0.024,\;0)$ & $1387.48$ / $12.41$ / $4.69$ & $1404.59$ & $-0.66$ & $+1.34$ / $+6.71$ & $+0.22$ \\
+ & Linder (2015) Thawing ($w\ge -1$) & $5$ & $(67.47,\;0.3089)$ & $w_0 = -0.939 \pm 0.038$ & $1386.16$ / $11.48$ / $5.07$ & $1402.71$ & $-2.54$ & $-0.54$ / $+4.84$ & $-1.66$ \\
+ & Phantom CPL Line ($w_a=-3.3(1+w_0)$) & $5$ & $(67.39,\;0.3122)$ & $(-0.849 \pm 0.055,\;-0.497)$ & $1386.55$ / $9.31$ / $1.32$ & $1397.18$ & $-8.07$ & $-6.07$ / $-0.69$ & $-7.18$ \\
  & Free CPL (\texttt{M1b}, $5\times 5$ Hessian) & $6$ & $(67.56,\;0.3112)$ & $(-0.848\pm 0.056,\;-0.545\pm 0.218)$ & $1386.47$ / $9.70$ / $0.82$ & $1396.99$ & $-8.26$ (---) & $-4.26$ / $+6.49$ & $0.00$ \\
 \midrule
 \texttt{DES-Dovekie} ($N_{\mathrm{SN}}=1820$, $N_{\mathrm{tot}}=1836$) & Flat $\Lambda$CDM (\texttt{M0}) & $4$ & $(68.28,\;0.3028)$ & $\alpha \equiv 0$ & $1634.79$ / $12.97$ / $3.12$ & $1650.88$ & $0.00$ (---) & $0.00$ / $0.00$ & $-3.78$ \\
- & \texttt{H2-vol} ($p=1$, linear void) & $5$ & $(67.29,\;0.3145)$ & $0.407 \pm 0.121$ & $1630.66$ / $8.56$ / $0.32$ & $1639.54$ & $-11.34$ ($3.37\sigma$ / $3.05\sigma$) & $-9.34$ / $-3.82$ & $-7.60$ \\
- & \texttt{H2-vol} ($p=2$, quadratic void) & $5$ & $(67.03,\;0.3152)$ & $0.511 \pm 0.176$ & $1630.62$ / $8.74$ / $1.76$ & $1641.11$ & $-9.77$ ($3.13\sigma$ / $2.79\sigma$) & $-7.77$ / $-2.25$ & $-6.03$ \\
- & \texttt{H2a} ($p=0$, free-$\alpha$ const.) & $5$ & $(68.44,\;0.3062)$ & $0.087 \pm 0.029$ & $1632.26$ / $9.93$ / $0.13$ & $1642.32$ & $-8.56$ ($2.93\sigma$ / $2.56\sigma$) & $-6.56$ / $-1.04$ & $-4.82$ \\
- & Linder (2015) Thawing ($w\ge -1$) & $5$ & $(67.36,\;0.3098)$ & $w_0 = -0.931 \pm 0.036$ & $1630.42$ / $11.41$ / $5.30$ & $1647.13$ & $-3.75$ ($1.94\sigma$) & $-1.75$ / $+3.77$ & $-0.01$ \\
- & Phantom CPL Line ($w_a=-3.3(1+w_0)$) & $5$ & $(67.23,\;0.3139)$ & $(-0.824 \pm 0.055,\;-0.579)$ & $1629.80$ / $9.04$ / $1.12$ & $1639.95$ & $-10.93$ ($3.31\sigma$) & $-8.93$ / $-3.41$ & $-7.19$ \\
+ & \texttt{H2-vol} ($p=1$, linear void) & $5$ & $(67.29,\;0.3145)$ & $0.407 \pm 0.121$ & $1630.66$ / $8.56$ / $0.32$ & $1639.54$ & $-11.34$ & $-9.34$ / $-3.82$ & $-7.60$ \\
+ & \texttt{H2-vol} ($p=2$, quadratic void) & $5$ & $(67.03,\;0.3152)$ & $0.511 \pm 0.176$ & $1630.62$ / $8.74$ / $1.76$ & $1641.11$ & $-9.77$ & $-7.77$ / $-2.25$ & $-6.03$ \\
+ & \texttt{H2a} ($p=0$, free-$\alpha$ const.) & $5$ & $(68.44,\;0.3062)$ & $0.087 \pm 0.029$ & $1632.26$ / $9.93$ / $0.13$ & $1642.32$ & $-8.56$ & $-6.56$ / $-1.04$ & $-4.82$ \\
+ & Linder (2015) Thawing ($w\ge -1$) & $5$ & $(67.36,\;0.3098)$ & $w_0 = -0.931 \pm 0.036$ & $1630.42$ / $11.41$ / $5.30$ & $1647.13$ & $-3.75$ & $-1.75$ / $+3.77$ & $-0.01$ \\
+ & Phantom CPL Line ($w_a=-3.3(1+w_0)$) & $5$ & $(67.23,\;0.3139)$ & $(-0.824 \pm 0.055,\;-0.579)$ & $1629.80$ / $9.04$ / $1.12$ & $1639.95$ & $-10.93$ & $-8.93$ / $-3.41$ & $-7.19$ \\
  & Free CPL (\texttt{M1b}, $5\times 5$ Hessian) & $6$ & $(67.42,\;0.3130)$ & $(-0.818\pm 0.057,\;-0.655\pm 0.232)$ & $1629.48$ / $9.61$ / $0.53$ & $1639.62$ & $-11.25$ (---) & $-7.25$ / $+3.78$ & $0.00$ \\
 \midrule
 \texttt{DES-SN5YR} ($N_{\mathrm{SN}}=1829$, $N_{\mathrm{tot}}=1845$) & Flat $\Lambda$CDM (\texttt{M0}) & $4$ & $(68.21,\;0.3036)$ & $\alpha \equiv 0$ & $1648.85$ / $13.67$ / $2.70$ & $1665.22$ & $0.00$ (---) & $0.00$ / $0.00$ & $+3.38$ \\
- & \texttt{H2-vol} ($p=1$, linear void) & $5$ & $(67.06,\;0.3180)$ & $0.517 \pm 0.120$ & $1638.28$ / $8.40$ / $0.00$ & $1646.69$ & $-18.53$ ($4.30\sigma$ / $4.06\sigma$) & $-16.53$ / $-11.01$ & $-7.64$ \\
- & \texttt{H2-vol} ($p=2$, quadratic void) & $5$ & $(66.57,\;0.3206)$ & $0.721 \pm 0.185$ & $1638.29$ / $8.17$ / $0.80$ & $1647.25$ & $-17.97$ ($4.24\sigma$ / $3.99\sigma$) & $-15.97$ / $-10.45$ & $-7.08$ \\
- & \texttt{H2a} ($p=0$, free-$\alpha$ const.) & $5$ & $(68.40,\;0.3072)$ & $0.095 \pm 0.029$ & $1644.56$ / $9.97$ / $0.46$ & $1654.99$ & $-10.23$ ($3.20\sigma$ / $2.87\sigma$) & $-8.23$ / $-2.71$ & $+0.66$ \\
- & Linder (2015) Thawing ($w\ge -1$) & $5$ & $(66.75,\;0.3151)$ & $w_0 = -0.891 \pm 0.036$ & $1638.66$ / $11.72$ / $6.05$ & $1656.43$ & $-8.79$ ($2.96\sigma$) & $-6.79$ / $-1.27$ & $+2.10$ \\
- & Phantom CPL Line ($w_a=-3.3(1+w_0)$) & $5$ & $(66.79,\;0.3189)$ & $(-0.765 \pm 0.057,\;-0.775)$ & $1637.56$ / $8.71$ / $0.54$ & $1646.82$ & $-18.40$ ($4.29\sigma$) & $-16.40$ / $-10.88$ & $-7.51$ \\
+ & \texttt{H2-vol} ($p=1$, linear void) & $5$ & $(67.06,\;0.3180)$ & $0.517 \pm 0.120$ & $1638.28$ / $8.40$ / $0.00$ & $1646.69$ & $-18.53$ & $-16.53$ / $-11.01$ & $-7.64$ \\
+ & \texttt{H2-vol} ($p=2$, quadratic void) & $5$ & $(66.57,\;0.3206)$ & $0.721 \pm 0.185$ & $1638.29$ / $8.17$ / $0.80$ & $1647.25$ & $-17.97$ & $-15.97$ / $-10.45$ & $-7.08$ \\
+ & \texttt{H2a} ($p=0$, free-$\alpha$ const.) & $5$ & $(68.40,\;0.3072)$ & $0.095 \pm 0.029$ & $1644.56$ / $9.97$ / $0.46$ & $1654.99$ & $-10.23$ & $-8.23$ / $-2.71$ & $+0.66$ \\
+ & Linder (2015) Thawing ($w\ge -1$) & $5$ & $(66.75,\;0.3151)$ & $w_0 = -0.891 \pm 0.036$ & $1638.66$ / $11.72$ / $6.05$ & $1656.43$ & $-8.79$ & $-6.79$ / $-1.27$ & $+2.10$ \\
+ & Phantom CPL Line ($w_a=-3.3(1+w_0)$) & $5$ & $(66.79,\;0.3189)$ & $(-0.765 \pm 0.057,\;-0.775)$ & $1637.56$ / $8.71$ / $0.54$ & $1646.82$ & $-18.40$ & $-16.40$ / $-10.88$ & $-7.51$ \\
  & Free CPL (\texttt{M1b}, $5\times 5$ Hessian) & $6$ & $(66.82,\;0.3187)$ & $(-0.764\pm 0.059,\;-0.789\pm 0.236)$ & $1637.53$ / $8.82$ / $0.46$ & $1646.81$ & $-18.41$ (---) & $-14.41$ / $-3.38$ & $0.00$ \\
 \midrule
 \texttt{Union3} ($N_{\mathrm{bins}}=22$, $N_{\mathrm{tot}}=38$) & Flat $\Lambda$CDM (\texttt{M0}) & $4$ & $(68.32,\;0.3022)$ & $\alpha \equiv 0$ & $28.26$ / $12.56$ / $3.41$ & $44.23$ & $0.00$ (---) & $0.00$ / $0.00$ & $+7.06$ \\
- & \texttt{H2-vol} ($p=1$, linear void) & $5$ & $(66.98,\;0.3192)$ & $0.558 \pm 0.141$ & $22.16$ / $8.43$ / $0.03$ & $30.61$ & $-13.62$ ($3.69\sigma$ / $3.40\sigma$) & $-11.62$ / $-9.98$ & $-2.92$ \\
- & \texttt{H2-vol} ($p=2$, quadratic void) & $5$ & $(66.13,\;0.3261)$ & $0.966 \pm 0.256$ & $21.79$ / $7.88$ / $0.14$ & $29.81$ & $-14.42$ ($3.80\sigma$ / $3.52\sigma$) & $-12.42$ / $-10.78$ & $-3.73$ \\
- & \texttt{H2a} ($p=0$, free-$\alpha$ const.) & $5$ & $(68.44,\;0.3060)$ & $0.086 \pm 0.030$ & $26.34$ / $9.93$ / $0.10$ & $36.37$ & $-7.86$ ($2.80\sigma$ / $2.43\sigma$) & $-5.86$ / $-4.22$ & $+2.84$ \\
- & Linder (2015) Thawing ($w\ge -1$) & $5$ & $(66.87,\;0.3140)$ & $w_0 = -0.900 \pm 0.052$ & $23.17$ / $11.65$ / $5.87$ & $40.69$ & $-3.54$ ($1.88\sigma$) & $-1.54$ / $+0.10$ & $+7.16$ \\
- & Phantom CPL Line ($w_a=-3.3(1+w_0)$) & $5$ & $(66.22,\;0.3253)$ & $(-0.686 \pm 0.091,\;-1.036)$ & $21.42$ / $8.46$ / $0.15$ & $30.03$ & $-14.20$ ($3.77\sigma$) & $-12.20$ / $-10.57$ & $-3.51$ \\
+ & \texttt{H2-vol} ($p=1$, linear void) & $5$ & $(66.98,\;0.3192)$ & $0.558 \pm 0.141$ & $22.16$ / $8.43$ / $0.03$ & $30.61$ & $-13.62$ & $-11.62$ / $-9.98$ & $-2.92$ \\
+ & \texttt{H2-vol} ($p=2$, quadratic void) & $5$ & $(66.13,\;0.3261)$ & $0.966 \pm 0.256$ & $21.79$ / $7.88$ / $0.14$ & $29.81$ & $-14.42$ & $-12.42$ / $-10.78$ & $-3.73$ \\
+ & \texttt{H2a} ($p=0$, free-$\alpha$ const.) & $5$ & $(68.44,\;0.3060)$ & $0.086 \pm 0.030$ & $26.34$ / $9.93$ / $0.10$ & $36.37$ & $-7.86$ & $-5.86$ / $-4.22$ & $+2.84$ \\
+ & Linder (2015) Thawing ($w\ge -1$) & $5$ & $(66.87,\;0.3140)$ & $w_0 = -0.900 \pm 0.052$ & $23.17$ / $11.65$ / $5.87$ & $40.69$ & $-3.54$ & $-1.54$ / $+0.10$ & $+7.16$ \\
+ & Phantom CPL Line ($w_a=-3.3(1+w_0)$) & $5$ & $(66.22,\;0.3253)$ & $(-0.686 \pm 0.091,\;-1.036)$ & $21.42$ / $8.46$ / $0.15$ & $30.03$ & $-14.20$ & $-12.20$ / $-10.57$ & $-3.51$ \\
  & Free CPL (\texttt{M1b}, $5\times 5$ Hessian) & $6$ & $(66.03,\;0.3266)$ & $(-0.683\pm 0.092,\;-1.005\pm 0.311)$ & $21.56$ / $8.02$ / $0.32$ & $29.90$ & $-14.33$ (---) & $-10.33$ / $-7.06$ & $0.00$ \\
 \bottomrule
 \end{tabular}%
 }
-\caption{Head-to-head fits across four overlapping public SN~Ia compilations combined with \texttt{DESI} 13-point BAO (CAMB-calibrated $r_d$) and the exact \texttt{Planck} 2018 \texttt{TT,TE,EE+lowE+lensing} $3\times 3$ $(\omega_b, \omega_c, 100\theta_*)$ PR3 chain covariance (\texttt{verify\_C9}). For optical templates, both raw $1\mathrm{dof}\;\sigma = \sqrt{|\Delta\chi^2|}$ and $3$-trial look-elsewhere-corrected (LEE) $\sigma$ across $p \in \{0, 1, 2\}$ are reported. On \texttt{DES-Dovekie}, \texttt{DES-SN5YR}, and \texttt{Union3}, $w$CDM ($k=5$) gives $\Delta\chi^2 = -1.23$, $-3.79$, and $-0.54$.}
+\caption{Head-to-head fits across four overlapping public SN~Ia compilations combined with \texttt{DESI} 13-point BAO (CAMB-calibrated $r_d$) and the exact \texttt{Planck} 2018 \texttt{TT,TE,EE+lowE+lensing} $3\times 3$ $(\omega_b, \omega_c, 100\theta_*)$ PR3 chain covariance (\texttt{verify\_C9}). On \texttt{DES-Dovekie}, \texttt{DES-SN5YR}, and \texttt{Union3}, $w$CDM ($k=5$) gives $\Delta\chi^2 = -1.23$, $-3.79$, and $-0.54$.}
 \label{tab:multi-sn}
 \end{table}
 
@@ -218,6 +253,80 @@ Unlike smooth dark-energy models, an anisotropic directional extension of clock-
 \end{enumerate}
 Because $67$ of the $68$ unique \texttt{DESIVAST} SNe also enter the \texttt{ASTRA-DESI} sample, the two \texttt{DESI} DR1 measurements represent correlated cross-checks rather than independent constraints. All three catalogs remain statistically consistent with zero, with the primary \texttt{ASTRA-DESI} $0.10 \le z \le 0.95$ GLS regression yielding a $95\%$ interval of $[-0.102, +0.032]\;\mathrm{mag}$ for this sample and sphere-union estimator, while remaining compatible with a conditional directional illustration of $-0.052\;\mathrm{mag}$ at $z \le 0.70$. Under a simple conditional $N^{-1/2}$ order-of-magnitude scaling from our measured \texttt{ASTRA-DESI} DR1 precision ($\sigma_{\mathrm{slope}} = 0.034\;\mathrm{mag}$ at $N = 734$)---assuming a fixed hypothetical $-0.052\;\mathrm{mag}$ directional amplitude (not fixed by the sky-averaged distance law) and identical per-SN sensitivity, without modeling future survey selection functions or spatial covariance---reaching $\sigma_{\mathrm{slope}} \simeq 0.017\;\mathrm{mag}$ corresponds to $N_{\mathrm{SN}} \sim 2.8 \times 10^3$ unique SNe~Ia within the \texttt{DESI} footprint (accessible with \texttt{Rubin LSST} / \texttt{Roman} paired with mock spatial null covariances).
 
+\subsection{Matched Pantheon+ null calibration in the local Gaussian model}
+\label{sec:matched-tangent}
+We independently refit the $1580$ Pantheon+ light-curve rows, the 13
+DESI DR2 BAO components and the three compressed Planck summaries
+with the same offset, common cosmological parameters and CAMB acoustic
+calibration, using the archived tracker spline. The null fit gives
+$\chi^2=1405.29$. The gains $\chi^2_{\Lambda\mathrm{CDM}}-\chi^2_{\rm model}$
+for $p=0,1,2$ are $8.02,9.83,7.71$; the smooth mirage CPL line gives
+$8.08$. Doubling the redshift grid from $1400$ to $2800$ intervals
+changes each gain by less than $0.002$. This is a check on the same
+data, not replication on an independent survey.
+
+For a separate local calculation, whiten the residual $r$ and the
+prediction derivatives using the adopted block covariance. Let $P$
+remove the constant SN magnitude shift and the shared cosmological
+tangent columns at the fitted null. Write $u_j$ for each normalized
+projected template derivative. The gain from fitting the signed
+linear amplitude is $Z_j^2$ with $Z_j=u_j^{T}Pr$ in whitened units.
+Under the fixed-tangent Gaussian null,
+$\mathrm{Cov}(Z_i,Z_j)=u_i^Tu_j$. Calibrating $\max_{j=0,1,2}Z_j^2$
+with two million common null draws gives the tail $0.00641$
+(Monte Carlo 95\% interval $[0.00630,0.00653]$) at the observed local
+statistic $8.858$. Testing only the winning template at this threshold
+would give $0.00292$. These are tails for the specified plug-in
+tangent experiment; the nonlinear fit statistic is not used as its
+threshold, and no other compilation enters the calibration.
+
+The projected $p=1$ and mirage CPL derivatives have absolute
+correlation $0.927$, consistent with the small difference between
+their fits. Neither the likelihood gains nor the local calibration
+identifies their physical origin. The test does not propagate
+acoustic-prior dependence or selection outside this fixed bank.
+Code and the hash-bound receipt are supplied with the Paper~23
+working sources as \texttt{validate\_pantheon\_joint\_tangent.py}
+and \texttt{pantheon\_joint\_tangent\_20261123\_strict.json}.
+
+\subsection{Held-out time-delay distance check}
+\label{sec:heldout-lens}
+We score the six released H0LiCOW XIII lens distance likelihoods
+\cite{Wong2020H0LiCOW}, which were not used in the Pantheon+,
+DESI BAO-13 and compressed Planck fits. This is a retrospective
+held-out test, not a blinded survey analysis. We freeze the separately
+fitted linear optical ($p=1$) and smooth mirage-CPL predictions
+($w_a=-3.3(1+w_0)$) before scoring, with fixed flat $\Lambda$CDM
+as a reference. No parameter is updated using the lenses. We use the
+per-lens released distance distributions, not the collaboration's
+cosmology-inferred $H_0$.
+For both templates we additionally assume the same flat
+distance-sum rule. With $d,s$ denoting deflector and source,
+respectively, $D_d=D_M(z_d)/(1+z_d)$ and
+\[
+ D_{\Delta t}=\frac{D_M(z_d)D_M(z_s)}{D_M(z_s)-D_M(z_d)}.
+\]
+All distances here are in Mpc. Three lenses use the joint distance KDE,
+two use the time-delay distance alone, and B1608 uses the released
+product of shifted lognormal fits. We adopt the published lens mass-model
+assumptions; this is not an analysis with free internal mass sheets
+\cite{Birrer2020TDCOSMO}.
+
+The fixed-point log-likelihoods relative to flat $\Lambda$CDM are
+$-0.136$ (optical) and $+0.206$ (mirage), so that
+$\ln(L_{\rm opt}/L_{\rm mirage})=-0.341$ (ratio $0.711$).
+All six point differences have the same sign (one is essentially zero);
+dropping any one lens gives $-0.341$ to $-0.206$. The two alternative KDE
+bandwidths give $-0.366$ and $-0.323$. The largest separation in any
+scored distance is $0.504\%$, or $0.104$ of the corresponding marginal
+distance standard deviation. Mirage ranks first, but the difference is
+not decisive. This is a likelihood ratio at two frozen points, not a
+Bayes factor or a significance. The check neither tests a directional
+void transport law nor distinguishes the physical mechanisms in
+general: a flat effective model with the same $D_M(z)$ has the same
+lens distances under the adopted rule. Code, frozen forecasts and the
+per-lens receipt are in the \href{https://github.com/tau-core-research/tau-core-void-clocks-des2026-galactic-dip-paper23/releases/tag/v15.1-lens-holdout}{Paper~23 evidence release}.
+
 \section{Conclusions}
 Weighting the normalized Wiltshire void-clock distance derivative by $f_v(z)/f_{v,0}$ provides a 1-parameter ($k = 5$) phenomenological distance template whose local modification vanishes prior to structure formation ($f_v(z_*) = 8.7\times 10^{-5}$) while improving joint \texttt{SN + DESI BAO + Planck18} fits over flat $\Lambda$CDM ($\Delta\chi^2 = -9.80$ to $-18.53$) and over Linder's strictly non-phantom algebraic thawing quintessence ($\Delta\chi^2 = -7.26$ to $-10.08$). At the same time, our controls establish four clear limitations: (i) at the sky-averaged background level, Eq.~\eqref{eq:h2-vol} is geometrically indistinguishable from a smooth phantom-crossing 1-parameter CPL curve $w_a = -3.3(1+w_0)$ ($|\Delta\chi^2| \le 1.73$); (ii) the effect currently exists only in the phenomenological transit template, vanishing under bare-$\bar{H}_0$ normalization and under consistent all-$z$ forward Sachs integration; (iii) $\hat{\alpha}$ is strongly degenerate with $f_{v,0}$; and (iv) exploratory 3D void-sightline tests through \texttt{SDSS} DR7 ($N = 280$) and deep \texttt{DESI} DR1 ($N = 734$, $0.10 \le z \le 0.95$, $95\%$ GLS interval $[-0.102, +0.032]\;\mathrm{mag}$) remain null-consistent ($\sigma_{\mathrm{slope}} \simeq 0.034\;\mathrm{mag}$), with conditional $N^{-1/2}$ scaling at identical sensitivity indicating an order-of-magnitude sample of $N_{\mathrm{SN}} \sim 2.8 \times 10^3$ SNe for a hypothetical $-0.052\;\mathrm{mag}$ directional test. Deriving coupled expansion and Ricci-focusing light-cone averages from a single 4D inhomogeneous metric, jointly re-fitting raw SN light-curve nuisance parameters \cite{LaneWiltshire2025MNRAS,SeifertWiltshire2025MNRAS}, and executing mock-calibrated deep \texttt{DESI} $\times$ \texttt{LSST}/\texttt{Roman} void-sightline cross-correlations remain the decisive next steps.
 
@@ -249,6 +358,13 @@ Weighting the normalized Wiltshire void-clock distance derivative by $f_v(z)/f_{
 \bibitem{Bolejko2013PRL} K.~Bolejko, C.~Clarkson, R.~Maartens, D.~Bacon, N.~Meures, and E.~Beynon, \textit{Antilensing: The Bright Side of Voids}, Phys.\ Rev.\ Lett.\ \textbf{110}, 021302 (2013), arXiv:1209.3142.
 \bibitem{DESIVAST2025} H.~Rincon \textit{et al.} (DESI Collaboration), \textit{DESIVAST: DESI DR1 BGS Cosmic Void Value-Added Catalogs (v1.0)}, \url{https://data.desi.lbl.gov/public/dr1/vac/dr1/desivast/v1.0/} (2025).
 \bibitem{ASTRADESI2025} ASTRA-DESI Collaboration, \textit{ASTRA-DESI DR1 Cosmic Void Catalogs (BGS \& LRG, Release v0.14)}, Zenodo \href{https://doi.org/10.5281/zenodo.22003899}{doi:10.5281/zenodo.22003899} (2025).
+\bibitem{Wong2020H0LiCOW}
+ K.~C.~Wong et al., MNRAS \textbf{498}, 1420--1439 (2020),
+ \href{https://arxiv.org/abs/1907.04869}{arXiv:1907.04869}.
+ Likelihoods: \href{https://shsuyu.github.io/H0LiCOW/site/h0licow_data.html}{H0LiCOW data products}.
+\bibitem{Birrer2020TDCOSMO}
+ S.~Birrer et al., A\&A \textbf{643}, A165 (2020),
+ \href{https://doi.org/10.1051/0004-6361/202038861}{doi:10.1051/0004-6361/202038861}.
 \end{thebibliography}
 
 \end{document}
